@@ -1,4 +1,32 @@
 {
 	"name": "@thyrith/momentkh",
-	"version": "1.0.0"
+	"version": "2.0.0",
+	"description": "Working on khmer calendar by implementting moment js",
+	"license": "MIT",
+	"type": "component",
+	"repository": "ThyrithSor/momentkh",
+	"homepage": "https://github.com/ThyrithSor/momentkh",
+	"main": "momentkh.js",
+	"authors": [
+		{
+			"name": "Thyrith Sor",
+			"email": "sor.thyrith@gmail.com"
+		}
+	],
+	"keywords": [
+		"moment",
+		"khmer",
+		"calendar",
+		"lunar",
+		"date",
+		"chankiti",
+		"chhankitek"
+	],
+	"extra": {
+		"component": {
+			"scripts": [
+				"momentkh.js"
+			]
+		}
+	}
 }
