@@ -434,13 +434,12 @@ const MoonStatus = {
 
     epoch_moment.add(Moment.duration(target.diff(epoch_moment), 'milliseconds').asDays(), 'day')
 
+    return this.localeData();
     return {
       day: khmer_day,
       month: khmer_month,
-      year: get_be_year(epoch_moment)
+      year: get_be_year(epoch_moment),
     }
-
-    // return epoch_moment.format('LLLL')
   }
 
   Moment.readLunarDate = readLunarDate;
