@@ -28,5 +28,8 @@
 				"momentkh.js"
 			]
 		}
+	},
+	"dependencies": {
+		"moment": "^2.23.0"
 	}
 }

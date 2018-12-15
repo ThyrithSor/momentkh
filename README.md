@@ -5,6 +5,10 @@
 [![GitHub license](https://img.shields.io/github/license/ThyrithSor/momentkh.svg)]()
 [![Twitter](https://img.shields.io/twitter/url/https/github.com/ThyrithSor/momentkh.svg?style=social)]()
 
-# momentkh
-Khmer calendar
+# @thyrith/momentkh
+Khmer Lunar Calendar
 
+## Install
+```
+$ npm install @thyrith/momentkh
+```
