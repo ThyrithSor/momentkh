@@ -18,22 +18,22 @@ const LunarMonths = {};
   LunarMonths[month] = index
 });
 
-const SolarMonth = {}
+const SolarMonth = {};
 'មករា_កុម្ភៈ_មីនា_មេសា_ឧសភា_មិថុនា_កក្កដា_សីហា_កញ្ញា_តុលា_វិច្ឆិកា_ធ្នូ'.split('_').forEach((month, index) => {
   SolarMonth[month] = index
 });
 
-const AnimalYear = {}
+const AnimalYear = {};
 "ជូត_ឆ្លូវ_ខាល_ថោះ_រោង_ម្សាញ់_មមីរ_មមែ_វក_រកា_ច_កុរ".split("_").forEach((year, index) => {
   AnimalYear[year] = index
 });
 
-const EraYear = {}
+const EraYear = {};
 "សំរឹទ្ធិស័ក_ឯកស័ក_ទោស័ក_ត្រីស័ក_ចត្វាស័ក_បញ្ចស័ក_ឆស័ក_សប្តស័ក_អដ្ឋស័ក_នព្វស័ក".split("_").forEach((year, index) => {
   EraYear[year] = index
 });
 
-const MoonStatus = {}
+const MoonStatus = {};
 "កើត_រោច".split("_").forEach((moon, index) => {
   MoonStatus[moon] = index
 });
@@ -60,7 +60,7 @@ const MoonStatus = {}
   /**
    * Avoman: អាវមាន
    * Avoman determines if a given year is a leap-day year. Given a year in Buddhist Era as denoted as ad_year
-   * @param year (0 - 691)
+   * @param be_year (0 - 691)
    */
   function get_avoman(be_year) {
     let ahk = get_aharkun(be_year);
@@ -71,7 +71,7 @@ const MoonStatus = {}
   /**
    * Aharkun: អាហារគុណ ឬ ហារគុណ
    * Aharkun is used for Avoman and Bodithey calculation below. Given ad_year as a target year in Buddhist Era
-   * @param ad_year
+   * @param be_year
    * @returns {number}
    */
   function get_aharkun(be_year) {
@@ -120,7 +120,7 @@ const MoonStatus = {}
    * * leap month if year has 13 months
    * * leap day if Jesth month of the year has 1 extra day
    * * leap day and month: both of them
-   * @param $ad_year
+   * @param be_year
    * @returns {number} return 0:regular, 1:leap month, 2:leap day, 3:leap day and month
    */
   function get_bodithey_leap(be_year) {
@@ -141,7 +141,7 @@ const MoonStatus = {}
     } else {
       if (a <= 137) {
         // check for avoman case 137/0, 137 must be normal year (p.26)
-        if (get_avoman(be_year + 1) == 0) {
+        if (get_avoman(be_year + 1) === 0) {
           avoman_leap = 0;
         } else {
           avoman_leap = 1;
@@ -151,9 +151,9 @@ const MoonStatus = {}
 
     // case of 25/5 consecutively
     // only bodithey 5 can be leap-month, so set bodithey 25 to none
-    if (b == 25) {
+    if (b === 25) {
       let next_b = get_bodithey(be_year + 1);
-      if (next_b == 5) {
+      if (next_b === 5) {
         bodithey_leap = 0;
       }
     }
@@ -167,11 +167,11 @@ const MoonStatus = {}
     }
 
     // format leap result (0:regular, 1:month, 2:day, 3:both)
-    if (bodithey_leap == 1 && avoman_leap == 1) {
+    if (bodithey_leap === 1 && avoman_leap === 1) {
       result = 3;
-    } else if (bodithey_leap == 1) {
+    } else if (bodithey_leap === 1) {
       result = 1;
-    } else if (avoman_leap == 1) {
+    } else if (avoman_leap === 1) {
       result = 2;
     } else {
       result = 0;
@@ -188,14 +188,14 @@ const MoonStatus = {}
    */
   function get_protetin_leap(be_year) {
     let b = get_bodithey_leap(be_year);
-    if (b == 3) {
+    if (b === 3) {
       return 1;
     }
-    if (b == 2 || b == 1) {
+    if (b === 2 || b === 1) {
       return b;
     }
     // case of previous year is 3
-    if (get_bodithey_leap(be_year - 1) == 3) {
+    if (get_bodithey_leap(be_year - 1) === 3) {
       return 2;
     }
     // normal case
@@ -265,6 +265,11 @@ const MoonStatus = {}
     return get_protetin_leap(be_year) === 2
   }
 
+  /**
+   * Gregorian Leap
+   * @param ad_year
+   * @returns {boolean}
+   */
   function is_gregorian_leap(ad_year) {
     if (ad_year % 4 === 0 && ad_year % 100 !== 0 || ad_year % 400 === 0) {
       return true;
@@ -316,10 +321,23 @@ const MoonStatus = {}
     }
   }
 
+  /**
+   * Turn be year to animal year
+   * @param be_year
+   * @returns {number}
+   */
   function get_animal_year(be_year) {
     return (be_year + 4) % 12
   }
 
+  /**
+   * Khmer date format handler
+   * @param day
+   * @param month
+   * @param moment
+   * @param format
+   * @returns {*}
+   */
   function formatKhmerDate({day, month, moment}, format) {
     if (format === null || format === undefined) {
       // Default date format
@@ -388,15 +406,8 @@ const MoonStatus = {}
         return formatRule[matched]();
       }));
 
-    } else if (typeof format === 'object') {
-      try {
-        // Return object by filling the need
-
-      } catch (e) {
-        Error(format + ' is not a valid date format.');
-      }
     }
-    return null;
+    Error(format + ' is not a valid date format.');
   }
 
   /**
@@ -410,28 +421,17 @@ const MoonStatus = {}
   }
 
   /**
-   * Return khmer lunar date
-   * @param String (wanted format)
-   * @return String
-   * @or @param Array (wanted field) [ថ្ងៃ ថ្ងៃទី កើត/រោច ខែចន្ទគតិ ខែសុរិយគតិ ឆ្នាំសត្វ ឆ្នាំស័ក ពស គស ចស មស សីល]
-   * @return Object
+   * Calculate date from momoentjs to Khmer date
+   * @param target : Moment
+   * @returns {{day: number, month: *, epochMoved: (*|moment.Moment)}}
    */
-  function toLunarDate(format) {
-
-    // let target = this.clone()
-    //
-    // let month = parseInt(target.format('M'));
-    // let day   = parseInt(target.format('D'));
-    // let year  = parseInt(target.format('YYYY'));
-
+  function findLunarDate(target) {
     /**
      * Epoch Date: January 1, 1900
      */
     let epoch_moment = Moment('1/1/1900', 'D/M/YYYY')
     let khmer_month = LunarMonths.បុស្ស;
     let khmer_day = 0; // 0 - 29 ១កើត ... ១៥កើត ១រោច ...១៤រោច (១៥រោច)
-
-    let target = this.clone()
 
     let differentFromEpoch = target.diff(epoch_moment)
 
@@ -506,11 +506,45 @@ const MoonStatus = {}
 
     epoch_moment.add(Moment.duration(target.diff(epoch_moment), 'milliseconds').asDays(), 'day');
 
-    return formatKhmerDate({
+    return {
       day: khmer_day,
       month: khmer_month,
-      moment: epoch_moment
+      epochMoved: epoch_moment
+    }
+  }
+
+  /**
+   * Return khmer lunar date
+   * @param format String (wanted format)
+   * @return String
+   * @or @param Array (wanted field) [ថ្ងៃ ថ្ងៃទី កើត/រោច ខែចន្ទគតិ ខែសុរិយគតិ ឆ្នាំសត្វ ឆ្នាំស័ក ពស គស ចស មស សីល]
+   * @return Object
+   */
+  function toLunarDate(format) {
+
+    let target = this.clone();
+
+    let result = findLunarDate(target);
+
+    return formatKhmerDate({
+      day: result.day,
+      month: result.month,
+      moment: target
     }, format)
+  }
+
+  function khDay () {
+    let result = findLunarDate(this.clone());
+    return result.day;
+  }
+
+  function khMonth () {
+    let result = findLunarDate(this.clone());
+    return result.month;
+  }
+
+  function khYear () {
+    return get_be_year(this.clone());
   }
 
   Moment.readLunarDate = readLunarDate;
@@ -520,6 +554,10 @@ const MoonStatus = {}
   Moment.fn.toLunarDate = toLunarDate;
   Moment.fn.toKhDate = toLunarDate;
   Moment.fn.tokhdate = toLunarDate;
+
+  Moment.fn.khDay = khDay;
+  Moment.fn.khMonth = khMonth;
+  Moment.fn.khYear = khYear;
 
   return Moment;
 })));

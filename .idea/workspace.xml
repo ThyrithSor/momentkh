@@ -38,16 +38,16 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="js" value="5555" />
+          <entry key="js" value="6109" />
           <entry key="json" value="2" />
-          <entry key="md" value="2115" />
+          <entry key="md" value="2516" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="JSON" value="2" />
-          <entry key="JavaScript" value="5530" />
-          <entry key="Markdown" value="2101" />
+          <entry key="JavaScript" value="6084" />
+          <entry key="Markdown" value="2502" />
           <entry key="PLAIN_TEXT" value="39" />
         </counts>
       </usages-collector>
@@ -58,8 +58,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/momentkh.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="152">
-              <caret line="380" column="10" selection-start-line="380" selection-start-column="10" selection-end-line="380" selection-end-column="10" />
+            <state relative-caret-position="10754">
+              <caret line="546" column="37" selection-start-line="546" selection-start-column="37" selection-end-line="546" selection-end-column="37" />
             </state>
           </provider>
         </entry>
@@ -68,8 +68,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="809">
-                <caret line="83" lean-forward="true" selection-start-line="83" selection-end-line="83" />
+              <first_editor relative-caret-position="-1543">
+                <caret line="7" column="20" lean-forward="true" selection-start-line="7" selection-start-column="20" selection-end-line="7" selection-end-column="20" />
               </first_editor>
               <second_editor />
             </state>
@@ -225,12 +225,12 @@
       <updated>1544804959699</updated>
       <workItem from="1544804962154" duration="18142000" />
       <workItem from="1544859195996" duration="1995000" />
-      <workItem from="1544871949886" duration="14906000" />
+      <workItem from="1544871949886" duration="16731000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="35043000" />
+    <option name="totallyTimeSpent" value="36868000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1920" height="1119" extended-state="0" />
@@ -305,8 +305,8 @@
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="809">
-            <caret line="83" lean-forward="true" selection-start-line="83" selection-end-line="83" />
+          <first_editor relative-caret-position="-1543">
+            <caret line="7" column="20" lean-forward="true" selection-start-line="7" selection-start-column="20" selection-end-line="7" selection-end-column="20" />
           </first_editor>
           <second_editor />
         </state>
@@ -314,8 +314,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/momentkh.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="380" column="10" selection-start-line="380" selection-start-column="10" selection-end-line="380" selection-end-column="10" />
+        <state relative-caret-position="10754">
+          <caret line="546" column="37" selection-start-line="546" selection-start-column="37" selection-end-line="546" selection-end-column="37" />
         </state>
       </provider>
     </entry>

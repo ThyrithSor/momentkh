@@ -46,7 +46,10 @@ console.log(khmerDate);
 #### Attributes of moment instance
 | Name  | Parameter | Description | Example |
 |---------|-------|---------|----------------|
-|toLunarDate| *empty* or String or Array |display format as Khmer lunar date | ``require('momentkh')().toLunarDate()`` |
+|toLunarDate| *empty* or String |display format as Khmer lunar date | ``require('momentkh')().toLunarDate();`` |
+|khDay| *empty* |display khmer day index | ``require('momentkh')().khDay();`` <br/> 0 -> ១កើត<br/> 1 -> ២កើត<br/> 2 -> ៣កើត<br/> ... <br/>15 -> ១រោច <br/>16 -> ២រោច <br/>17 -> ៣រោច<br/> ...|
+|khMonth| *empty* |display khmer month index | ``require('momentkh')().khMonth();`` <br/>0 -> មិគសិរ <br/> 1 -> បុស្ស <br/> 2 -> មាឃ <br/> 3 -> ផល្គុន <br/> 4 -> ចេត្រ <br/> 5 -> ពិសាខ <br/> 6 -> ជេស្ឋ <br/> 7 -> អាសាឍ <br/> 8 -> ស្រាពណ៍ <br/> 9 -> ភទ្របទ <br/> 10 -> អស្សុជ <br/> 11 -> កក្ដិក <br/> 12 -> បឋមាសាឍ <br/> 13 -> ទុតិយាសាឍ<br/>|
+|khYear| *empty* |display Buddhist Era year | ``require('momentkh')().khYear();`` |
 
 ##### *Alias*
 | Name  | Original |
@@ -81,3 +84,8 @@ myBirthday.toLunarDate('dN ថ្ងៃW ខែm ព.ស. b');
 | c | ឆ្នាំគ្រិស្តសករាជ| ២០១៩ |
 | j | ឆ្នាំចុល្លសករាជ | ១៤៦៣ |
 
+# Bug Report
+I know there will be a lot of error.
+
+# Contribute
+Welcome pull request 
