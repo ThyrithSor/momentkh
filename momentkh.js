@@ -10,7 +10,7 @@
  * @credit http://www.cam-cc.org
  */
 
-const Moment = require('moment');
+// const Moment = require('moment');
 const config = require('./locale/km');
 
 const LunarMonths = {};
@@ -39,10 +39,10 @@ const MoonStatus = {};
 });
 
 ;(function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory :
     typeof define === 'function' && define.amd ? define(factory) :
-      global.momentkh = factory()
-}(this, (function () {
+      global.momentkh = factory
+}(this, (function (Moment) {
   'use strict';
 
   /**
@@ -417,7 +417,7 @@ const MoonStatus = {};
    * @return Moment
    */
   function readLunarDate(...params) {
-    console.log('hi')
+    console.log('Now working yet')
   }
 
   /**

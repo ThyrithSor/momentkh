@@ -5,19 +5,24 @@
 [![GitHub license](https://img.shields.io/github/license/ThyrithSor/momentkh.svg)]()
 
 # momentkh
-Khmer Lunar Calendar
+momentkh is an add-on feature to moment js library
 
-## Install
+## Install 🗜
 ```
-$ npm install @thyrith/momentkh
+$ npm install moment --save
+$ npm install @thyrith/momentkh --save
 ```
 
-## How to use
+## How to use 🛫
 This library is built depends on [moment.js](https://momentjs.com) popular library.
 We added some functionality to make it easier to work with Khmer date format.
 
 ```javascript
-const moment = require('momentkh');
+const moment = require('moment');
+// Add our features to your preferred moment.js version
+require('@thyrith/momentkh')(moment);
+
+// From now on, your moment js is transformed
 
 let today = moment();
 
@@ -32,29 +37,33 @@ console.log(khmerDate);
 // For example: ថ្ងៃសៅរ៍ ៨កើត ខែមិគសិរ ឆ្នាំច សំរឹទ្ធស័ក ពុទ្ធសករាជ ២៥៦២
 ```
 
-## Added Functionality
-#### Attributes of moment
-| Name  | Parameter | Description | Example |
-|---------|-----|-----------|----------------|
-|readLunarDate| String or Object |Return moment.js object. Just same as calling: ``require('moment')('13/04/2018', 'dd/mm/yyyy');`` for Gregorian date </br> |``require('momentkh').readLunarDate('១៥កើត ពិសាខ ព.ស. ២៥៥៥');`` |
-
-##### *Alias*
-| Name  | Original |
-|---------|----------------|
-|khDate, khdate|readLunarDate|
+## Added Functionality 🎡
 
 #### Attributes of moment instance
 | Name  | Parameter | Description | Example |
 |---------|-------|---------|----------------|
-|toLunarDate| *empty* or String |display format as Khmer lunar date | ``require('momentkh')().toLunarDate();`` |
-|khDay| *empty* |display khmer day index | ``require('momentkh')().khDay();`` <br/> 0 -> ១កើត<br/> 1 -> ២កើត<br/> 2 -> ៣កើត<br/> ... <br/>15 -> ១រោច <br/>16 -> ២រោច <br/>17 -> ៣រោច<br/> ...|
-|khMonth| *empty* |display khmer month index | ``require('momentkh')().khMonth();`` <br/>0 -> មិគសិរ <br/> 1 -> បុស្ស <br/> 2 -> មាឃ <br/> 3 -> ផល្គុន <br/> 4 -> ចេត្រ <br/> 5 -> ពិសាខ <br/> 6 -> ជេស្ឋ <br/> 7 -> អាសាឍ <br/> 8 -> ស្រាពណ៍ <br/> 9 -> ភទ្របទ <br/> 10 -> អស្សុជ <br/> 11 -> កក្ដិក <br/> 12 -> បឋមាសាឍ <br/> 13 -> ទុតិយាសាឍ<br/>|
-|khYear| *empty* |display Buddhist Era year | ``require('momentkh')().khYear();`` |
+|toLunarDate| *empty* or String |display format as Khmer lunar date | ``moment().toLunarDate();`` |
+|khDay| *empty* |display khmer day index | ``moment().khDay();`` <br/> 0 -> ១កើត<br/> 1 -> ២កើត<br/> 2 -> ៣កើត<br/> ... <br/>15 -> ១រោច <br/>16 -> ២រោច <br/>17 -> ៣រោច<br/> ...|
+|khMonth| *empty* |display khmer month index | ``moment.khMonth();`` <br/>0 -> មិគសិរ <br/> 1 -> បុស្ស <br/> 2 -> មាឃ <br/> 3 -> ផល្គុន <br/> 4 -> ចេត្រ <br/> 5 -> ពិសាខ <br/> 6 -> ជេស្ឋ <br/> 7 -> អាសាឍ <br/> 8 -> ស្រាពណ៍ <br/> 9 -> ភទ្របទ <br/> 10 -> អស្សុជ <br/> 11 -> កក្ដិក <br/> 12 -> បឋមាសាឍ <br/> 13 -> ទុតិយាសាឍ<br/>|
+|khYear| *empty* |display Buddhist Era year | ``moment().khYear();`` |
 
 ##### *Alias*
 | Name  | Original |
 |---------|----------------|
 |toKhDate, tokhdate|toLunarDate|
+
+
+#### Attributes of moment
+*Sorry, this part is not working yet*
+
+| Name  | Parameter | Description | Example |
+|---------|-----|-----------|----------------|
+|readLunarDate| String or Object |Return moment.js object. Just same as calling: ``moment('13/04/2018', 'dd/mm/yyyy');`` for Gregorian date </br> |``moment.readLunarDate('១៥កើត ពិសាខ ព.ស. ២៥៥៥');`` |
+
+##### *Alias*
+| Name  | Original |
+|---------|----------------|
+|khDate, khdate|readLunarDate|
 
 ## Format
 By default, it will return the format as shown in example above.
@@ -84,8 +93,8 @@ myBirthday.toLunarDate('dN ថ្ងៃW ខែm ព.ស. b');
 | c | ឆ្នាំគ្រិស្តសករាជ| ២០១៩ |
 | j | ឆ្នាំចុល្លសករាជ | ១៤៦៣ |
 
-# Bug Report
+# Bug Report 🐞🐜🦗🕷🕸🦂🦟🐛🐌💣
 I know there will be a lot of error.
 
-# Contribute
+# Contribute 💡
 Welcome pull request 
