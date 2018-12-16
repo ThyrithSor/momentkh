@@ -31,5 +31,11 @@
 	},
 	"dependencies": {
 		"moment": "^2.23.0"
-	}
+	},
+	"spm": {
+		"main": "momentkh.js",
+		"output": [
+			"locale/*.js"
+		]
+	},
 }

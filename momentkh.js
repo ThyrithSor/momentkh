@@ -11,71 +11,32 @@
  */
 
 const Moment = require('moment');
+const config = require('./locale/km');
 
-const LunarMonths = {
-  'មិគសិរ': 1,
-  'បុស្ស': 2,
-  'មាឃ': 3,
-  'ផល្គុន': 4,
-  'ចេត្រ': 5,
-  'ពិសាខ': 6,
-  'ជេស្ឋ': 7,
-  'អាសាឍ': 8,
-  'ស្រាពណ៍': 9,
-  'ភទ្របទ': 10,
-  'អស្សុជ': 11,
-  'កក្ដិក': 12,
-  'បឋមាសាឍ': 81,
-  'ទុតិយាសាឍ': 82
-};
+const LunarMonths = {};
+"មិគសិរ_បុស្ស_មាឃ_ផល្គុន_ចេត្រ_ពិសាខ_ជេស្ឋ_អាសាឍ_ស្រាពណ៍_ភទ្របទ_អស្សុជ_កក្ដិក_បឋមាសាឍ_ទុតិយាសាឍ".split("_").forEach((month, index) => {
+  LunarMonths[month] = index
+});
 
-const SolarMonth = {
-  'មករា': 1,
-  'កុម្ភៈ': 2,
-  'មីនា': 3,
-  'មេសា': 4,
-  'ឧសភា': 5,
-  'មិថុនា': 6,
-  'កក្កដា': 7,
-  'សីហា': 8,
-  'កញ្ញា': 9,
-  'តុលា': 10,
-  'វិច្ឆិកា': 11,
-  'ធ្នូ': 12,
-};
+const SolarMonth = {}
+'មករា_កុម្ភៈ_មីនា_មេសា_ឧសភា_មិថុនា_កក្កដា_សីហា_កញ្ញា_តុលា_វិច្ឆិកា_ធ្នូ'.split('_').forEach((month, index) => {
+  SolarMonth[month] = index
+});
 
-const AnimalYear = {
-  'ជូត': 1,
-  'ឆ្លូវ': 2,
-  'ខាល': 3,
-  'ថោះ': 4,
-  'រោង': 5,
-  'ម្សាញ់': 6,
-  'មមីរ': 7,
-  'មមែ': 8,
-  'វក': 9,
-  'រកា': 10,
-  'ច': 11,
-  'កុរ': 12,
-}
+const AnimalYear = {}
+"ជូត_ឆ្លូវ_ខាល_ថោះ_រោង_ម្សាញ់_មមីរ_មមែ_វក_រកា_ច_កុរ".split("_").forEach((year, index) => {
+  AnimalYear[year] = index
+});
 
-const SakYear = {
-  'ឯកស័ក': 1,
-  'ទោស័ក': 2,
-  'ត្រីស័ក': 3,
-  'ចត្វាស័ក': 4,
-  'បញ្ចស័ក': 5,
-  'ឆស័ក': 6,
-  'សប្តស័ក': 7,
-  'អដ្ឋស័ក': 8,
-  'នព្វស័ក': 9,
-  'សំរឹទ្ធិស័ក': 0
-}
+const EraYear = {}
+"សំរឹទ្ធិស័ក_ឯកស័ក_ទោស័ក_ត្រីស័ក_ចត្វាស័ក_បញ្ចស័ក_ឆស័ក_សប្តស័ក_អដ្ឋស័ក_នព្វស័ក".split("_").forEach((year, index) => {
+  EraYear[year] = index
+});
 
-const MoonStatus = {
-  'កើត': 0,
-  'រោច': 1
-}
+const MoonStatus = {}
+"កើត_រោច".split("_").forEach((moon, index) => {
+  MoonStatus[moon] = index
+});
 
 ;(function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
@@ -120,7 +81,7 @@ const MoonStatus = {
   }
 
   /**
-   * Kromthupul: ក្រមធុពល
+   * Kromathupul
    * @param be_year
    * @returns {number} (1-800)
    */
@@ -132,7 +93,7 @@ const MoonStatus = {
 
   /**
    * is_khmer_solar_leap
-   * @param year
+   * @param be_year
    * @returns {number}
    */
   function is_khmer_solar_leap(be_year) {
@@ -141,18 +102,6 @@ const MoonStatus = {
       return 1;
     else
       return 0;
-  }
-
-  /**
-   * ១កើត ៤កើត ២រោច ១៤រោច ...
-   * @param day 1-30
-   * @returns {{count: number, moonStatus: number}}
-   */
-  function get_khmer_lunar_day(day) {
-    return {
-      count: ((day - 1) % 15) + 1,
-      moonStatus: day > 15 ? MoonStatus.រោច : MoonStatus.កើត
-    }
   }
 
   /**
@@ -266,7 +215,8 @@ const MoonStatus = {
     if (be_month === LunarMonths.បឋមាសាឍ || be_month === LunarMonths.ទុតិយាសាឍ) {
       return 30;
     }
-    return 30 - (be_month % 2);
+    // មិគសិរ : 29 , បុស្ស : 30 , មាឃ : 29 .. 30 .. 29 ..30 .....
+    return be_month % 2 === 0 ? 29 : 30;
   }
 
   /**
@@ -329,7 +279,7 @@ const MoonStatus = {
    * @returns {*}
    */
   function get_be_year(moment) {
-    if (parseInt(moment.format('M')) < SolarMonth.មេសា) {
+    if (parseInt(moment.format('M')) < SolarMonth.មេសា + 1) {
       return parseInt(moment.format('YYYY')) + 543;
     } else {
       return parseInt(moment.format('YYYY')) + 544;
@@ -355,6 +305,100 @@ const MoonStatus = {
   }
 
   /**
+   * ១កើត ៤កើត ២រោច ១៤រោច ...
+   * @param day 1-30
+   * @returns {{count: number, moonStatus: number}}
+   */
+  function get_khmer_lunar_day(day) {
+    return {
+      count: (day % 15) + 1,
+      moonStatus: day > 14 ? MoonStatus.រោច : MoonStatus.កើត
+    }
+  }
+
+  function get_animal_year(be_year) {
+    return (be_year + 4) % 12
+  }
+
+  function formatKhmerDate({day, month, moment}, format) {
+    if (format === null || format === undefined) {
+      // Default date format
+      let dayOfWeek = moment.day();
+      let moonDay = get_khmer_lunar_day(day);
+      let beYear = get_be_year(moment);
+      let animalYear = get_animal_year(beYear);
+      let eraYear = get_js_year(beYear) % 10;
+      return config.postformat(`ថ្ងៃ${config.weekdays[dayOfWeek]} ${moonDay.count}${config.moonStatus[moonDay.moonStatus]} ខែ${config.lunarMonths[month]} ឆ្នាំ${config.animalYear[animalYear]} ${config.eraYear[eraYear]} ពុទ្ធសករាជ ${beYear}`);
+    } else if (typeof format === 'string') {
+      // Follow the format
+      let formatRule = {
+        'W': function () { // Day of week
+          let dayOfWeek = moment.day();
+          return config.weekdays[dayOfWeek]
+        },
+        'w': function () { // Day of week
+          let dayOfWeek = moment.day();
+          return config.weekdaysShort[dayOfWeek]
+        },
+        'd': function () { // no determine digit
+          let moonDay = get_khmer_lunar_day(day);
+          return moonDay.count;
+        },
+        'D': function () { // minimum 2 digits
+          let moonDay = get_khmer_lunar_day(day);
+          return ('' + moonDay.count).length === 1 ? '0' + moonDay.count : moonDay.count;
+        },
+        'n': function () {
+          let moonDay = get_khmer_lunar_day(day);
+          return config.moonStatusShort[moonDay.moonStatus]
+        },
+        'N': function () {
+          let moonDay = get_khmer_lunar_day(day);
+          return config.moonStatus[moonDay.moonStatus]
+        },
+        'o': function () {
+          return config.moonDays[day];
+        },
+        'm': function () {
+          return config.lunarMonths[month];
+        },
+        'a': function () {
+          let beYear = get_be_year(moment);
+          let animalYear = get_animal_year(beYear);
+          return config.animalYear[animalYear];
+        },
+        'e': function () {
+          let beYear = get_be_year(moment);
+          let eraYear = get_js_year(beYear) % 10;
+          return config.eraYear[eraYear];
+        },
+        'b': function () {
+          return get_be_year(moment);
+        },
+        'c': function () {
+          return moment.format('YYYY');
+        },
+        'j': function () {
+          let beYear = get_be_year(moment);
+          return get_js_year(beYear);
+        }
+      }
+
+      return config.postformat(format.replace(/[WwdDnNomaebcj]/g, function (matched) {
+        return formatRule[matched]();
+      }));
+
+    } else if (typeof format === 'object') {
+      try {
+        // Return object by filling the need
+      } catch (e) {
+        Error(format + ' is not a valid date format.');
+      }
+    }
+    return null;
+  }
+
+  /**
    * Read Khmer lunar date
    * @param params : String (2) (input and format)
    * @or @param Object {ថ្ងៃ: ..., កើត: ..., ខែ: ..., ពស: ...}
@@ -371,7 +415,7 @@ const MoonStatus = {
    * @or @param Array (wanted field) [ថ្ងៃ ថ្ងៃទី កើត/រោច ខែចន្ទគតិ ខែសុរិយគតិ ឆ្នាំសត្វ ឆ្នាំស័ក ពស គស ចស មស សីល]
    * @return Object
    */
-  function toLunarDate() {
+  function toLunarDate(format) {
 
     // let target = this.clone()
     //
@@ -384,7 +428,7 @@ const MoonStatus = {
      */
     let epoch_moment = Moment('1/1/1900', 'D/M/YYYY')
     let khmer_month = LunarMonths.បុស្ស;
-    let khmer_day = 1; // 1 - 30 ១កើត ... ១៥កើត ១រោច ...១៤រោច (១៥រោច)
+    let khmer_day = 0; // 0 - 29 ១កើត ... ១៥កើត ១រោច ...១៤រោច (១៥រោច)
 
     let target = this.clone()
 
@@ -403,14 +447,26 @@ const MoonStatus = {
 
     // Move epoch month
     while (Moment.duration(target.diff(epoch_moment), 'milliseconds').asDays() > get_numofday_in_kmonth(khmer_month, get_be_year(epoch_moment))) {
-      epoch_moment.add(get_numofday_in_kmonth(khmer_month, get_be_year(epoch_moment)), 'day')
+      epoch_moment.add(get_numofday_in_kmonth(khmer_month, get_be_year(epoch_moment)), 'day');
       switch (khmer_month) {
-        case LunarMonths.មិគសិរ: khmer_month = LunarMonths.បុស្ស; break;
-        case LunarMonths.បុស្ស: khmer_month = LunarMonths.មាឃ; break;
-        case LunarMonths.មាឃ: khmer_month = LunarMonths.ផល្គុន; break;
-        case LunarMonths.ផល្គុន: khmer_month = LunarMonths.ចេត្រ; break;
-        case LunarMonths.ចេត្រ: khmer_month = LunarMonths.ពិសាខ; break;
-        case LunarMonths.ពិសាខ: khmer_month = LunarMonths.ជេស្ឋ; break;
+        case LunarMonths.មិគសិរ:
+          khmer_month = LunarMonths.បុស្ស;
+          break;
+        case LunarMonths.បុស្ស:
+          khmer_month = LunarMonths.មាឃ;
+          break;
+        case LunarMonths.មាឃ:
+          khmer_month = LunarMonths.ផល្គុន;
+          break;
+        case LunarMonths.ផល្គុន:
+          khmer_month = LunarMonths.ចេត្រ;
+          break;
+        case LunarMonths.ចេត្រ:
+          khmer_month = LunarMonths.ពិសាខ;
+          break;
+        case LunarMonths.ពិសាខ:
+          khmer_month = LunarMonths.ជេស្ឋ;
+          break;
         case LunarMonths.ជេស្ឋ: {
           if (is_khmer_leap_month(get_be_year(epoch_moment))) {
             khmer_month = LunarMonths.បឋមាសាឍ
@@ -419,27 +475,41 @@ const MoonStatus = {
           }
           break;
         }
-        case LunarMonths.អាសាឍ: khmer_month = LunarMonths.ស្រាពណ៍; break;
-        case LunarMonths.ស្រាពណ៍: khmer_month = LunarMonths.ភទ្របទ; break;
-        case LunarMonths.ភទ្របទ: khmer_month = LunarMonths.អស្សុជ; break;
-        case LunarMonths.អស្សុជ: khmer_month = LunarMonths.កក្ដិក; break;
-        case LunarMonths.កក្ដិក: khmer_month = LunarMonths.មិគសិរ; break;
-        case LunarMonths.បឋមាសាឍ: khmer_month = LunarMonths.ទុតិយាសាឍ; break;
-        case LunarMonths.ទុតិយាសាឍ: khmer_month = LunarMonths.ស្រាពណ៍; break;
-        default: console.log('error', khmer_month)
+        case LunarMonths.អាសាឍ:
+          khmer_month = LunarMonths.ស្រាពណ៍;
+          break;
+        case LunarMonths.ស្រាពណ៍:
+          khmer_month = LunarMonths.ភទ្របទ;
+          break;
+        case LunarMonths.ភទ្របទ:
+          khmer_month = LunarMonths.អស្សុជ;
+          break;
+        case LunarMonths.អស្សុជ:
+          khmer_month = LunarMonths.កក្ដិក;
+          break;
+        case LunarMonths.កក្ដិក:
+          khmer_month = LunarMonths.មិគសិរ;
+          break;
+        case LunarMonths.បឋមាសាឍ:
+          khmer_month = LunarMonths.ទុតិយាសាឍ;
+          break;
+        case LunarMonths.ទុតិយាសាឍ:
+          khmer_month = LunarMonths.ស្រាពណ៍;
+          break;
+        default:
+          throw Error('Plugin is facing wrong calculation (Invalid month)');
       }
     }
 
-    khmer_day = Moment.duration(target.diff(epoch_moment), 'milliseconds').asDays() + 1
+    khmer_day += Math.floor(Moment.duration(target.diff(epoch_moment), 'milliseconds').asDays());
 
-    epoch_moment.add(Moment.duration(target.diff(epoch_moment), 'milliseconds').asDays(), 'day')
+    epoch_moment.add(Moment.duration(target.diff(epoch_moment), 'milliseconds').asDays(), 'day');
 
-    return this.localeData();
-    return {
+    return formatKhmerDate({
       day: khmer_day,
       month: khmer_month,
-      year: get_be_year(epoch_moment),
-    }
+      moment: epoch_moment
+    }, format)
   }
 
   Moment.readLunarDate = readLunarDate;
