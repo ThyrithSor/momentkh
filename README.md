@@ -13,6 +13,9 @@ $ npm install @thyrith/momentkh
 ```
 
 ## How to use
+This library is built depends on [moment.js](https://momentjs.com) popular library.
+We added some functionality to make it easier to work with Khmer date format.
+
 ```javascript
 const moment = require('momentkh');
 
@@ -28,6 +31,27 @@ console.log(khmerDate);
 // Display khmer date
 // For example: ថ្ងៃសៅរ៍ ៨កើត ខែមិគសិរ ឆ្នាំច សំរឹទ្ធស័ក ពុទ្ធសករាជ ២៥៦២
 ```
+
+## Added Functionality
+#### Attributes of moment
+| Name  | Parameter | Description | Example |
+|---------|-----|-----------|----------------|
+|readLunarDate| String or Object |Return moment.js object. Just same as calling: ``require('moment')('13/04/2018', 'dd/mm/yyyy');`` for Gregorian date </br> |``require('momentkh').readLunarDate('១៥កើត ពិសាខ ព.ស. ២៥៥៥');`` |
+
+##### *Alias*
+| Name  | Original |
+|---------|----------------|
+|khDate, khdate|readLunarDate|
+
+#### Attributes of moment instance
+| Name  | Parameter | Description | Example |
+|---------|-------|---------|----------------|
+|toLunarDate| *empty* or String or Array |display format as Khmer lunar date | ``require('momentkh')().toLunarDate()`` |
+
+##### *Alias*
+| Name  | Original |
+|---------|----------------|
+|toKhDate, tokhdate|toLunarDate|
 
 ## Format
 By default, it will return the format as shown in example above.

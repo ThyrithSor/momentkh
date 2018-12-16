@@ -384,13 +384,14 @@ const MoonStatus = {}
         }
       }
 
-      return config.postformat(format.replace(/[WwdDnNomaebcj]/g, function (matched) {
+      return config.postformat(format.replace(new RegExp(Object.keys(formatRule).join('|'), 'g'), function (matched) {
         return formatRule[matched]();
       }));
 
     } else if (typeof format === 'object') {
       try {
         // Return object by filling the need
+
       } catch (e) {
         Error(format + ' is not a valid date format.');
       }
@@ -513,8 +514,12 @@ const MoonStatus = {}
   }
 
   Moment.readLunarDate = readLunarDate;
+  Moment.khDate = readLunarDate;
+  Moment.khdate = readLunarDate;
 
   Moment.fn.toLunarDate = toLunarDate;
+  Moment.fn.toKhDate = toLunarDate;
+  Moment.fn.tokhdate = toLunarDate;
 
   return Moment;
 })));
