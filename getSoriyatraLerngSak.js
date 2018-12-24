@@ -15,6 +15,11 @@
 
     let {LunarMonths} = require('./constant');
 
+    /**
+     * គណនា ហារគុន Kromathopol អវមាន និង បូតិថី
+     * @param jsYear
+     * @returns {{bodithey: number, avaman: number, kromathopol: number, harkun: number}}
+     */
     function getInfo(jsYear) {
       let h = 292207 * jsYear + 373;
       let harkun = Math.floor(h / 800) + 1;
@@ -33,11 +38,21 @@
 
     let info = getInfo(jsYear);
 
+    /**
+     * ឆ្នាំចុល្លសករាជដែលមាន៣៦៦ថ្ងៃ
+     * @param jsYear
+     * @returns {boolean}
+     */
     function getHas366day(jsYear) {
       let infoOfYear = getInfo(jsYear);
       return infoOfYear.kromathopol <= 207;
     }
 
+    /**
+     * រកឆ្នាំអធិកមាស
+     * @param jsYear
+     * @returns {boolean}
+     */
     function getIsAthikameas(jsYear) {
       let infoOfYear = getInfo(jsYear);
       let infoOfNextYear = getInfo(jsYear + 1);
@@ -51,6 +66,11 @@
       );
     }
 
+    /**
+     * រកឆ្នាំចន្ទ្រាធិមាស
+     * @param jsYear
+     * @returns {boolean}
+     */
     function getIsChantreathimeas(jsYear) {
       let infoOfYear = getInfo(jsYear);
       let infoOfNextYear = getInfo(jsYear + 1);
@@ -73,6 +93,10 @@
     let isAthikameas = getIsAthikameas(jsYear)
     let isChantreathimeas = getIsChantreathimeas(jsYear)
 
+    /**
+     * ឆែកមើលថាជាឆ្នាំដែលខែជេស្ឋមាន៣០ថ្ងៃឬទេ
+     * @type {boolean}
+     */
     let jesthHas30 = (function () {
       let tmp = isChantreathimeas;
       if (isAthikameas && isChantreathimeas) {
@@ -84,8 +108,16 @@
       return tmp;
     })();
 
+    /**
+     * រកមើលថាតើថ្ងៃឡើងស័កចំថ្ងៃអ្វី
+     * @type {number}
+     */
     let dayLerngSak = (info.harkun - 2) % 7;
 
+    /**
+     * គណនារកថ្ងៃឡើងស័ក
+     * @type {{month, day}}
+     */
     let lunarDateLerngSak = (function () {
       let bodithey = info.bodithey;
       if (getIsAthikameas(jsYear - 1) && getIsChantreathimeas(jsYear - 1)) {

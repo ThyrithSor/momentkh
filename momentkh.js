@@ -265,7 +265,23 @@ let {LunarMonths, SolarMonth, MoonStatus} = require('./constant');
    * @returns {*}
    */
   function getBEYear(moment) {
-    if (parseInt(moment.format('M')) < SolarMonth.មេសា + 1) {
+    if (parseInt(moment.format('M')) === SolarMonth.មេសា + 1) {
+
+      const getSoriyatraLerngSak = require('./getSoriyatraLerngSak')
+      let jsYear = parseInt(moment.format('YYYY')) - 638;
+      let info = getSoriyatraLerngSak(jsYear)
+      let newYearMoment;
+      if (info.newYearsDaySotins[0].angsar === 0) { // ថ្ងៃ ខែ ឆ្នាំ ម៉ោង និង នាទី ចូលឆ្នាំ
+        newYearMoment = Moment(`13-04-${moment.format('YYYY')} ${info.timeOfNewYear.hour}:${info.timeOfNewYear.minute}`, 'DD-MM-YYYY H:m')
+      } else {
+        newYearMoment = Moment(`14-04-${moment.format('YYYY')} ${info.timeOfNewYear.hour}:${info.timeOfNewYear.minute}`, 'DD-MM-YYYY H:m')
+      }
+      if (moment.diff(newYearMoment) >= 0) {
+        return parseInt(moment.format('YYYY')) + 544;
+      } else {
+        return parseInt(moment.format('YYYY')) + 543;
+      }
+    } else if (parseInt(moment.format('M')) < SolarMonth.មេសា + 1) {
       return parseInt(moment.format('YYYY')) + 543;
     } else {
       return parseInt(moment.format('YYYY')) + 544;
