@@ -1,6 +1,6 @@
 {
 	"name": "@thyrith/momentkh",
-	"version": "2.0.0",
+	"version": "2.2.0",
 	"description": "Working on khmer calendar by implementting moment js",
 	"license": "MIT",
 	"type": "component",
@@ -20,7 +20,9 @@
 		"lunar",
 		"date",
 		"chankiti",
-		"chhankitek"
+		"chhankitek",
+		"ប្រតិទិនខ្មែរ",
+		"ចន្ទគតិ"
 	],
 	"extra": {
 		"component": {

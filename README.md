@@ -54,11 +54,11 @@ console.log(khmerDate);
 
 
 #### Attributes of moment
-*Sorry, this part is not working yet*
 
 | Name  | Parameter | Description | Example |
 |---------|-----|-----------|----------------|
-|readLunarDate| String or Object |Return moment.js object. Just same as calling: ``moment('13/04/2018', 'dd/mm/yyyy');`` for Gregorian date </br> |``moment.readLunarDate('១៥កើត ពិសាខ ព.ស. ២៥៥៥');`` |
+|getKhNewYearMoment| Integer | Return moment.js object. Giving the moment of Khmer New Year. (ពេលទេវតាចុះ) | `moment.getKhNewYearMoment(2019);`|
+|~~readLunarDate~~*(not yet working on this)*| String or Object |Return moment.js object. Just same as calling: ``moment('13/04/2018', 'dd/mm/yyyy');`` for Gregorian date </br> |``moment.readLunarDate('១៥កើត ពិសាខ ព.ស. ២៥៥៥');`` |
 
 ##### *Alias*
 | Name  | Original |
@@ -98,3 +98,7 @@ I know there will be a lot of error.
 
 # Contribute 💡
 Welcome pull request 
+
+# References
+* [គណនាម៉ោងទេវតាចុះ](http://www.dahlina.com/education/khmer_new_year_time.html?fbclid=IwAR0Eq6US-F0LfplMjKzmiRn7rvPgi31i74Wpv4mNhU034mzdyj-3hYrCA8w)
+* [ប្រតិទិនចន្ទគតិ](http://www.cam-cc.org)
