@@ -30,11 +30,22 @@
     MoonStatus[moon] = index
   });
 
+  // ឆ្នាំលើកលែងមួយចំនួនដែលខុសពីការគណនា
+  const khNewYearMoments = {
+    '1879' : '12-04-1879 11:36',
+    '2011' : '14-04-2011 13:12',
+    '2012' : '14-04-2012 19:11',
+    '2013' : '14-04-2013 02:12',
+    '2014' : '14-04-2014 08:07',
+    '2015' : '14-04-2015 14:02'
+  }
+
   return {
     LunarMonths,
     SolarMonth,
     AnimalYear,
     EraYear,
-    MoonStatus
+    MoonStatus,
+    khNewYearMoments,
   }
 })));

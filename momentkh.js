@@ -8,6 +8,7 @@
  * Here we choose to use only Buddhist Era.
  *
  * @credit http://www.cam-cc.org
+ * @ref http://www.dahlina.com/education/khmer_new_year_time.html?fbclid=IwAR3lVUvvd4bM6QD635djBpgWt_VDE9KFf4zfqK02RiagIVvRtDMkY2TNWMo
  */
 
 // const Moment = require('moment');
@@ -17,7 +18,7 @@ function getLocaleConfig() {
 
 let config = getLocaleConfig();
 
-let {LunarMonths, SolarMonth, MoonStatus} = require('./constant');
+let {LunarMonths, SolarMonth, MoonStatus, khNewYearMoments} = require('./constant');
 
 ;(function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory :
@@ -25,6 +26,8 @@ let {LunarMonths, SolarMonth, MoonStatus} = require('./constant');
       global.momentkh = factory
 }(this, (function (Moment) {
   'use strict';
+
+  Moment.khNewYearMoments = khNewYearMoments
 
   /**
    * Bodithey: បូតិថី
@@ -261,22 +264,31 @@ let {LunarMonths, SolarMonth, MoonStatus} = require('./constant');
 
   /**
    * Buddhist Era
+   * ថ្ងៃឆ្លងឆ្នាំ គឺ ១ រោច ខែពិសាខ
+   * @ref http://news.sabay.com.kh/article/1039620
+   * @summary: ឯកឧត្តម សេង សុមុនី អ្នកនាំពាក្យ​ក្រ​សួង​ធម្មការ និង​សាសនា​ឲ្យ​Sabay ដឹង​ថា​នៅ​ប្រ​ទេស​កម្ពុជា​ការ​ឆ្លង​ចូល​ពុទ្ធសករាជថ្មី​គឺ​កំណត់​យក​នៅ​ថ្ងៃព្រះ​ពុទ្ធយាងចូល​និព្វាន ពោល​គឺ​នៅ​ថ្ងៃ​១រោច ខែពិសាខ។
    * @param moment
    * @returns {*}
    */
   function getBEYear(moment) {
-    if (parseInt(moment.format('M')) === SolarMonth.មេសា + 1) {
+    if (moment.khMonth() > 5 || moment.khMonth() === 5 && moment.khDay() >= 15) {
+      return parseInt(moment.format('YYYY')) + 544;
+    } else {
+      return parseInt(moment.format('YYYY')) + 543;
+    }
+  }
 
-      const getSoriyatraLerngSak = require('./getSoriyatraLerngSak')
-      let jsYear = parseInt(moment.format('YYYY')) - 638;
-      let info = getSoriyatraLerngSak(jsYear)
-      let newYearMoment;
-      if (info.newYearsDaySotins[0].angsar === 0) { // ថ្ងៃ ខែ ឆ្នាំ ម៉ោង និង នាទី ចូលឆ្នាំ
-        newYearMoment = Moment(`13-04-${moment.format('YYYY')} ${info.timeOfNewYear.hour}:${info.timeOfNewYear.minute}`, 'DD-MM-YYYY H:m')
-      } else {
-        newYearMoment = Moment(`14-04-${moment.format('YYYY')} ${info.timeOfNewYear.hour}:${info.timeOfNewYear.minute}`, 'DD-MM-YYYY H:m')
-      }
-      if (moment.diff(newYearMoment) >= 0) {
+  /**
+   * Due to recursive problem, I need to calculate the BE based on new year's day
+   * This won't be displayed on final result, it is used to find number of day in year,
+   * It won't affect the result because on ខែចេត្រ និង ខែពិសាខ, number of days is the same every year
+   * ពីព្រោះចូលឆ្នាំតែងតែចំខែចេត្រ​ ឬ ពិសាខ
+   * @param moment
+   * @returns {*}
+   */
+  function getMaybeBEYear(moment) {
+    if (parseInt(moment.format('M')) === SolarMonth.មេសា + 1) {
+      if (parseInt(moment.format('D') > 14)) {
         return parseInt(moment.format('YYYY')) + 544;
       } else {
         return parseInt(moment.format('YYYY')) + 543;
@@ -378,12 +390,12 @@ let {LunarMonths, SolarMonth, MoonStatus} = require('./constant');
           return config.lunarMonths[month];
         },
         'a': function () {
-          let beYear = getBEYear(moment);
+          let beYear = getMaybeBEYear(moment);
           let animalYear = getAnimalYear(beYear);
           return config.animalYear[animalYear];
         },
         'e': function () {
-          let beYear = getBEYear(moment);
+          let beYear = getMaybeBEYear(moment);
           let eraYear = getJolakSakarajYear(beYear) % 10;
           return config.eraYear[eraYear];
         },
@@ -394,7 +406,7 @@ let {LunarMonths, SolarMonth, MoonStatus} = require('./constant');
           return moment.format('YYYY');
         },
         'j': function () {
-          let beYear = getBEYear(moment);
+          let beYear = getMaybeBEYear(moment);
           return getJolakSakarajYear(beYear);
         }
       }
@@ -434,18 +446,18 @@ let {LunarMonths, SolarMonth, MoonStatus} = require('./constant');
 
     // Find nearest year epoch
     if (differentFromEpoch > 0) {
-      while (Moment.duration(target.diff(epochMoment), 'milliseconds').asDays() > getNumerOfDayInKhmerYear(getBEYear(epochMoment.clone().add(1, 'year')))) {
-        epochMoment.add(getNumerOfDayInKhmerYear(getBEYear(epochMoment.clone().add(1, 'year'))), 'day')
+      while (Moment.duration(target.diff(epochMoment), 'milliseconds').asDays() > getNumerOfDayInKhmerYear(getMaybeBEYear(epochMoment.clone().add(1, 'year')))) {
+        epochMoment.add(getNumerOfDayInKhmerYear(getMaybeBEYear(epochMoment.clone().add(1, 'year'))), 'day')
       }
     } else {
       do {
-        epochMoment.subtract(getNumerOfDayInKhmerYear(getBEYear(epochMoment)), 'day')
+        epochMoment.subtract(getNumerOfDayInKhmerYear(getMaybeBEYear(epochMoment)), 'day')
       } while (Moment.duration(epochMoment.diff(target), 'milliseconds').asDays() > 0)
     }
 
     // Move epoch month
-    while (Moment.duration(target.diff(epochMoment), 'milliseconds').asDays() > getNumberOfDayInKhmerMonth(khmerMonth, getBEYear(epochMoment))) {
-      epochMoment.add(getNumberOfDayInKhmerMonth(khmerMonth, getBEYear(epochMoment)), 'day');
+    while (Moment.duration(target.diff(epochMoment), 'milliseconds').asDays() > getNumberOfDayInKhmerMonth(khmerMonth, getMaybeBEYear(epochMoment))) {
+      epochMoment.add(getNumberOfDayInKhmerMonth(khmerMonth, getMaybeBEYear(epochMoment)), 'day');
       switch (khmerMonth) {
         case LunarMonths.មិគសិរ:
           khmerMonth = LunarMonths.បុស្ស;
@@ -466,7 +478,7 @@ let {LunarMonths, SolarMonth, MoonStatus} = require('./constant');
           khmerMonth = LunarMonths.ជេស្ឋ;
           break;
         case LunarMonths.ជេស្ឋ: {
-          if (isKhmerLeapMonth(getBEYear(epochMoment))) {
+          if (isKhmerLeapMonth(getMaybeBEYear(epochMoment))) {
             khmerMonth = LunarMonths.បឋមាសាឍ
           } else {
             khmerMonth = LunarMonths.អាសាឍ
@@ -530,6 +542,33 @@ let {LunarMonths, SolarMonth, MoonStatus} = require('./constant');
     }, format)
   }
 
+  function getKhNewYearMoment(gregorianYear) {
+    if (Moment.khNewYearMoments[gregorianYear] !== undefined) {
+      return Moment(Moment.khNewYearMoments[gregorianYear], 'DD-MM-YYYY H:m')
+    } else {
+      const getSoriyatraLerngSak = require('./getSoriyatraLerngSak')
+      // ពីគ្រិស្ដសករាជ ទៅ ចុល្លសករាជ
+      let jsYear = (gregorianYear + 544) - 1182;
+      let info = getSoriyatraLerngSak(jsYear);
+      // ចំនួនថ្ងៃចូលឆ្នាំ
+      let numberNewYearDay;
+      if (info.newYearsDaySotins[0].angsar === 0) { // ថ្ងៃ ខែ ឆ្នាំ ម៉ោង និង នាទី ចូលឆ្នាំ
+        // ចូលឆ្នាំ ៤ ថ្ងៃ
+        numberNewYearDay = 4;
+        // return Moment(`13-04-${gregorianYear} ${info.timeOfNewYear.hour}:${info.timeOfNewYear.minute}`, 'DD-MM-YYYY H:m')
+      } else {
+        // ចូលឆ្នាំ ៣ ថ្ងៃ
+        numberNewYearDay = 3;
+        // return Moment(`14-04-${gregorianYear} ${info.timeOfNewYear.hour}:${info.timeOfNewYear.minute}`, 'DD-MM-YYYY H:m')
+      }
+      let epochLerngSak = Moment(`17-04-${gregorianYear} ${info.timeOfNewYear.hour}:${info.timeOfNewYear.minute}`, 'DD-MM-YYYY H:m')
+      let khEpoch = findLunarDate(epochLerngSak)
+      let diffFromEpoch = (((khEpoch.month - 4) * 30) + khEpoch.day) -
+                          (((info.lunarDateLerngSak.month - 4) * 30) + info.lunarDateLerngSak.day)
+      return epochLerngSak.subtract(diffFromEpoch + numberNewYearDay - 1, 'day')
+    }
+  }
+
   function khDay() {
     let result = findLunarDate(this.clone());
     return result.day;
@@ -553,6 +592,8 @@ let {LunarMonths, SolarMonth, MoonStatus} = require('./constant');
     Moment.fn.toKhDate =
       Moment.fn.tokhdate =
         toLunarDate;
+
+  Moment.getKhNewYearMoment = getKhNewYearMoment;
 
   Moment.fn.khDay = khDay;
   Moment.fn.khMonth = khMonth;
