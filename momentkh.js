@@ -287,13 +287,7 @@ let {LunarMonths, SolarMonth, MoonStatus, khNewYearMoments} = require('./constan
    * @returns {*}
    */
   function getMaybeBEYear(moment) {
-    if (parseInt(moment.format('M')) === SolarMonth.មេសា + 1) {
-      if (parseInt(moment.format('D') > 14)) {
-        return parseInt(moment.format('YYYY')) + 544;
-      } else {
-        return parseInt(moment.format('YYYY')) + 543;
-      }
-    } else if (parseInt(moment.format('M')) < SolarMonth.មេសា + 1) {
+    if (parseInt(moment.format('M')) <= SolarMonth.មេសា + 1) {
       return parseInt(moment.format('YYYY')) + 543;
     } else {
       return parseInt(moment.format('YYYY')) + 544;
@@ -314,8 +308,14 @@ let {LunarMonths, SolarMonth, MoonStatus, khNewYearMoments} = require('./constan
    * @param beYear
    * @returns {number}
    */
-  function getJolakSakarajYear(beYear) {
-    return beYear - 1182;
+  function getJolakSakarajYear(moment) {
+    let gregorianYear = parseInt(moment.format('YYYY'));
+    let newYearMoment = getKhNewYearMoment(gregorianYear);
+    if (moment.diff(newYearMoment) < 0) {
+      return gregorianYear + 543 - 1182
+    } else {
+      return gregorianYear + 544 - 1182
+    }
   }
 
   /**
@@ -335,8 +335,14 @@ let {LunarMonths, SolarMonth, MoonStatus, khNewYearMoments} = require('./constan
    * @param beYear
    * @returns {number}
    */
-  function getAnimalYear(beYear) {
-    return (beYear + 4) % 12
+  function getAnimalYear(moment) {
+    let gregorianYear = parseInt(moment.format('YYYY'));
+    let newYearMoment = getKhNewYearMoment(gregorianYear);
+    if (moment.diff(newYearMoment) < 0) {
+      return (gregorianYear + 543 + 4) % 12
+    } else {
+      return (gregorianYear + 544 + 4) % 12
+    }
   }
 
   /**
@@ -353,8 +359,8 @@ let {LunarMonths, SolarMonth, MoonStatus, khNewYearMoments} = require('./constan
       let dayOfWeek = moment.day();
       let moonDay = getKhmerLunarDay(day);
       let beYear = getBEYear(moment);
-      let animalYear = getAnimalYear(beYear);
-      let eraYear = getJolakSakarajYear(beYear) % 10;
+      let animalYear = getAnimalYear(moment);
+      let eraYear = getJolakSakarajYear(moment) % 10;
       return config.postformat(`ថ្ងៃ${config.weekdays[dayOfWeek]} ${moonDay.count}${config.moonStatus[moonDay.moonStatus]} ខែ${config.lunarMonths[month]} ឆ្នាំ${config.animalYear[animalYear]} ${config.eraYear[eraYear]} ពុទ្ធសករាជ ${beYear}`);
     } else if (typeof format === 'string') {
       // Follow the format
@@ -390,13 +396,11 @@ let {LunarMonths, SolarMonth, MoonStatus, khNewYearMoments} = require('./constan
           return config.lunarMonths[month];
         },
         'a': function () {
-          let beYear = getMaybeBEYear(moment);
-          let animalYear = getAnimalYear(beYear);
+          let animalYear = getAnimalYear(moment);
           return config.animalYear[animalYear];
         },
         'e': function () {
-          let beYear = getMaybeBEYear(moment);
-          let eraYear = getJolakSakarajYear(beYear) % 10;
+          let eraYear = getJolakSakarajYear(moment) % 10;
           return config.eraYear[eraYear];
         },
         'b': function () {
@@ -406,8 +410,7 @@ let {LunarMonths, SolarMonth, MoonStatus, khNewYearMoments} = require('./constan
           return moment.format('YYYY');
         },
         'j': function () {
-          let beYear = getMaybeBEYear(moment);
-          return getJolakSakarajYear(beYear);
+          return getJolakSakarajYear(moment);
         }
       }
 
