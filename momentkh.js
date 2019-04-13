@@ -544,8 +544,10 @@ let {LunarMonths, SolarMonth, MoonStatus, khNewYearMoments} = require('./constan
 
   function getKhNewYearMoment(gregorianYear) {
     if (Moment.khNewYearMoments[gregorianYear] !== undefined) {
+      console.log('cache')
       return Moment(Moment.khNewYearMoments[gregorianYear], 'DD-MM-YYYY H:m')
     } else {
+      console.log('calculate')
       const getSoriyatraLerngSak = require('./getSoriyatraLerngSak')
       // ពីគ្រិស្ដសករាជ ទៅ ចុល្លសករាជ
       let jsYear = (gregorianYear + 544) - 1182;
@@ -565,7 +567,10 @@ let {LunarMonths, SolarMonth, MoonStatus, khNewYearMoments} = require('./constan
       let khEpoch = findLunarDate(epochLerngSak)
       let diffFromEpoch = (((khEpoch.month - 4) * 30) + khEpoch.day) -
                           (((info.lunarDateLerngSak.month - 4) * 30) + info.lunarDateLerngSak.day)
-      return epochLerngSak.subtract(diffFromEpoch + numberNewYearDay - 1, 'day')
+      let result = epochLerngSak.subtract(diffFromEpoch + numberNewYearDay - 1, 'day')
+      // Caching
+      Moment.khNewYearMoments[gregorianYear] = result.format('DD-MM-YYYY H:m')
+      return result
     }
   }
 
