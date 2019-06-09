@@ -547,10 +547,10 @@ let {LunarMonths, SolarMonth, MoonStatus, khNewYearMoments} = require('./constan
 
   function getKhNewYearMoment(gregorianYear) {
     if (Moment.khNewYearMoments[gregorianYear] !== undefined) {
-      console.log('cache')
+      // console.log('cache')
       return Moment(Moment.khNewYearMoments[gregorianYear], 'DD-MM-YYYY H:m')
     } else {
-      console.log('calculate')
+      // console.log('calculate')
       const getSoriyatraLerngSak = require('./getSoriyatraLerngSak')
       // ពីគ្រិស្ដសករាជ ទៅ ចុល្លសករាជ
       let jsYear = (gregorianYear + 544) - 1182;
