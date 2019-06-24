@@ -268,7 +268,10 @@
     })();
 
     return {
-      ...info,
+      harkun: info.harkun,
+      kromathopol: info.kromathopol,
+      avaman: info.avaman,
+      bodithey: info.bodithey,
       has366day, // សុរិយគតិខ្មែរ
       isAthikameas, // 13 months
       isChantreathimeas, // 30ថ្ងៃនៅខែជេស្ឋ
