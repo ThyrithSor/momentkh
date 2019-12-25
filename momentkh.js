@@ -516,6 +516,19 @@ let {LunarMonths, SolarMonth, MoonStatus, khNewYearMoments} = require('./constan
 
     khmerDay += Math.floor(Moment.duration(target.diff(epochMoment), 'milliseconds').asDays());
 
+    /**
+     * Fix result display 15 រោច ខែ ជេស្ឋ នៅថ្ងៃ ១ កើតខែបឋមាសាធ
+     * ករណី ខែជេស្ឋមានតែ ២៩ ថ្ងៃ តែលទ្ធផលបង្ហាញ ១៥រោច ខែជេស្ឋ
+     */
+    if (khmerDay === 29 && khmerMonth === LunarMonths.ជេស្ឋ && getNumberOfDayInKhmerMonth(LunarMonths.ជេស្ឋ, getMaybeBEYear(target) === 29)) {
+      khmerDay = 0
+      if (isKhmerLeapMonth(getMaybeBEYear(epochMoment))) {
+        khmerMonth = LunarMonths.បឋមាសាឍ
+      } else {
+        khmerMonth = LunarMonths.អាសាឍ
+      }
+    }
+
     epochMoment.add(Moment.duration(target.diff(epochMoment), 'milliseconds').asDays(), 'day');
 
     return {
