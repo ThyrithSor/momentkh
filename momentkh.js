@@ -433,6 +433,49 @@ let {LunarMonths, SolarMonth, MoonStatus, khNewYearMoments} = require('./constan
   }
 
   /**
+   * Next month of the month
+   */
+  function nextMonthOf(khmerMonth, BEYear) {
+    switch (khmerMonth) {
+    case LunarMonths.មិគសិរ:
+      return LunarMonths.បុស្ស;
+    case LunarMonths.បុស្ស:
+      return LunarMonths.មាឃ;
+    case LunarMonths.មាឃ:
+      return LunarMonths.ផល្គុន;
+    case LunarMonths.ផល្គុន:
+      return LunarMonths.ចេត្រ;
+    case LunarMonths.ចេត្រ:
+      return LunarMonths.ពិសាខ;
+    case LunarMonths.ពិសាខ:
+      return LunarMonths.ជេស្ឋ;
+    case LunarMonths.ជេស្ឋ: {
+      if (isKhmerLeapMonth(BEYear)) {
+        return LunarMonths.បឋមាសាឍ
+      } else {
+        return LunarMonths.អាសាឍ
+      }
+    }
+    case LunarMonths.អាសាឍ:
+      return LunarMonths.ស្រាពណ៍;
+    case LunarMonths.ស្រាពណ៍:
+      return LunarMonths.ភទ្របទ;
+    case LunarMonths.ភទ្របទ:
+      return LunarMonths.អស្សុជ;
+    case LunarMonths.អស្សុជ:
+      return LunarMonths.កក្ដិក;
+    case LunarMonths.កក្ដិក:
+      return LunarMonths.មិគសិរ;
+    case LunarMonths.បឋមាសាឍ:
+      return LunarMonths.ទុតិយាសាឍ;
+    case LunarMonths.ទុតិយាសាឍ:
+      return LunarMonths.ស្រាពណ៍;
+    default:
+      throw Error('Plugin is facing wrong calculation (Invalid month)');
+    }
+  }
+
+  /**
    * Calculate date from momoentjs to Khmer date
    * @param target : Moment
    * @returns {{day: number, month: *, epochMoved: (*|moment.Moment)}}
@@ -461,57 +504,7 @@ let {LunarMonths, SolarMonth, MoonStatus, khNewYearMoments} = require('./constan
     // Move epoch month
     while (Moment.duration(target.diff(epochMoment), 'milliseconds').asDays() > getNumberOfDayInKhmerMonth(khmerMonth, getMaybeBEYear(epochMoment))) {
       epochMoment.add(getNumberOfDayInKhmerMonth(khmerMonth, getMaybeBEYear(epochMoment)), 'day');
-      switch (khmerMonth) {
-        case LunarMonths.មិគសិរ:
-          khmerMonth = LunarMonths.បុស្ស;
-          break;
-        case LunarMonths.បុស្ស:
-          khmerMonth = LunarMonths.មាឃ;
-          break;
-        case LunarMonths.មាឃ:
-          khmerMonth = LunarMonths.ផល្គុន;
-          break;
-        case LunarMonths.ផល្គុន:
-          khmerMonth = LunarMonths.ចេត្រ;
-          break;
-        case LunarMonths.ចេត្រ:
-          khmerMonth = LunarMonths.ពិសាខ;
-          break;
-        case LunarMonths.ពិសាខ:
-          khmerMonth = LunarMonths.ជេស្ឋ;
-          break;
-        case LunarMonths.ជេស្ឋ: {
-          if (isKhmerLeapMonth(getMaybeBEYear(epochMoment))) {
-            khmerMonth = LunarMonths.បឋមាសាឍ
-          } else {
-            khmerMonth = LunarMonths.អាសាឍ
-          }
-          break;
-        }
-        case LunarMonths.អាសាឍ:
-          khmerMonth = LunarMonths.ស្រាពណ៍;
-          break;
-        case LunarMonths.ស្រាពណ៍:
-          khmerMonth = LunarMonths.ភទ្របទ;
-          break;
-        case LunarMonths.ភទ្របទ:
-          khmerMonth = LunarMonths.អស្សុជ;
-          break;
-        case LunarMonths.អស្សុជ:
-          khmerMonth = LunarMonths.កក្ដិក;
-          break;
-        case LunarMonths.កក្ដិក:
-          khmerMonth = LunarMonths.មិគសិរ;
-          break;
-        case LunarMonths.បឋមាសាឍ:
-          khmerMonth = LunarMonths.ទុតិយាសាឍ;
-          break;
-        case LunarMonths.ទុតិយាសាឍ:
-          khmerMonth = LunarMonths.ស្រាពណ៍;
-          break;
-        default:
-          throw Error('Plugin is facing wrong calculation (Invalid month)');
-      }
+      khmerMonth = nextMonthOf(khmerMonth, getMaybeBEYear(epochMoment))
     }
 
     khmerDay += Math.floor(Moment.duration(target.diff(epochMoment), 'milliseconds').asDays());
@@ -520,13 +513,10 @@ let {LunarMonths, SolarMonth, MoonStatus, khNewYearMoments} = require('./constan
      * Fix result display 15 រោច ខែ ជេស្ឋ នៅថ្ងៃ ១ កើតខែបឋមាសាធ
      * ករណី ខែជេស្ឋមានតែ ២៩ ថ្ងៃ តែលទ្ធផលបង្ហាញ ១៥រោច ខែជេស្ឋ
      */
-    if (khmerDay === 29 && khmerMonth === LunarMonths.ជេស្ឋ && getNumberOfDayInKhmerMonth(LunarMonths.ជេស្ឋ, getMaybeBEYear(target) === 29)) {
-      khmerDay = 0
-      if (isKhmerLeapMonth(getMaybeBEYear(epochMoment))) {
-        khmerMonth = LunarMonths.បឋមាសាឍ
-      } else {
-        khmerMonth = LunarMonths.អាសាឍ
-      }
+     const totalDaysOfTheMonth = getNumberOfDayInKhmerMonth(khmerMonth, getMaybeBEYear(target))
+    if (totalDaysOfTheMonth <= khmerDay) {
+      khmerDay = khmerDay % totalDaysOfTheMonth
+      khmerMonth = nextMonthOf(khmerMonth, getMaybeBEYear(epochMoment))
     }
 
     epochMoment.add(Moment.duration(target.diff(epochMoment), 'milliseconds').asDays(), 'day');
