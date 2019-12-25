@@ -96,6 +96,9 @@ myBirthday.toLunarDate('dN ថ្ងៃW ខែm ព.ស. b');
 # Bug Report 🐞🐜🦗🕷🕸🦂🦟🐛🐌💣
 I know there will be a lot of error.
 
+# Testing
+There is no test running on this package. If you are available for this work, it would be very awesome.
+
 # Contribute 💡
 Welcome pull request 
 
