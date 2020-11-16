@@ -271,7 +271,8 @@ let {LunarMonths, SolarMonth, MoonStatus, khNewYearMoments} = require('./constan
    * @returns {*}
    */
   function getBEYear(moment) {
-    if (moment.khMonth() > 5 || moment.khMonth() === 5 && moment.khDay() >= 15) {
+    let newYearMoment = getKhNewYearMoment(moment.format('YYYY'))
+    if (moment.khMonth() > 5 || (moment.khMonth() === 5 && moment.khDay() >= 15) || moment.diff(newYearMoment) > 0) {
       return parseInt(moment.format('YYYY')) + 544;
     } else {
       return parseInt(moment.format('YYYY')) + 543;
