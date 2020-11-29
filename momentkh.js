@@ -430,7 +430,8 @@ let {LunarMonths, SolarMonth, MoonStatus, khNewYearMoments} = require('./constan
    * @return Moment
    */
   function readLunarDate(...params) {
-    console.log('Now working yet')
+    // let today = Moment();
+    // console.log(today.toLunarDate());
   }
 
   /**
