@@ -58,7 +58,7 @@ console.log(khmerDate);
 | Name  | Parameter | Description | Example |
 |---------|-----|-----------|----------------|
 |getKhNewYearMoment| Integer | Return moment.js object. Giving the moment of Khmer New Year. (ពេលទេវតាចុះ) | `moment.getKhNewYearMoment(2019);`|
-|~~readLunarDate~~*(not yet working on this)*| String or Object |Return moment.js object. Just same as calling: ``moment('13/04/2018', 'dd/mm/yyyy');`` for Gregorian date </br> |``moment.readLunarDate('១៥កើត ពិសាខ ព.ស. ២៥៥៥');`` |
+|~~readLunarDate~~*(currently working on this)*| String or Object |Return moment.js object. Just same as calling: ``moment('13/04/2018', 'dd/mm/yyyy');`` for Gregorian date </br> |``moment.readLunarDate('១៥កើត ពិសាខ ព.ស. ២៥៥៥');`` |
 
 ##### *Alias*
 | Name  | Original |
