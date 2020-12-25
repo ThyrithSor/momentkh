@@ -396,6 +396,9 @@ let {LunarMonths, SolarMonth, MoonStatus, khNewYearMoments} = require('./constan
         'm': function () {
           return config.lunarMonths[month];
         },
+        'M': function () {
+          return config.months[moment.month()];
+        },
         'a': function () {
           let animalYear = getAnimalYear(moment);
           return config.animalYear[animalYear];

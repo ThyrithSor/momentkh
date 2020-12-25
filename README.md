@@ -82,7 +82,7 @@ myBirthday.toLunarDate('dN ថ្ងៃW ខែm ព.ស. b');
 | W | ថ្ងៃនៃសប្ដាហ៍| អង្គារ |
 | w | ថ្ងៃនៃសប្ដាហ៍កាត់ | អ |
 | d | ថ្ងៃទី ចាប់ពីលេខ ១ ដល់ ១៥      | ១      |
-| D | ថ្ងៃទី ចាប់ពីលេខ 0១ ដល់ ១៥ | ០១ |
+| D | ថ្ងៃទី ចាប់ពីលេខ ០១ ដល់ ១៥ | ០១ |
 | n | កើត ឬ រោច | ក |
 | N | កើត ឬ រោច | កើត |
 | o | របៀបសរសេរខ្លីអំពីថ្ងៃទី | ᧡ (មានន័យថា ១កើត)|
@@ -105,3 +105,8 @@ Welcome pull request
 # References
 * [គណនាម៉ោងទេវតាចុះ](http://www.dahlina.com/education/khmer_new_year_time.html?fbclid=IwAR0Eq6US-F0LfplMjKzmiRn7rvPgi31i74Wpv4mNhU034mzdyj-3hYrCA8w)
 * [ប្រតិទិនចន្ទគតិ](http://www.cam-cc.org)
+
+# Support me
+I'm really happy if this project is useful to you.
+
+If you would like to buy me some breakfast, here is my ABA account number: **000 485 222**. Don't forget to remark `momentkh` so that I can count it as usefulness of my work.
