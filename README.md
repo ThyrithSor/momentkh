@@ -39,6 +39,10 @@ console.log(khmerDate);
 ```
 
 ### HTML
+First, you need to clone this package to the root of your project or your `/public` folder.
+
+\*\*\* *For `momentjs` library, you can import it any method or any version you want.*
+
 ```html
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script src="momentkh/constant.js"></script>
