@@ -17,6 +17,7 @@ $ npm install @thyrith/momentkh --save
 This library is built depends on [moment.js](https://momentjs.com) popular library.
 We added some functionality to make it easier to work with Khmer date format.
 
+### Nodejs
 ```javascript
 const moment = require('moment');
 // Add our features to your preferred moment.js version
@@ -35,6 +36,21 @@ let khmerDate = today.toLunarDate();
 console.log(khmerDate);
 // Display khmer date
 // For example: ថ្ងៃសៅរ៍ ៨កើត ខែមិគសិរ ឆ្នាំច សំរឹទ្ធស័ក ពុទ្ធសករាជ ២៥៦២
+```
+
+### HTML
+```html
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="momentkh/constant.js"></script>
+<script src="momentkh/locale/km.js"></script>
+<script src="momentkh/getSoriyatraLerngSak.js"></script>
+<script src="momentkh/momentkh.js"></script>
+<script>
+	var moment = momentkh(moment)
+	var today = moment()
+	console.log('Today: ', today.toKhDate())
+	console.log('New year at: ', moment.getKhNewYearMoment(2021))
+</script>
 ```
 
 ## Added Functionality 🎡

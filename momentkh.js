@@ -54,7 +54,6 @@ khNewYearMoments = constant.khNewYearMoments
 }(this, (function (Moment) {
   'use strict';
 
-  console.log(Moment)
   Moment.khNewYearMoments = khNewYearMoments
 
   /**
