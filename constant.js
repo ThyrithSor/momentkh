@@ -1,7 +1,13 @@
 ;(function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-    typeof define === 'function' && define.amd ? define(factory) :
-      global.constant = factory()
+  if (typeof exports === 'object' && typeof module !== 'undefined') {
+    module.exports = factory()
+  } else {
+    if (typeof define === 'function' && define.amd) {
+      define(factory)
+    } else {
+      global.momentkhConstant = factory()
+    }
+  }
 }(this, (function () {
   'use strict';
 
@@ -37,7 +43,8 @@
     '2012' : '14-04-2012 19:11',
     '2013' : '14-04-2013 02:12',
     '2014' : '14-04-2014 08:07',
-    '2015' : '14-04-2015 14:02'
+    '2015' : '14-04-2015 14:02',
+    '2021' : '14-04-2021 04:00'
   }
 
   return {
