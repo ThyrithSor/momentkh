@@ -13,20 +13,48 @@
 
 // const Moment = require('moment');
 function getLocaleConfig() {
-  return require('./locale/km');
+  if (typeof require === 'function') {
+    return require('./locale/km')
+  } else {
+    if (!this.momentkhLocales) {
+      throw "Please import [MOMENTKH]/locale/km.js to your project"
+    } else {
+      return this.momentkhLocales['km']
+    }
+  }
 }
 
 let config = getLocaleConfig();
 
-let {LunarMonths, SolarMonth, MoonStatus, khNewYearMoments} = require('./constant');
+let constant, LunarMonths, SolarMonth, MoonStatus, khNewYearMoments;
+if (typeof require === 'function') {
+  constant = require('./constant')
+} else {
+  if (!this.momentkhConstant)  {
+    throw "Please import [MOMENTKH]/constant.js to your project"
+  } else {
+    constant = this.momentkhConstant
+  }
+}
+LunarMonths = constant.LunarMonths
+SolarMonth = constant.SolarMonth
+MoonStatus = constant.MoonStatus
+khNewYearMoments = constant.khNewYearMoments
 
 ;(function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory :
-    typeof define === 'function' && define.amd ? define(factory) :
+  if (typeof exports === 'object' && typeof module !== 'undefined') {
+    module.exports = factory
+  } else {
+    if (typeof define === 'function' && define.amd) {
+      define(factory)
+    } else {
       global.momentkh = factory
+    }
+  }
 }(this, (function (Moment) {
   'use strict';
 
+  console.log(Moment)
   Moment.khNewYearMoments = khNewYearMoments
 
   /**
@@ -193,10 +221,10 @@ let {LunarMonths, SolarMonth, MoonStatus, khNewYearMoments} = require('./constan
    * @returns {number}
    */
   function getNumberOfDayInKhmerMonth(beMonth, beYear) {
-    if (beMonth === LunarMonths.ជេស្ឋ && isKhmerLeapDay(beYear)) {
+    if (beMonth === LunarMonths['ជេស្ឋ'] && isKhmerLeapDay(beYear)) {
       return 30;
     }
-    if (beMonth === LunarMonths.បឋមាសាឍ || beMonth === LunarMonths.ទុតិយាសាឍ) {
+    if (beMonth === LunarMonths['បឋមាសាឍ'] || beMonth === LunarMonths['ទុតិយាសាឍ']) {
       return 30;
     }
     // មិគសិរ : 29 , បុស្ស : 30 , មាឃ : 29 .. 30 .. 29 ..30 .....
@@ -288,7 +316,7 @@ let {LunarMonths, SolarMonth, MoonStatus, khNewYearMoments} = require('./constan
    * @returns {*}
    */
   function getMaybeBEYear(moment) {
-    if (parseInt(moment.format('M')) <= SolarMonth.មេសា + 1) {
+    if (parseInt(moment.format('M')) <= SolarMonth['មេសា'] + 1) {
       return parseInt(moment.format('YYYY')) + 543;
     } else {
       return parseInt(moment.format('YYYY')) + 544;
@@ -327,7 +355,7 @@ let {LunarMonths, SolarMonth, MoonStatus, khNewYearMoments} = require('./constan
   function getKhmerLunarDay(day) {
     return {
       count: (day % 15) + 1,
-      moonStatus: day > 14 ? MoonStatus.រោច : MoonStatus.កើត
+      moonStatus: day > 14 ? MoonStatus['រោច'] : MoonStatus['កើត']
     }
   }
 
@@ -441,39 +469,39 @@ let {LunarMonths, SolarMonth, MoonStatus, khNewYearMoments} = require('./constan
    */
   function nextMonthOf(khmerMonth, BEYear) {
     switch (khmerMonth) {
-    case LunarMonths.មិគសិរ:
-      return LunarMonths.បុស្ស;
-    case LunarMonths.បុស្ស:
-      return LunarMonths.មាឃ;
-    case LunarMonths.មាឃ:
-      return LunarMonths.ផល្គុន;
-    case LunarMonths.ផល្គុន:
-      return LunarMonths.ចេត្រ;
-    case LunarMonths.ចេត្រ:
-      return LunarMonths.ពិសាខ;
-    case LunarMonths.ពិសាខ:
-      return LunarMonths.ជេស្ឋ;
-    case LunarMonths.ជេស្ឋ: {
+    case LunarMonths['មិគសិរ']:
+      return LunarMonths['បុស្ស'];
+    case LunarMonths['បុស្ស']:
+      return LunarMonths['មាឃ'];
+    case LunarMonths['មាឃ']:
+      return LunarMonths['ផល្គុន'];
+    case LunarMonths['ផល្គុន']:
+      return LunarMonths['ចេត្រ'];
+    case LunarMonths['ចេត្រ']:
+      return LunarMonths['ពិសាខ'];
+    case LunarMonths['ពិសាខ']:
+      return LunarMonths['ជេស្ឋ'];
+    case LunarMonths['ជេស្ឋ']: {
       if (isKhmerLeapMonth(BEYear)) {
-        return LunarMonths.បឋមាសាឍ
+        return LunarMonths['បឋមាសាឍ']
       } else {
-        return LunarMonths.អាសាឍ
+        return LunarMonths['អាសាឍ']
       }
     }
-    case LunarMonths.អាសាឍ:
-      return LunarMonths.ស្រាពណ៍;
-    case LunarMonths.ស្រាពណ៍:
-      return LunarMonths.ភទ្របទ;
-    case LunarMonths.ភទ្របទ:
-      return LunarMonths.អស្សុជ;
-    case LunarMonths.អស្សុជ:
-      return LunarMonths.កក្ដិក;
-    case LunarMonths.កក្ដិក:
-      return LunarMonths.មិគសិរ;
-    case LunarMonths.បឋមាសាឍ:
-      return LunarMonths.ទុតិយាសាឍ;
-    case LunarMonths.ទុតិយាសាឍ:
-      return LunarMonths.ស្រាពណ៍;
+    case LunarMonths['អាសាឍ']:
+      return LunarMonths['ស្រាពណ៍'];
+    case LunarMonths['ស្រាពណ៍']:
+      return LunarMonths['ភទ្របទ'];
+    case LunarMonths['ភទ្របទ']:
+      return LunarMonths['អស្សុជ'];
+    case LunarMonths['អស្សុជ']:
+      return LunarMonths['កក្ដិក'];
+    case LunarMonths['កក្ដិក']:
+      return LunarMonths['មិគសិរ'];
+    case LunarMonths['បឋមាសាឍ']:
+      return LunarMonths['ទុតិយាសាឍ'];
+    case LunarMonths['ទុតិយាសាឍ']:
+      return LunarMonths['ស្រាពណ៍'];
     default:
       throw Error('Plugin is facing wrong calculation (Invalid month)');
     }
@@ -489,7 +517,7 @@ let {LunarMonths, SolarMonth, MoonStatus, khNewYearMoments} = require('./constan
      * Epoch Date: January 1, 1900
      */
     let epochMoment = Moment('1/1/1900', 'D/M/YYYY')
-    let khmerMonth = LunarMonths.បុស្ស;
+    let khmerMonth = LunarMonths['បុស្ស'];
     let khmerDay = 0; // 0 - 29 ១កើត ... ១៥កើត ១រោច ...១៤រោច (១៥រោច)
 
     let differentFromEpoch = target.diff(epochMoment)
@@ -558,7 +586,20 @@ let {LunarMonths, SolarMonth, MoonStatus, khNewYearMoments} = require('./constan
       return Moment(Moment.khNewYearMoments[gregorianYear], 'DD-MM-YYYY H:m')
     } else {
       // console.log('calculate')
-      const getSoriyatraLerngSak = require('./getSoriyatraLerngSak')
+      let getSoriyatraLerngSak;
+      if (typeof require === 'function') {
+        getSoriyatraLerngSak = require('./getSoriyatraLerngSak')
+      } else {
+        if (window) {
+          if (!window.getSoriyatraLerngSak) {
+            throw 'Please import [MOMENTKH]/getSoriyatraLerngSak.js to your project'
+          } else {
+            getSoriyatraLerngSak = window.getSoriyatraLerngSak
+          } 
+        } else {
+          throw 'Cannot import getSoriyatraLerngSak. This is might not a nodejs environment or a browser'
+        }
+      }
       // ពីគ្រិស្ដសករាជ ទៅ ចុល្លសករាជ
       let jsYear = (gregorianYear + 544) - 1182;
       let info = getSoriyatraLerngSak(jsYear);

@@ -1,9 +1,21 @@
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-    typeof define === 'function' && define.amd ? define(factory) :
-      global.momentkh = factory()
+  if (typeof exports === 'object' && typeof module !== 'undefined') {
+    module.exports = factory
+  } else {
+    if (typeof define === 'function' && define.amd) {
+      define(factory)
+    } else {
+      if (!global.momentkhLocales) {
+        global.momentkhLocales = {
+          'km': factory()
+        }
+      } else {
+        global.momentkhLocales['km'] = factory()
+      }
+    }
+  }
 }(this, (function () {
   'use strict';
 

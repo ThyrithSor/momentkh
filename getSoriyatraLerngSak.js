@@ -5,15 +5,31 @@
  */
 
 ;(function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory :
-    typeof define === 'function' && define.amd ? define(factory) :
+  if (typeof exports === 'object' && typeof module !== 'undefined') {
+    module.exports = factory
+  } else {
+    if (typeof define === 'function' && define.amd) {
+      define(factory)
+    } else {
       global.getSoriyatraLerngSak = factory
+    }
+  }
 }(this, (function (jsYear) {
   'use strict';
 
   return (function (jsYear) {
 
-    let {LunarMonths} = require('./constant');
+    let LunarMonths;
+
+    if (typeof require === 'function') {
+      LunarMonths = require('./constant').LunarMonths;
+    } else {
+      if (!window.momentkhConstant) {
+        throw "Please import [MOMENTKH]/constant.js to your project"
+      } else {
+        LunarMonths = window.momentkhConstant.LunarMonths;
+      }
+    }
 
     /**
      * គណនា ហារគុន Kromathopol អវមាន និង បូតិថី
@@ -125,7 +141,7 @@
       }
       return {
         day: bodithey >= 6 ? bodithey - 1 : bodithey,
-        month: bodithey >= 6 ? LunarMonths.ចេត្រ : LunarMonths.ពិសាខ
+        month: bodithey >= 6 ? LunarMonths['ចេត្រ'] : LunarMonths['ពិសាខ']
       };
     })();
 
