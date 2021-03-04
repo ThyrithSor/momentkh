@@ -450,7 +450,7 @@ khNewYearMoments = constant.khNewYearMoments
       }));
 
     }
-    Error(format + ' is not a valid date format.');
+    throw Error(format + ' is not a valid date format.');
   }
 
   /**
@@ -594,7 +594,7 @@ khNewYearMoments = constant.khNewYearMoments
             throw 'Please import [MOMENTKH]/getSoriyatraLerngSak.js to your project'
           } else {
             getSoriyatraLerngSak = window.getSoriyatraLerngSak
-          } 
+          }
         } else {
           throw 'Cannot import getSoriyatraLerngSak. This is might not a nodejs environment or a browser'
         }

@@ -255,7 +255,7 @@
     }
 
     let newYearsDaySotins = (function () { // ចំនួនថ្ងៃវ័នបត
-      let sotins = getHas366day(jsYear - 1) ? [363,364,365,366] : [362,363,364,365]; // សុទិន
+      let sotins = getHas366day(jsYear - 1) ? [363, 364, 365, 366] : [362, 363, 364, 365]; // សុទិន
       return sotins.map(function (sotin) {
         let sunInfo = getSunInfo(sotin);
         return {
@@ -271,7 +271,7 @@
       let sotinNewYear = newYearsDaySotins.filter(function (sotin) {
         return sotin.angsar === 0;
       });
-      if (sotinNewYear.length === 1) {
+      if (sotinNewYear.length > 0) {
         let libda = sotinNewYear[0].libda; // ២៤ ម៉ោង មាន ៦០លិប្ដា
         let minutes = (24 * 60) - (libda * 24)
         return {
@@ -279,7 +279,7 @@
           minute: minutes % 60
         }
       } else {
-        Error('Plugin is facing wrong calculation on new years hour');
+        throw Error('Plugin is facing wrong calculation on new years hour. No sotin with angsar = 0');
       }
     })();
 
