@@ -290,6 +290,22 @@ khNewYearMoments = constant.khNewYearMoments
   }
 
   /**
+   * រកថ្ងៃវិសាខបូជា
+   * ថ្ងៃដាច់ឆ្នាំពុទ្ធសករាជ
+   */
+  function getVisakhaBochea(gregorianYear) {
+    var date = Moment('1/1/' + gregorianYear, 'D/M/YYYY')
+    for (var i = 0; i < 365; i++) {
+      var lunarDate = findLunarDate(date);
+      if (lunarDate.month == LunarMonths['ពិសាខ'] && lunarDate.day == 14) {
+        return date
+      }
+      date.add(1, 'day')
+    }
+    throw 'Cannot find Visakhabochea day. Please report this bug.';
+  }
+
+  /**
    * Buddhist Era
    * ថ្ងៃឆ្លងឆ្នាំ គឺ ១ រោច ខែពិសាខ
    * @ref http://news.sabay.com.kh/article/1039620
@@ -298,8 +314,7 @@ khNewYearMoments = constant.khNewYearMoments
    * @returns {*}
    */
   function getBEYear(moment) {
-    let newYearMoment = getKhNewYearMoment(moment.format('YYYY'))
-    if (moment.khMonth() > 5 || (moment.khMonth() === 5 && moment.khDay() >= 15) || moment.diff(newYearMoment) > 0) {
+    if (moment.diff(getVisakhaBochea(moment.format('YYYY'))) > 0) {
       return parseInt(moment.format('YYYY')) + 544;
     } else {
       return parseInt(moment.format('YYYY')) + 543;
