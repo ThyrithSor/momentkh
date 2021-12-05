@@ -1,6 +1,6 @@
 {
 	"name": "@thyrith/momentkh",
-	"version": "2.5.2",
+	"version": "2.5.3",
 	"description": "Working on khmer calendar by implementting moment js",
 	"license": "MIT",
 	"type": "component",
