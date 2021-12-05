@@ -1,0 +1,169 @@
+<!-- To branch gh-pages -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>MomentKH</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Koh+Santepheap:wght@300&family=Moulpali&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://bootswatch.com/5/superhero/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+        <style>
+            body {
+                font-family: 'Koh Santepheap', cursive;
+            }
+
+            .pali {
+                font-family: 'Moulpali', cursive;
+                line-height: 2.5rem;
+            }
+
+            .vdp-datepicker__calendar {
+                background-color: #4e5d6c !important;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <div class="container">
+                  <a class="navbar-brand" href="#">momentkh</a>
+                  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
+              
+                  <div class="collapse navbar-collapse" id="navbarColor02">
+                    <ul class="navbar-nav me-auto">
+                      <li class="nav-item">
+                        <a class="nav-link active" href="#">Demo
+                          <span class="visually-hidden">(current)</span>
+                        </a>
+                      </li>
+                      <!-- <li class="nav-item">
+                        <a class="nav-link" href="#">Support</a>
+                      </li> -->
+                    </ul>
+                    <ul class="navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a target="_blank" rel="noopener" class="nav-link" href="https://github.com/ThyrithSor/momentkh"><i class="fa fa-github"></i> GitHub</a>
+                        </li>
+                        <li class="nav-item">
+                            <a target="_blank" rel="noopener" class="nav-link" href="https://www.npmjs.com/package/@thyrith/momentkh">
+                                <svg height="30px" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="npm" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="svg-inline--fa fa-npm fa-w-18 fa-3x"><path fill="currentColor" d="M288 288h-32v-64h32v64zm288-128v192H288v32H160v-32H0V160h576zm-416 32H32v128h64v-96h32v96h32V192zm160 0H192v160h64v-32h64V192zm224 0H352v128h64v-96h32v96h32v-96h32v96h32V192z" class=""></path></svg>
+                                NPM
+                            </a>
+                        </li>
+                    </ul>
+                  </div>
+                </div>
+              </nav>
+            <div class="container">
+                <h1 class="mt-5 mb-2">
+                    ប្រតិទិនខ្មែរ – momentkh
+                </h1>
+                <h2 class="my-4">
+                    <svg style="margin-right: 10px;" height="30px" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="calendar-alt" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="svg-inline--fa fa-calendar-alt fa-w-14 fa-2x"><path fill="currentColor" d="M0 464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V192H0v272zm320-196c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zm0 128c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zM192 268c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zm0 128c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zM64 268c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12H76c-6.6 0-12-5.4-12-12v-40zm0 128c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12H76c-6.6 0-12-5.4-12-12v-40zM400 64h-48V16c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v48H160V16c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v48H48C21.5 64 0 85.5 0 112v48h448v-48c0-26.5-21.5-48-48-48z" class=""></path></svg>
+                    បម្លែងកាលបរិច្ឆេទពី moment instance ទៅកាលបរិច្ឆេទខ្មែរ</h2>
+                <div class="row my-5">
+                    <p class="col-12 text-center">
+                        {{ displayedDate }}
+                    </p>
+                    <div class="text-center py-4">
+                        <svg style="transform: rotate(180deg); height: 40px;" aria-hidden="true" focusable="false" data-prefix="far" data-icon="hand-pointer" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="svg-inline--fa fa-hand-pointer fa-w-14 fa-3x"><path fill="currentColor" d="M358.182 179.361c-19.493-24.768-52.679-31.945-79.872-19.098-15.127-15.687-36.182-22.487-56.595-19.629V67c0-36.944-29.736-67-66.286-67S89.143 30.056 89.143 67v161.129c-19.909-7.41-43.272-5.094-62.083 8.872-29.355 21.795-35.793 63.333-14.55 93.152l109.699 154.001C134.632 501.59 154.741 512 176 512h178.286c30.802 0 57.574-21.5 64.557-51.797l27.429-118.999A67.873 67.873 0 0 0 448 326v-84c0-46.844-46.625-79.273-89.818-62.639zM80.985 279.697l27.126 38.079c8.995 12.626 29.031 6.287 29.031-9.283V67c0-25.12 36.571-25.16 36.571 0v175c0 8.836 7.163 16 16 16h6.857c8.837 0 16-7.164 16-16v-35c0-25.12 36.571-25.16 36.571 0v35c0 8.836 7.163 16 16 16H272c8.837 0 16-7.164 16-16v-21c0-25.12 36.571-25.16 36.571 0v21c0 8.836 7.163 16 16 16h6.857c8.837 0 16-7.164 16-16 0-25.121 36.571-25.16 36.571 0v84c0 1.488-.169 2.977-.502 4.423l-27.43 119.001c-1.978 8.582-9.29 14.576-17.782 14.576H176c-5.769 0-11.263-2.878-14.697-7.697l-109.712-154c-14.406-20.223 14.994-42.818 29.394-22.606zM176.143 400v-96c0-8.837 6.268-16 14-16h6c7.732 0 14 7.163 14 16v96c0 8.837-6.268 16-14 16h-6c-7.733 0-14-7.163-14-16zm75.428 0v-96c0-8.837 6.268-16 14-16h6c7.732 0 14 7.163 14 16v96c0 8.837-6.268 16-14 16h-6c-7.732 0-14-7.163-14-16zM327 400v-96c0-8.837 6.268-16 14-16h6c7.732 0 14 7.163 14 16v96c0 8.837-6.268 16-14 16h-6c-7.732 0-14-7.163-14-16z" class=""></path></svg>
+                    </div>
+                    <p class="pali col-12 text-center" v-html="displayedKhmerDate"></p>
+                </div>
+                <h2 class="my-4">
+                    <svg style="margin-right: 10px;" height="30px" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="clock" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-clock fa-w-16 fa-3x"><path fill="currentColor" d="M256,8C119,8,8,119,8,256S119,504,256,504,504,393,504,256,393,8,256,8Zm92.49,313h0l-20,25a16,16,0,0,1-22.49,2.5h0l-67-49.72a40,40,0,0,1-15-31.23V112a16,16,0,0,1,16-16h32a16,16,0,0,1,16,16V256l58,42.5A16,16,0,0,1,348.49,321Z" class=""></path></svg>
+                    ពេលដែលទេវតាចុះ ៖ គ.ស.
+                    <vuejs-datepicker 
+                        :value="formattedDate"
+                        :format="DatePickerFormat"
+                        :language="language"
+                        @selected="pickedYear"
+                        minimum-view="year"              
+                        name="datepicker"
+                        id="input-id"
+                        wrapper-class="d-inline-block"
+                        input-class="btn btn-secondary"></vuejs-datepicker>
+                </h2>
+                <div class="row my-5">
+                    <p class="pali col-12 text-center">
+                        {{ newYearMoment }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/locale/km.min.js"></script>
+        <script src="https://unpkg.com/vuejs-datepicker"></script>
+        <script src="./constant.js"></script>
+        <script src="./locale/km.js"></script>
+        <script src="./getSoriyatraLerngSak.js"></script>
+        <script src="./momentkh.js"></script>
+        <script>
+            window.onload = function() {
+                var moment = momentkh(window.moment)
+
+                new Vue({
+                    el: "#app",
+                    data() {
+                        return {
+                            format: 'dN ខែm ឆ្នាំa e ព.ស. b',
+                            now: moment(),
+                            date: moment(),
+                            DatePickerFormat: 'yyyy',
+                            language: {
+                                language: 'Khmer', 
+                                months: ['មករា', 'កុម្ភៈ', 'មីនា', 'មេសា', 'ឧសភា', 'មិថុនា', 'កក្កដា', 'សីហា', 'កញ្ញា', 'តុលា', 'វិច្ឆិកា', 'ធ្នូ'], 
+                                monthsAbbr: ['មករា', 'កុម្ភៈ', 'មីនា', 'មេសា', 'ឧសភា', 'មិថុនា', 'កក្កដា', 'សីហា', 'កញ្ញា', 'តុលា', 'វិច្ឆិកា', 'ធ្នូ'], 
+                                days: ['អាទិត្យ', 'ចន្ទ', 'អង្គារ', 'ពុធ', 'ព្រហស្បត្តិ៍', 'សុក្រ', 'សៅរ'], 
+                                rtl: false, 
+                                ymd: false, 
+                                yearSuffix: ''
+                            }
+                        }
+                    },
+                    computed: {
+                        year() {
+                            return this.date.year()
+                        },
+                        formattedDate() {
+                            return this.date.locale('en').format('YYYY-MM-DD')
+                        },
+                        displayedDate() {
+                            return this.now
+                        },
+                        displayedKhmerDate() {
+                            return this.now.locale('km').format('ថ្ងៃdddd ទីDD ខែMMMM ឆ្នាំYYYY') + '<br/>ត្រូវនឹង<br/>ថ្ងៃទី ' + this.now.toKhDate(this.format) + '<br/>' + this.now.locale('km').format('h:mm:ss a')
+                        },
+                        newYearMoment() {
+                            return moment.getKhNewYearMoment(this.year).locale('km').format('ថ្ងៃdddd ទីDD ខែMMMM ឆ្នាំYYYY វេលាម៉ោង h:mm នាទី a')
+                        }
+                    },
+                    methods: {
+                        pickedYear(year) {
+                            this.date = moment(year)
+                        }
+                    },
+                    mounted() {
+                        setInterval(() => {
+                            this.now = moment()
+                        }, 1000)
+                    },
+                    components: {
+                        'vuejs-datepicker':vuejsDatepicker
+                    }
+                })
+            }
+        </script>
+    </body>
+</html>

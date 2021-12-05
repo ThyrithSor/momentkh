@@ -314,10 +314,10 @@ khNewYearMoments = constant.khNewYearMoments
    * @returns {*}
    */
   function getBEYear(moment) {
-    if (moment.diff(getVisakhaBochea(moment.format('YYYY'))) > 0) {
-      return parseInt(moment.format('YYYY')) + 544;
+    if (moment.diff(getVisakhaBochea(moment.year())) > 0) {
+      return moment.year() + 544;
     } else {
-      return parseInt(moment.format('YYYY')) + 543;
+      return moment.year() + 543;
     }
   }
 
@@ -330,10 +330,10 @@ khNewYearMoments = constant.khNewYearMoments
    * @returns {*}
    */
   function getMaybeBEYear(moment) {
-    if (parseInt(moment.format('M')) <= SolarMonth['មេសា'] + 1) {
-      return parseInt(moment.format('YYYY')) + 543;
+    if (moment.month() + 1 <= SolarMonth['មេសា'] + 1) {
+      return moment.year() + 543;
     } else {
-      return parseInt(moment.format('YYYY')) + 544;
+      return moment.year() + 544;
     }
   }
 
@@ -352,7 +352,7 @@ khNewYearMoments = constant.khNewYearMoments
    * @returns {number}
    */
   function getJolakSakarajYear(moment) {
-    let gregorianYear = parseInt(moment.format('YYYY'));
+    let gregorianYear = moment.year();
     let newYearMoment = getKhNewYearMoment(gregorianYear);
     if (moment.diff(newYearMoment) < 0) {
       return gregorianYear + 543 - 1182
@@ -379,7 +379,7 @@ khNewYearMoments = constant.khNewYearMoments
    * @returns {number}
    */
   function getAnimalYear(moment) {
-    let gregorianYear = parseInt(moment.format('YYYY'));
+    let gregorianYear = moment.year();
     let newYearMoment = getKhNewYearMoment(gregorianYear);
     if (moment.diff(newYearMoment) < 0) {
       return (gregorianYear + 543 + 4) % 12
@@ -453,7 +453,7 @@ khNewYearMoments = constant.khNewYearMoments
           return getBEYear(moment);
         },
         'c': function () {
-          return moment.format('YYYY');
+          return moment.year();
         },
         'j': function () {
           return getJolakSakarajYear(moment);
