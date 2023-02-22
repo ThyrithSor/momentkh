@@ -127,7 +127,3 @@ Welcome pull request
 * [គណនាម៉ោងទេវតាចុះ](http://www.dahlina.com/education/khmer_new_year_time.html?fbclid=IwAR0Eq6US-F0LfplMjKzmiRn7rvPgi31i74Wpv4mNhU034mzdyj-3hYrCA8w)
 * [ប្រតិទិនចន្ទគតិ](http://www.cam-cc.org)
 
-# Support me
-I'm really happy if this project is useful to you.
-
-If you would like to buy me some breakfast, here is my ABA account number: **000 485 222**. Don't forget to remark `momentkh` so that I can count it as usefulness of my work.
