@@ -630,8 +630,8 @@ khNewYearMoments = constant.khNewYearMoments
       }
       let epochLerngSak = Moment(`17-04-${gregorianYear} ${info.timeOfNewYear.hour}:${info.timeOfNewYear.minute}`, 'DD-MM-YYYY H:m')
       let khEpoch = findLunarDate(epochLerngSak)
-      let diffFromEpoch = (((khEpoch.month - 4) * 30) + khEpoch.day) -
-                          (((info.lunarDateLerngSak.month - 4) * 30) + info.lunarDateLerngSak.day)
+      let diffFromEpoch = (((khEpoch.month - 4) * 29) + khEpoch.day) -
+                          (((info.lunarDateLerngSak.month - 4) * 29) + info.lunarDateLerngSak.day)
       let result = epochLerngSak.subtract(diffFromEpoch + numberNewYearDay - 1, 'day')
       // Caching
       Moment.khNewYearMoments[gregorianYear] = result.format('DD-MM-YYYY H:m')
