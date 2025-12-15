@@ -32,7 +32,8 @@
 		}
 	},
 	"dependencies": {
-		"moment": "^2.29.1"
+		"fs": "^0.0.1-security",
+		"moment": "^2.30.1"
 	},
 	"spm": {
 		"main": "momentkh.js",
