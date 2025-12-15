@@ -808,34 +808,9 @@
       return newYearInfoCache[ceYear];
     }
 
-    // Check pre-calculated moments first
-    if (khNewYearMoments[ceYear]) {
-      const [datePart, timePart] = khNewYearMoments[ceYear].split(' ');
-      const [day, month, year] = datePart.split('-').map(Number);
-      const [hour, minute] = timePart.split(':').map(Number);
-
-      // Construct moments
-      const newYearMoment = new Date(year, month - 1, day, hour, minute);
-
-      // Determine Lerng Sak (usually +2 or +3 days, but for hardcoded we might need logic or just approximation)
-      // Since these are "exceptional" years, we'll run the calculation to be safe, 
-      // OR just standard logic:
-      // We still need the detailed Lerng Sak day.
-      // So we better run the calculation even for cached years, using the cache ONLY for the Time of NY?
-      // Actually the original code just returns the Time.
-      // Let's rely on standard calc for all years but override the Time if cached.
-    }
-
-    // Calculate using the standard algorithm
+    // Calculate using the standard algorithm first to get necessary info (like angsar for numberNewYearDay)
     const jsYear = adToJs(ceYear);
     let newYearInfo = getNewYearInfo(jsYear);
-
-    // Override time if in cache
-    if (khNewYearMoments[ceYear]) {
-      const [datePart, timePart] = khNewYearMoments[ceYear].split(' ');
-      const [h, m] = timePart.split(':').map(Number);
-      newYearInfo.timeOfNewYear = { hour: h, minute: m };
-    }
 
     // Get Lerng Sak info
     let bodithey = getBoditheyJs(jsYear);
@@ -871,7 +846,21 @@
 
     // Calculate new year date (Moha Songkran)
     const epochJdn = gregorianToJulianDay(epochLerngSakGreg.year, epochLerngSakGreg.month, epochLerngSakGreg.day);
-    const newYearJdn = epochJdn - daysToSubtract;
+    let newYearJdn = epochJdn - daysToSubtract;
+
+    // Override with cache if available
+    if (khNewYearMoments[ceYear]) {
+      const [datePart, timePart] = khNewYearMoments[ceYear].split(' ');
+      const [d, m, y] = datePart.split('-').map(Number);
+      const [hr, min] = timePart.split(':').map(Number);
+
+      // Update newYearInfo time
+      newYearInfo.timeOfNewYear = { hour: hr, minute: min };
+
+      // Update JDN based on cached date
+      newYearJdn = gregorianToJulianDay(y, m, d);
+    }
+
     const newYearDate = julianDayToGregorian(newYearJdn);
 
     const newYearMoment = new Date(
@@ -883,7 +872,7 @@
     );
 
     // Calculate Lerng Sak Date (Midnight)
-    // Lerng Sak is the last day of NY celebration. 
+    // Lerng Sak is the last day of NY celebration.
     // Jdn = newYearJdn + (numberNewYearDay - 1)
     const lerngSakJdn = newYearJdn + numberNewYearDay - 1;
     const lerngSakDate = julianDayToGregorian(lerngSakJdn);
