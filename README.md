@@ -2,7 +2,9 @@
 
 **MomentKH** is a lightweight, zero-dependency JavaScript/TypeScript library for accurate Khmer (Cambodian) Lunar Calendar conversions. It provides a modern, standalone implementation with full TypeScript support.
 
-[![Version](https://img.shields.io/badge/version-3.0.0-blue.svg)](https://github.com/ThyrithSor/momentkh)
+[🎮 **Live Demo Playground**](https://thyrithsor.github.io/momentkh/)
+
+[![Version](https://img.shields.io/badge/version-3.0.1-blue.svg)](https://github.com/ThyrithSor/momentkh)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![No Dependencies](https://img.shields.io/badge/dependencies-none-success.svg)](https://github.com/ThyrithSor/momentkh)
 
