@@ -12,6 +12,6 @@
     "skipLibCheck": true,
     "moduleResolution": "node"
   },
-  "include": ["momentkh2.ts"],
-  "exclude": ["node_modules", "dist"]
+  "include": ["momentkh.ts"],
+  "exclude": ["node_modules", "dist", "test"]
 }

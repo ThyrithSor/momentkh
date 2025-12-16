@@ -1,12 +1,29 @@
 {
 	"name": "@thyrith/momentkh",
-	"version": "2.5.5",
+	"version": "3.0.0",
 	"description": "Working on khmer calendar by implementting moment js",
 	"license": "MIT",
 	"type": "component",
 	"repository": "ThyrithSor/momentkh",
 	"homepage": "https://github.com/ThyrithSor/momentkh",
 	"main": "momentkh.js",
+	"types": "dist/momentkh.d.ts",
+	"files": [
+		"momentkh.js",
+		"momentkh.ts",
+		"dist/",
+		"example/",
+		"README.md",
+		"LICENSE"
+	],
+	"scripts": {
+		"build": "tsc",
+		"test": "npm run test:gregorian && npm run test:khmer && npm run test:newyear",
+		"test:gregorian": "node test/gregorian-to-khmer.test.js",
+		"test:khmer": "node test/khmer-to-gregorian.test.js",
+		"test:newyear": "node test/new-year.test.js",
+		"prepublishOnly": "npm run build && npm test"
+	},
 	"authors": [
 		{
 			"name": "Thyrith Sor",
@@ -32,8 +49,6 @@
 		}
 	},
 	"dependencies": {
-		"fs": "^0.0.1-security",
-		"moment": "^2.30.1"
 	},
 	"spm": {
 		"main": "momentkh.js",

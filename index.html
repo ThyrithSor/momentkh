@@ -1,169 +1,292 @@
-<!-- To branch gh-pages -->
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>MomentKH</title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Koh+Santepheap:wght@300&family=Moulpali&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="https://bootswatch.com/5/superhero/bootstrap.min.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-
-        <style>
-            body {
-                font-family: 'Koh Santepheap', cursive;
-            }
-
-            .pali {
-                font-family: 'Moulpali', cursive;
-                line-height: 2.5rem;
-            }
-
-            .vdp-datepicker__calendar {
-                background-color: #4e5d6c !important;
-            }
-        </style>
-    </head>
-    <body>
-        <div id="app">
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                <div class="container">
-                  <a class="navbar-brand" href="#">momentkh</a>
-                  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                  </button>
-              
-                  <div class="collapse navbar-collapse" id="navbarColor02">
-                    <ul class="navbar-nav me-auto">
-                      <li class="nav-item">
-                        <a class="nav-link active" href="#">Demo
-                          <span class="visually-hidden">(current)</span>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MomentKH v3 - Khmer Calendar Library</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Koh+Santepheap:wght@300;700&family=Moulpali&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://bootswatch.com/5/superhero/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Koh Santepheap', cursive;
+        }
+        .pali {
+            font-family: 'Moulpali', cursive;
+            line-height: 2.5rem;
+            font-size: 1.5rem;
+        }
+        .code-block {
+            background: #2b3e50;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        .result-box {
+            background: #4e5d6c;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <strong>MomentKH v3.0.0</strong>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://github.com/ThyrithSor/momentkh" target="_blank">
+                            GitHub
                         </a>
-                      </li>
-                      <!-- <li class="nav-item">
-                        <a class="nav-link" href="#">Support</a>
-                      </li> -->
-                    </ul>
-                    <ul class="navbar-nav ms-md-auto">
-                        <li class="nav-item">
-                            <a target="_blank" rel="noopener" class="nav-link" href="https://github.com/ThyrithSor/momentkh"><i class="fa fa-github"></i> GitHub</a>
-                        </li>
-                        <li class="nav-item">
-                            <a target="_blank" rel="noopener" class="nav-link" href="https://www.npmjs.com/package/@thyrith/momentkh">
-                                <svg height="30px" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="npm" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="svg-inline--fa fa-npm fa-w-18 fa-3x"><path fill="currentColor" d="M288 288h-32v-64h32v64zm288-128v192H288v32H160v-32H0V160h576zm-416 32H32v128h64v-96h32v96h32V192zm160 0H192v160h64v-32h64V192zm224 0H352v128h64v-96h32v96h32v-96h32v96h32V192z" class=""></path></svg>
-                                NPM
-                            </a>
-                        </li>
-                    </ul>
-                  </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://www.npmjs.com/package/@thyrith/momentkh" target="_blank">
+                            NPM
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-5">
+        <div class="text-center mb-5">
+            <h1 class="display-4">🇰🇭 ប្រតិទិនខ្មែរ</h1>
+            <p class="lead">Khmer Calendar Library v3.0.0</p>
+            <p class="text-muted">Zero Dependencies • TypeScript Support • Full Bidirectional Conversion</p>
+        </div>
+
+        <!-- Today's Date -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3>📅 Today's Khmer Date</h3>
+            </div>
+            <div class="card-body">
+                <div class="result-box">
+                    <div class="pali text-center" id="todayKhmer">Loading...</div>
+                    <p class="text-center text-muted mt-3" id="todayGregorian">Loading...</p>
                 </div>
-              </nav>
-            <div class="container">
-                <h1 class="mt-5 mb-2">
-                    ប្រតិទិនខ្មែរ – momentkh
-                </h1>
-                <h2 class="my-4">
-                    <svg style="margin-right: 10px;" height="30px" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="calendar-alt" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="svg-inline--fa fa-calendar-alt fa-w-14 fa-2x"><path fill="currentColor" d="M0 464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V192H0v272zm320-196c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zm0 128c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zM192 268c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zm0 128c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zM64 268c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12H76c-6.6 0-12-5.4-12-12v-40zm0 128c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12H76c-6.6 0-12-5.4-12-12v-40zM400 64h-48V16c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v48H160V16c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v48H48C21.5 64 0 85.5 0 112v48h448v-48c0-26.5-21.5-48-48-48z" class=""></path></svg>
-                    បម្លែងកាលបរិច្ឆេទពី moment instance ទៅកាលបរិច្ឆេទខ្មែរ</h2>
-                <div class="row my-5">
-                    <p class="col-12 text-center">
-                        {{ displayedDate }}
-                    </p>
-                    <div class="text-center py-4">
-                        <svg style="transform: rotate(180deg); height: 40px;" aria-hidden="true" focusable="false" data-prefix="far" data-icon="hand-pointer" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="svg-inline--fa fa-hand-pointer fa-w-14 fa-3x"><path fill="currentColor" d="M358.182 179.361c-19.493-24.768-52.679-31.945-79.872-19.098-15.127-15.687-36.182-22.487-56.595-19.629V67c0-36.944-29.736-67-66.286-67S89.143 30.056 89.143 67v161.129c-19.909-7.41-43.272-5.094-62.083 8.872-29.355 21.795-35.793 63.333-14.55 93.152l109.699 154.001C134.632 501.59 154.741 512 176 512h178.286c30.802 0 57.574-21.5 64.557-51.797l27.429-118.999A67.873 67.873 0 0 0 448 326v-84c0-46.844-46.625-79.273-89.818-62.639zM80.985 279.697l27.126 38.079c8.995 12.626 29.031 6.287 29.031-9.283V67c0-25.12 36.571-25.16 36.571 0v175c0 8.836 7.163 16 16 16h6.857c8.837 0 16-7.164 16-16v-35c0-25.12 36.571-25.16 36.571 0v35c0 8.836 7.163 16 16 16H272c8.837 0 16-7.164 16-16v-21c0-25.12 36.571-25.16 36.571 0v21c0 8.836 7.163 16 16 16h6.857c8.837 0 16-7.164 16-16 0-25.121 36.571-25.16 36.571 0v84c0 1.488-.169 2.977-.502 4.423l-27.43 119.001c-1.978 8.582-9.29 14.576-17.782 14.576H176c-5.769 0-11.263-2.878-14.697-7.697l-109.712-154c-14.406-20.223 14.994-42.818 29.394-22.606zM176.143 400v-96c0-8.837 6.268-16 14-16h6c7.732 0 14 7.163 14 16v96c0 8.837-6.268 16-14 16h-6c-7.733 0-14-7.163-14-16zm75.428 0v-96c0-8.837 6.268-16 14-16h6c7.732 0 14 7.163 14 16v96c0 8.837-6.268 16-14 16h-6c-7.732 0-14-7.163-14-16zM327 400v-96c0-8.837 6.268-16 14-16h6c7.732 0 14 7.163 14 16v96c0 8.837-6.268 16-14 16h-6c-7.732 0-14-7.163-14-16z" class=""></path></svg>
-                    </div>
-                    <p class="pali col-12 text-center" v-html="displayedKhmerDate"></p>
+                <details class="mt-3">
+                    <summary class="btn btn-sm btn-outline-info">Show Code</summary>
+                    <pre class="code-block mt-2"><code>const today = new Date();
+const khmer = momentkh.fromDate(today);
+console.log(momentkh.format(khmer));</code></pre>
+                </details>
+            </div>
+        </div>
+
+        <!-- Next Year New Year -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3>🎊 Next Khmer New Year</h3>
+            </div>
+            <div class="card-body">
+                <div class="result-box">
+                    <div class="pali text-center" id="nextNewYearKhmer">Loading...</div>
+                    <p class="text-center mt-3" id="nextNewYearTime">Loading...</p>
                 </div>
-                <h2 class="my-4">
-                    <svg style="margin-right: 10px;" height="30px" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="clock" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-clock fa-w-16 fa-3x"><path fill="currentColor" d="M256,8C119,8,8,119,8,256S119,504,256,504,504,393,504,256,393,8,256,8Zm92.49,313h0l-20,25a16,16,0,0,1-22.49,2.5h0l-67-49.72a40,40,0,0,1-15-31.23V112a16,16,0,0,1,16-16h32a16,16,0,0,1,16,16V256l58,42.5A16,16,0,0,1,348.49,321Z" class=""></path></svg>
-                    ពេលដែលទេវតាចុះ ៖ គ.ស.
-                    <vuejs-datepicker 
-                        :value="formattedDate"
-                        :format="DatePickerFormat"
-                        :language="language"
-                        @selected="pickedYear"
-                        minimum-view="year"              
-                        name="datepicker"
-                        id="input-id"
-                        wrapper-class="d-inline-block"
-                        input-class="btn btn-secondary"></vuejs-datepicker>
-                </h2>
-                <div class="row my-5">
-                    <p class="pali col-12 text-center">
-                        {{ newYearMoment }}
-                    </p>
+                <details class="mt-3">
+                    <summary class="btn btn-sm btn-outline-info">Show Code</summary>
+                    <pre class="code-block mt-2"><code>const nextYear = new Date().getFullYear() + 1;
+const newYear = momentkh.getNewYear(nextYear);
+console.log(`${newYear.year}-${newYear.month}-${newYear.day} ${newYear.hour}:${newYear.minute}`);</code></pre>
+                </details>
+            </div>
+        </div>
+
+        <!-- Round-trip Conversion -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3>🔄 Round-Trip Conversion</h3>
+            </div>
+            <div class="card-body">
+                <div class="result-box">
+                    <p><strong>Original Gregorian:</strong> <span id="originalDate">Loading...</span></p>
+                    <p><strong>Converted to Khmer:</strong> <span class="pali" id="convertedKhmer">Loading...</span></p>
+                    <p><strong>Back to Gregorian:</strong> <span id="backToGregorian">Loading...</span></p>
+                    <p class="mt-3"><strong>Result:</strong> <span id="matchResult">Loading...</span></p>
+                </div>
+                <details class="mt-3">
+                    <summary class="btn btn-sm btn-outline-info">Show Code</summary>
+                    <pre class="code-block mt-2"><code>// Gregorian → Khmer
+const today = new Date();
+const khmer = momentkh.fromDate(today);
+
+// Khmer → Gregorian
+const backToGregorian = momentkh.fromKhmer(
+    khmer.khmer.day,
+    khmer.khmer.moonPhase,
+    khmer.khmer.monthIndex,
+    khmer.khmer.beYear
+);
+
+// Verify they match
+console.log('Match:', backToGregorian.year === today.getFullYear());</code></pre>
+                </details>
+            </div>
+        </div>
+
+        <!-- Live Clock -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3>⏰ Live Khmer Calendar</h3>
+            </div>
+            <div class="card-body">
+                <div class="result-box text-center">
+                    <div class="pali" id="liveClock">Loading...</div>
+                    <p class="text-muted mt-2" id="liveTime">Loading...</p>
                 </div>
             </div>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/locale/km.min.js"></script>
-        <script src="https://unpkg.com/vuejs-datepicker"></script>
-        <script src="./constant.js"></script>
-        <script src="./locale/km.js"></script>
-        <script src="./getSoriyatraLerngSak.js"></script>
-        <script src="./momentkh.js"></script>
-        <script>
-            window.onload = function() {
-                var moment = momentkh(window.moment)
 
-                new Vue({
-                    el: "#app",
-                    data() {
-                        return {
-                            format: 'dN ខែm ឆ្នាំa e ព.ស. b',
-                            now: moment(),
-                            date: moment(),
-                            DatePickerFormat: 'yyyy',
-                            language: {
-                                language: 'Khmer', 
-                                months: ['មករា', 'កុម្ភៈ', 'មីនា', 'មេសា', 'ឧសភា', 'មិថុនា', 'កក្កដា', 'សីហា', 'កញ្ញា', 'តុលា', 'វិច្ឆិកា', 'ធ្នូ'], 
-                                monthsAbbr: ['មក', 'កម', 'មន', 'មស', 'ឧស', 'មថ', 'កដ', 'សហ', 'កញ', 'តល', 'វក', 'ធន'], 
-                                days: ['អាទិត្យ', 'ចន្ទ', 'អង្គារ', 'ពុធ', 'ព្រហស្បត្តិ៍', 'សុក្រ', 'សៅរ'], 
-                                rtl: false, 
-                                ymd: false, 
-                                yearSuffix: ''
-                            }
-                        }
-                    },
-                    computed: {
-                        year() {
-                            return this.date.year()
-                        },
-                        formattedDate() {
-                            return this.date.locale('en').format('YYYY-MM-DD')
-                        },
-                        displayedDate() {
-                            return this.now
-                        },
-                        displayedKhmerDate() {
-                            return this.now.locale('km').format('ថ្ងៃdddd ទីDD ខែMMMM ឆ្នាំYYYY') + '<br/>ត្រូវនឹង<br/>ថ្ងៃទី ' + this.now.toKhDate(this.format) + '<br/>' + this.now.locale('km').format('h:mm:ss a')
-                        },
-                        newYearMoment() {
-                            return moment.getKhNewYearMoment(this.year).locale('km').format('ថ្ងៃdddd ទីDD ខែMMMM ឆ្នាំYYYY វេលាម៉ោង h:mm នាទី a')
-                        }
-                    },
-                    methods: {
-                        pickedYear(year) {
-                            this.date = moment(year)
-                        }
-                    },
-                    mounted() {
-                        setInterval(() => {
-                            this.now = moment()
-                        }, 1000)
-                    },
-                    components: {
-                        'vuejs-datepicker':vuejsDatepicker
-                    }
-                })
-            }
-        </script>
-    </body>
+        <!-- Footer -->
+        <div class="text-center mt-5 mb-3">
+            <p class="text-muted">
+                MomentKH v3.0.0 •
+                <a href="https://github.com/ThyrithSor/momentkh" target="_blank">GitHub</a> •
+                <a href="https://www.npmjs.com/package/@thyrith/momentkh" target="_blank">NPM</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Load MomentKH Library -->
+    <script src="./momentkh.js"></script>
+    <script>
+        // Helper function to format date
+        function formatDate(date) {
+            const pad = (n) => String(n).padStart(2, '0');
+            return `${date.year}-${pad(date.month)}-${pad(date.day)}`;
+        }
+
+        function formatDateTime(info) {
+            const pad = (n) => String(n).padStart(2, '0');
+            return `${info.year}-${pad(info.month)}-${pad(info.day)} ${pad(info.hour)}:${pad(info.minute)}`;
+        }
+
+        // 1. Get Khmer date of today
+        function updateToday() {
+            const today = new Date();
+            const khmer = momentkh.fromDate(today);
+
+            document.getElementById('todayKhmer').textContent = momentkh.format(khmer);
+            document.getElementById('todayGregorian').textContent =
+                `${today.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}`;
+
+            console.log('1. Today\'s Khmer Date:');
+            console.log(momentkh.format(khmer));
+            console.log(khmer);
+        }
+
+        // 2. Get Khmer New Year datetime of next year
+        function updateNextNewYear() {
+            const nextYear = new Date().getFullYear() + 1;
+            const newYear = momentkh.getNewYear(nextYear);
+
+            // Convert to Khmer for display
+            const khmerNewYear = momentkh.fromGregorian(
+                newYear.year,
+                newYear.month,
+                newYear.day,
+                newYear.hour,
+                newYear.minute
+            );
+
+            document.getElementById('nextNewYearKhmer').textContent =
+                momentkh.format(khmerNewYear, 'W dN ខែm ឆ្នាំa');
+            document.getElementById('nextNewYearTime').innerHTML =
+                `<strong>Date & Time:</strong> ${formatDateTime(newYear)}<br>` +
+                `<strong>Year:</strong> ${nextYear} (BE ${khmerNewYear.khmer.beYear})`;
+
+            console.log('2. Next Khmer New Year (' + nextYear + '):');
+            console.log(formatDateTime(newYear));
+            console.log(newYear);
+        }
+
+        // 3. Convert today's Khmer date to Gregorian (round-trip)
+        function updateRoundTrip() {
+            const today = new Date();
+            const khmer = momentkh.fromDate(today);
+
+            // Convert back to Gregorian
+            const backToGregorian = momentkh.fromKhmer(
+                khmer.khmer.day,
+                khmer.khmer.moonPhase,
+                khmer.khmer.monthIndex,
+                khmer.khmer.beYear
+            );
+
+            const isMatch =
+                backToGregorian.year === today.getFullYear() &&
+                backToGregorian.month === (today.getMonth() + 1) &&
+                backToGregorian.day === today.getDate();
+
+            document.getElementById('originalDate').textContent = formatDate({
+                year: today.getFullYear(),
+                month: today.getMonth() + 1,
+                day: today.getDate()
+            });
+            document.getElementById('convertedKhmer').textContent = momentkh.format(khmer, 'dN ខែm ព.ស. b');
+            document.getElementById('backToGregorian').textContent = formatDate(backToGregorian);
+            document.getElementById('matchResult').innerHTML = isMatch
+                ? '<span class="badge bg-success">✓ Match!</span>'
+                : '<span class="badge bg-danger">✗ Mismatch</span>';
+
+            console.log('3. Round-trip Conversion:');
+            console.log('Original:', formatDate({
+                year: today.getFullYear(),
+                month: today.getMonth() + 1,
+                day: today.getDate()
+            }));
+            console.log('Khmer:', momentkh.format(khmer, 'dN ខែm ព.ស. b'));
+            console.log('Back to Gregorian:', formatDate(backToGregorian));
+            console.log('Match:', isMatch);
+        }
+
+        // Live clock update
+        function updateLiveClock() {
+            const now = new Date();
+            const khmer = momentkh.fromDate(now);
+
+            document.getElementById('liveClock').textContent = momentkh.format(khmer);
+            document.getElementById('liveTime').textContent = now.toLocaleTimeString('en-US', {
+                hour12: false,
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+        }
+
+        // Initialize on page load
+        window.onload = function() {
+            console.log('='.repeat(80));
+            console.log('MomentKH v3.0.0 Demo');
+            console.log('='.repeat(80));
+
+            updateToday();
+            console.log('');
+
+            updateNextNewYear();
+            console.log('');
+
+            updateRoundTrip();
+            console.log('');
+
+            console.log('Live clock started...');
+            console.log('='.repeat(80));
+
+            // Start live clock
+            updateLiveClock();
+            setInterval(updateLiveClock, 1000);
+        };
+    </script>
+</body>
 </html>
