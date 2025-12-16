@@ -12,16 +12,19 @@
 		"momentkh.js",
 		"momentkh.ts",
 		"dist/",
-		"example/",
 		"README.md",
 		"LICENSE"
 	],
 	"scripts": {
 		"build": "tsc",
-		"test": "npm run test:gregorian && npm run test:khmer && npm run test:newyear",
+		"test": "npm run test:validation && npm run test:gregorian && npm run test:khmer && npm run test:newyear && npm run test:verify-conversion && npm run test:verify-newyear && npm run test:verify-roundtrip",
+		"test:validation": "node test/validation.test.js",
 		"test:gregorian": "node test/gregorian-to-khmer.test.js",
 		"test:khmer": "node test/khmer-to-gregorian.test.js",
 		"test:newyear": "node test/new-year.test.js",
+		"test:verify-conversion": "node test/verify-conversion.test.js",
+		"test:verify-newyear": "node test/verify-new-year.test.js",
+		"test:verify-roundtrip": "node test/verify-roundtrip.test.js",
 		"prepublishOnly": "npm run build && npm test"
 	},
 	"authors": [
