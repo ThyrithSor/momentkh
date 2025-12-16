@@ -38,23 +38,18 @@
             <a class="navbar-brand" href="#">
                 <strong>MomentKH v3.0.1</strong>
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="https://github.com/ThyrithSor/momentkh" target="_blank">
-                            GitHub
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="https://www.npmjs.com/package/@thyrith/momentkh" target="_blank">
-                            NPM
-                        </a>
-                    </li>
-                </ul>
-            </div>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="https://github.com/ThyrithSor/momentkh" target="_blank">
+                        GitHub
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://www.npmjs.com/package/@thyrith/momentkh" target="_blank">
+                        NPM
+                    </a>
+                </li>
+            </ul>
         </div>
     </nav>
 
@@ -65,39 +60,47 @@
             <p class="text-muted">Zero Dependencies • TypeScript Support • Full Bidirectional Conversion</p>
         </div>
 
-        <!-- Today's Date -->
+        <!-- Date Conversion with Picker -->
         <div class="card mb-4">
             <div class="card-header">
-                <h3>📅 Today's Khmer Date</h3>
+                <h3>📅 Date Conversion</h3>
             </div>
             <div class="card-body">
+                <div class="mb-3">
+                    <label for="datePicker" class="form-label">Select a date to convert:</label>
+                    <input type="date" class="form-control" id="datePicker" />
+                </div>
                 <div class="result-box">
                     <div class="pali text-center" id="todayKhmer">Loading...</div>
                     <p class="text-center text-muted mt-3" id="todayGregorian">Loading...</p>
                 </div>
                 <details class="mt-3">
                     <summary class="btn btn-sm btn-outline-info">Show Code</summary>
-                    <pre class="code-block mt-2"><code>const today = new Date();
-const khmer = momentkh.fromDate(today);
+                    <pre class="code-block mt-2"><code>const selectedDate = new Date('2024-12-17');
+const khmer = momentkh.fromDate(selectedDate);
 console.log(momentkh.format(khmer));</code></pre>
                 </details>
             </div>
         </div>
 
-        <!-- Next Year New Year -->
+        <!-- New Year with Year Picker -->
         <div class="card mb-4">
             <div class="card-header">
-                <h3>🎊 Next Khmer New Year</h3>
+                <h3>🎊 Khmer New Year</h3>
             </div>
             <div class="card-body">
+                <div class="mb-3">
+                    <label for="yearPicker" class="form-label">Select a year:</label>
+                    <input type="number" class="form-control" id="yearPicker" min="1900" max="2300" />
+                </div>
                 <div class="result-box">
                     <div class="pali text-center" id="nextNewYearKhmer">Loading...</div>
                     <p class="text-center mt-3" id="nextNewYearTime">Loading...</p>
                 </div>
                 <details class="mt-3">
                     <summary class="btn btn-sm btn-outline-info">Show Code</summary>
-                    <pre class="code-block mt-2"><code>const nextYear = new Date().getFullYear() + 1;
-const newYear = momentkh.getNewYear(nextYear);
+                    <pre class="code-block mt-2"><code>const selectedYear = 2025;
+const newYear = momentkh.getNewYear(selectedYear);
 console.log(`${newYear.year}-${newYear.month}-${newYear.day} ${newYear.hour}:${newYear.minute}`);</code></pre>
                 </details>
             </div>
@@ -172,24 +175,24 @@ console.log('Match:', backToGregorian.year === today.getFullYear());</code></pre
             return `${info.year}-${pad(info.month)}-${pad(info.day)} ${pad(info.hour)}:${pad(info.minute)}`;
         }
 
-        // 1. Get Khmer date of today
-        function updateToday() {
-            const today = new Date();
-            const khmer = momentkh.fromDate(today);
+        // 1. Update date conversion based on picker
+        function updateToday(date) {
+            if (!date) date = new Date();
+            const khmer = momentkh.fromDate(date);
 
             document.getElementById('todayKhmer').textContent = momentkh.format(khmer);
             document.getElementById('todayGregorian').textContent =
-                `${today.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}`;
+                `${date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}`;
 
-            console.log('1. Today\'s Khmer Date:');
+            console.log('1. Selected Date Khmer:');
             console.log(momentkh.format(khmer));
             console.log(khmer);
         }
 
-        // 2. Get Khmer New Year datetime of next year
-        function updateNextNewYear() {
-            const nextYear = new Date().getFullYear() + 1;
-            const newYear = momentkh.getNewYear(nextYear);
+        // 2. Update New Year based on year picker
+        function updateNextNewYear(year) {
+            if (!year) year = new Date().getFullYear() + 1;
+            const newYear = momentkh.getNewYear(year);
 
             // Convert to Khmer for display
             const khmerNewYear = momentkh.fromGregorian(
@@ -204,9 +207,9 @@ console.log('Match:', backToGregorian.year === today.getFullYear());</code></pre
                 momentkh.format(khmerNewYear, 'W dN ខែm ឆ្នាំa');
             document.getElementById('nextNewYearTime').innerHTML =
                 `<strong>Date & Time:</strong> ${formatDateTime(newYear)}<br>` +
-                `<strong>Year:</strong> ${nextYear} (BE ${khmerNewYear.khmer.beYear})`;
+                `<strong>Year:</strong> ${year} (BE ${khmerNewYear.khmer.beYear})`;
 
-            console.log('2. Next Khmer New Year (' + nextYear + '):');
+            console.log('2. Khmer New Year (' + year + '):');
             console.log(formatDateTime(newYear));
             console.log(newYear);
         }
@@ -271,10 +274,18 @@ console.log('Match:', backToGregorian.year === today.getFullYear());</code></pre
             console.log('MomentKH v3.0.1 Demo');
             console.log('='.repeat(80));
 
-            updateToday();
+            // Set default values for pickers
+            const today = new Date();
+            const nextYear = today.getFullYear() + 1;
+            
+            document.getElementById('datePicker').valueAsDate = today;
+            document.getElementById('yearPicker').value = nextYear;
+
+            // Initial updates
+            updateToday(today);
             console.log('');
 
-            updateNextNewYear();
+            updateNextNewYear(nextYear);
             console.log('');
 
             updateRoundTrip();
@@ -282,6 +293,22 @@ console.log('Match:', backToGregorian.year === today.getFullYear());</code></pre
 
             console.log('Live clock started...');
             console.log('='.repeat(80));
+
+            // Add event listeners for pickers
+            document.getElementById('datePicker').addEventListener('change', function(e) {
+                const selectedDate = e.target.valueAsDate;
+                if (selectedDate) {
+                    updateToday(selectedDate);
+                    updateRoundTrip();
+                }
+            });
+
+            document.getElementById('yearPicker').addEventListener('change', function(e) {
+                const selectedYear = parseInt(e.target.value);
+                if (selectedYear) {
+                    updateNextNewYear(selectedYear);
+                }
+            });
 
             // Start live clock
             updateLiveClock();
