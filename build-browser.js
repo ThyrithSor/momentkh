@@ -19,20 +19,21 @@ const umdBundle = `(function (root, factory) {
     module.exports = factory();
   } else {
     // Browser globals
-    root.momentkh = factory().momentkh;
-    root.MoonPhase = factory().MoonPhase;
-    root.MonthIndex = factory().MonthIndex;
-    root.AnimalYear = factory().AnimalYear;
-    root.EraYear = factory().EraYear;
-    root.DayOfWeek = factory().DayOfWeek;
+    var exp = factory();
+    root.momentkh = exp;
+    root.MoonPhase = exp.MoonPhase;
+    root.MonthIndex = exp.MonthIndex;
+    root.AnimalYear = exp.AnimalYear;
+    root.EraYear = exp.EraYear;
+    root.DayOfWeek = exp.DayOfWeek;
   }
 }(typeof self !== 'undefined' ? self : this, function () {
   // CommonJS module code
   var module = { exports: {} };
   var exports = module.exports;
-  
+
   ${cjsCode.replace(/\\"use strict\\";?\\n?/, '')}
-  
+
   return module.exports;
 }));
 `;

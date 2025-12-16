@@ -155,13 +155,28 @@ declare class KhmerDate {
     subtractDays(count: number): KhmerDate;
     toString(): string;
 }
-export declare const momentkh: {
-    fromGregorian(year: number, month: number, day: number, hour?: number, minute?: number, second?: number): KhmerConversionResult;
-    fromKhmer(day: number, moonPhase: MoonPhase | number, monthIndex: MonthIndex | number, beYear: number): GregorianDate;
-    getNewYear(ceYear: number): NewYearInfo;
-    format(khmerData: KhmerConversionResult, formatString?: string): string;
-    fromDate(date: Date): KhmerConversionResult;
-    toDate(day: number, moonPhase: MoonPhase | number, monthIndex: MonthIndex | number, beYear: number): Date;
+export declare function fromGregorian(year: number, month: number, day: number, hour?: number, minute?: number, second?: number): KhmerConversionResult;
+export declare function fromKhmer(day: number, moonPhase: MoonPhase | number, monthIndex: MonthIndex | number, beYear: number): GregorianDate;
+export declare function getNewYear(ceYear: number): NewYearInfo;
+export declare function format(khmerData: KhmerConversionResult, formatString?: string): string;
+export declare function fromDate(date: Date): KhmerConversionResult;
+export declare function toDate(day: number, moonPhase: MoonPhase | number, monthIndex: MonthIndex | number, beYear: number): Date;
+export declare const constants: {
+    LunarMonths: Record<string, number>;
+    LunarMonthNames: string[];
+    SolarMonthNames: string[];
+    AnimalYearNames: string[];
+    EraYearNames: string[];
+    WeekdayNames: string[];
+    MoonStatusNames: string[];
+};
+declare const _default: {
+    fromGregorian: typeof fromGregorian;
+    fromKhmer: typeof fromKhmer;
+    getNewYear: typeof getNewYear;
+    format: typeof format;
+    fromDate: typeof fromDate;
+    toDate: typeof toDate;
     constants: {
         LunarMonths: Record<string, number>;
         LunarMonthNames: string[];
@@ -177,5 +192,5 @@ export declare const momentkh: {
     EraYear: typeof EraYear;
     DayOfWeek: typeof DayOfWeek;
 };
-export default momentkh;
+export default _default;
 //# sourceMappingURL=momentkh.d.ts.map

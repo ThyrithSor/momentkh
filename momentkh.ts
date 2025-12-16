@@ -1225,7 +1225,7 @@ function getKhmerNewYear(ceYear: number): NewYearInfo {
 // Formatting Functions
 // ============================================================================
 
-function format(khmerData: KhmerConversionResult, formatString?: string): string {
+function formatKhmer(khmerData: KhmerConversionResult, formatString?: string): string {
   if (!formatString) {
     // Default format
     const { khmer } = khmerData;
@@ -1274,64 +1274,68 @@ function gregorianToKhmer(year: number, month: number, day: number, hour: number
 // Public API
 // ============================================================================
 
-export const momentkh = {
-  // Conversion functions
-  fromGregorian(year: number, month: number, day: number, hour: number = 0, minute: number = 0, second: number = 0): KhmerConversionResult {
-    return gregorianToKhmer(year, month, day, hour, minute, second);
-  },
+// Conversion functions
+export function fromGregorian(year: number, month: number, day: number, hour: number = 0, minute: number = 0, second: number = 0): KhmerConversionResult {
+  return gregorianToKhmer(year, month, day, hour, minute, second);
+}
 
-  fromKhmer(day: number, moonPhase: MoonPhase | number, monthIndex: MonthIndex | number, beYear: number): GregorianDate {
-    return khmerToGregorian(day, moonPhase, monthIndex, beYear);
-  },
+export function fromKhmer(day: number, moonPhase: MoonPhase | number, monthIndex: MonthIndex | number, beYear: number): GregorianDate {
+  return khmerToGregorian(day, moonPhase, monthIndex, beYear);
+}
 
-  // New Year function
-  getNewYear(ceYear: number): NewYearInfo {
-    return getKhmerNewYear(ceYear);
-  },
+// New Year function
+export function getNewYear(ceYear: number): NewYearInfo {
+  return getKhmerNewYear(ceYear);
+}
 
-  // Format function
-  format(khmerData: KhmerConversionResult, formatString?: string): string {
-    return format(khmerData, formatString);
-  },
+// Format function
+export function format(khmerData: KhmerConversionResult, formatString?: string): string {
+  return formatKhmer(khmerData, formatString);
+}
 
-  // Utility for creating date from Date object
-  fromDate(date: Date): KhmerConversionResult {
-    // Validate Date object
-    validateDateObject(date);
-    return gregorianToKhmer(
-      date.getFullYear(),
-      date.getMonth() + 1,
-      date.getDate(),
-      date.getHours(),
-      date.getMinutes(),
-      date.getSeconds()
-    );
-  },
+// Utility for creating date from Date object
+export function fromDate(date: Date): KhmerConversionResult {
+  // Validate Date object
+  validateDateObject(date);
+  return gregorianToKhmer(
+    date.getFullYear(),
+    date.getMonth() + 1,
+    date.getDate(),
+    date.getHours(),
+    date.getMinutes(),
+    date.getSeconds()
+  );
+}
 
-  // Convert Khmer to Date object
-  toDate(day: number, moonPhase: MoonPhase | number, monthIndex: MonthIndex | number, beYear: number): Date {
-    const greg = khmerToGregorian(day, moonPhase, monthIndex, beYear);
-    return new Date(greg.year, greg.month - 1, greg.day);
-  },
+// Convert Khmer to Date object
+export function toDate(day: number, moonPhase: MoonPhase | number, monthIndex: MonthIndex | number, beYear: number): Date {
+  const greg = khmerToGregorian(day, moonPhase, monthIndex, beYear);
+  return new Date(greg.year, greg.month - 1, greg.day);
+}
 
-  // Constants export
-  constants: {
-    LunarMonths,
-    LunarMonthNames,
-    SolarMonthNames,
-    AnimalYearNames,
-    EraYearNames,
-    WeekdayNames,
-    MoonStatusNames
-  },
+// Constants export
+export const constants = {
+  LunarMonths,
+  LunarMonthNames,
+  SolarMonthNames,
+  AnimalYearNames,
+  EraYearNames,
+  WeekdayNames,
+  MoonStatusNames
+};
 
-  // Enums export for easier usage
+// Default export - aggregate all exports for convenience
+export default {
+  fromGregorian,
+  fromKhmer,
+  getNewYear,
+  format,
+  fromDate,
+  toDate,
+  constants,
   MoonPhase,
   MonthIndex,
   AnimalYear,
   EraYear,
   DayOfWeek
 };
-
-// Default export
-export default momentkh;
