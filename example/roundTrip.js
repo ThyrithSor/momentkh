@@ -5,7 +5,7 @@
  * Gregorian → Khmer → Gregorian (and verify they match)
  */
 
-const momentkh = require('../momentkh');
+const momentkh = require('@thyrith/momentkh');
 
 // Step 1: Get today's Gregorian date
 const today = new Date();

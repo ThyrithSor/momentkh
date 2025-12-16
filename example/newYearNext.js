@@ -5,7 +5,7 @@
  * of Khmer New Year (Moha Songkran) for next year.
  */
 
-const momentkh = require('../momentkh');
+const momentkh = require('@thyrith/momentkh');
 
 // Get next year
 const currentYear = new Date().getFullYear();

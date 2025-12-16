@@ -5,7 +5,7 @@
  * to the Khmer calendar format.
  */
 
-const momentkh = require('../momentkh');
+const momentkh = require('@thyrith/momentkh');
 
 // Get today's date
 const today = new Date();

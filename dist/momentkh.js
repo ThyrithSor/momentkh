@@ -501,23 +501,23 @@ const visakhaBocheaCache = {};
 // Cache for New Year Full Info
 const newYearInfoCache = {};
 /**
- * Find Visakha Bochea datetime for a given Gregorian year
- * Visakha Bochea is ១៥កើត ខែពិសាខ (dayNumber 14 of month 5)
- * Returns timestamp in milliseconds
+ * Find BE Year transition datetime for a given Gregorian year
+ * BE year increases on ១រោច ខែពិសាខ (1st waning day of Pisakh = dayNumber 15 of month 5)
+ * Returns timestamp in milliseconds at midnight of that day
  */
 function getVisakhaBochea(year, isSearching = false) {
     if (visakhaBocheaCache[year]) {
         return visakhaBocheaCache[year];
     }
-    // Search for Visakha Bochea - start from April since it typically occurs then
+    // Search for 1រោច Pisakh (when BE year changes) - start from April since it typically occurs then
     for (let searchMonth = 4; searchMonth <= 6; searchMonth++) {
         const daysInMonth = new Date(year, searchMonth, 0).getDate();
         for (let searchDay = 1; searchDay <= daysInMonth; searchDay++) {
             // Avoid infinite recursion by using simplified BE year during search
             const result = gregorianToKhmerInternal(year, searchMonth, searchDay, 12, 0, 0, true);
-            if (result.khmer.monthIndex === 5 && result._khmerDateObj.getDayNumber() === 14) {
-                // Found Visakha Bochea - return timestamp at midnight (start of 15កើត day)
-                // BE year changes at 00:01 on this day (right after midnight)
+            if (result.khmer.monthIndex === 5 && result._khmerDateObj.getDayNumber() === 15) {
+                // Found 1រោច Pisakh - return timestamp at midnight (start of BE year change day)
+                // BE year changes at 00:00 on this day
                 const timestamp = new Date(year, searchMonth - 1, searchDay, 0, 0, 0, 0).getTime();
                 visakhaBocheaCache[year] = timestamp;
                 return timestamp;
@@ -591,23 +591,23 @@ function gregorianToKhmerInternal(year, month, day, hour = 0, minute = 0, second
     // Convert dayNumber to day/moonPhase format
     const khmerDayInfo = KhmerDate.fromDayNumber(khmerDayNumber);
     // Calculate actual BE year
-    // The BE year changes AFTER Visakha Bochea (១៥កើត ខែពិសាខ = dayNumber 14)
-    // Compare datetime (including hour/minute) against Visakha Bochea datetime
+    // The BE year changes on ១រោច ខែពិសាខ (1st waning day of Pisakh = dayNumber 15)
+    // Compare datetime (including hour/minute) against BE year transition datetime
     let beYear;
     if (isSearching) {
-        // During Visakha Bochea search, use simple approximation to avoid recursion
+        // During search, use simple approximation to avoid recursion
         beYear = month <= 4 ? year + 543 : year + 544;
     }
     else {
-        // Normal mode: compare against exact Visakha Bochea datetime
+        // Normal mode: compare against exact BE year transition datetime (1រោច Pisakh at 00:00)
         const inputTimestamp = new Date(year, month - 1, day, hour, minute, second).getTime();
-        const visakhaBocheaTimestamp = getVisakhaBochea(year);
-        if (inputTimestamp > visakhaBocheaTimestamp) {
-            // After Visakha Bochea (the day AFTER १៥កើត is ១រោច, start of new BE year)
+        const beYearTransitionTimestamp = getVisakhaBochea(year);
+        if (inputTimestamp >= beYearTransitionTimestamp) {
+            // On or after 1រោច Pisakh (new BE year)
             beYear = year + 544;
         }
         else {
-            // On or before Visakha Bochea
+            // Before 1រោច Pisakh (old BE year)
             beYear = year + 543;
         }
     }
@@ -663,9 +663,11 @@ function khmerToGregorian(day, moonPhase, monthIndex, beYear) {
         for (let month = 1; month <= 12; month++) {
             const daysInMonth = getDaysInGregorianMonth(year, month);
             for (let gDay = 1; gDay <= daysInMonth; gDay++) {
-                // For Visakha Bochea day (15កើត Pisakh), check multiple times during the day
-                // because the BE year can change during that day
-                const timesToCheck = (day === 15 && moonPhase === 0 && monthIndex === 5)
+                // For BE year transition day (1រោច Pisakh) and the day before (15កើត Pisakh),
+                // check multiple times during the day because BE year can change during this period
+                const isAroundBEYearChange = monthIndex === 5 &&
+                    ((day === 15 && moonPhase === 0) || (day === 1 && moonPhase === 1));
+                const timesToCheck = isAroundBEYearChange
                     ? [0, 6, 12, 18, 23] // Check at different hours
                     : [0]; // Normal case: just check at midnight
                 for (const hour of timesToCheck) {
