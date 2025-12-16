@@ -13,19 +13,83 @@
  * @license MIT
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.momentkh = void 0;
+exports.momentkh = exports.DayOfWeek = exports.EraYear = exports.AnimalYear = exports.MonthIndex = exports.MoonPhase = void 0;
+// ============================================================================
+// Type Definitions
+// ============================================================================
+// Enums for better type safety and ease of use
+var MoonPhase;
+(function (MoonPhase) {
+    MoonPhase[MoonPhase["Waxing"] = 0] = "Waxing";
+    MoonPhase[MoonPhase["Waning"] = 1] = "Waning"; // រោច
+})(MoonPhase || (exports.MoonPhase = MoonPhase = {}));
+var MonthIndex;
+(function (MonthIndex) {
+    MonthIndex[MonthIndex["Mikasar"] = 0] = "Mikasar";
+    MonthIndex[MonthIndex["Bos"] = 1] = "Bos";
+    MonthIndex[MonthIndex["Meak"] = 2] = "Meak";
+    MonthIndex[MonthIndex["Phalgun"] = 3] = "Phalgun";
+    MonthIndex[MonthIndex["Chetr"] = 4] = "Chetr";
+    MonthIndex[MonthIndex["Visakh"] = 5] = "Visakh";
+    MonthIndex[MonthIndex["Jesth"] = 6] = "Jesth";
+    MonthIndex[MonthIndex["Asath"] = 7] = "Asath";
+    MonthIndex[MonthIndex["Srap"] = 8] = "Srap";
+    MonthIndex[MonthIndex["Photrobot"] = 9] = "Photrobot";
+    MonthIndex[MonthIndex["Assoch"] = 10] = "Assoch";
+    MonthIndex[MonthIndex["Kadek"] = 11] = "Kadek";
+    MonthIndex[MonthIndex["BothmakAsath"] = 12] = "BothmakAsath";
+    MonthIndex[MonthIndex["TutiyakAsath"] = 13] = "TutiyakAsath"; // ទុតិយាសាឍ
+})(MonthIndex || (exports.MonthIndex = MonthIndex = {}));
+var AnimalYear;
+(function (AnimalYear) {
+    AnimalYear[AnimalYear["Chhut"] = 0] = "Chhut";
+    AnimalYear[AnimalYear["Chlov"] = 1] = "Chlov";
+    AnimalYear[AnimalYear["Khal"] = 2] = "Khal";
+    AnimalYear[AnimalYear["Thos"] = 3] = "Thos";
+    AnimalYear[AnimalYear["Rong"] = 4] = "Rong";
+    AnimalYear[AnimalYear["Masagn"] = 5] = "Masagn";
+    AnimalYear[AnimalYear["Momee"] = 6] = "Momee";
+    AnimalYear[AnimalYear["Momae"] = 7] = "Momae";
+    AnimalYear[AnimalYear["Vok"] = 8] = "Vok";
+    AnimalYear[AnimalYear["Roka"] = 9] = "Roka";
+    AnimalYear[AnimalYear["Cho"] = 10] = "Cho";
+    AnimalYear[AnimalYear["Kor"] = 11] = "Kor"; // កុរ - Pig
+})(AnimalYear || (exports.AnimalYear = AnimalYear = {}));
+var EraYear;
+(function (EraYear) {
+    EraYear[EraYear["Samridhisak"] = 0] = "Samridhisak";
+    EraYear[EraYear["Ekasak"] = 1] = "Ekasak";
+    EraYear[EraYear["Tosak"] = 2] = "Tosak";
+    EraYear[EraYear["Tresak"] = 3] = "Tresak";
+    EraYear[EraYear["Chatvasak"] = 4] = "Chatvasak";
+    EraYear[EraYear["Panchasak"] = 5] = "Panchasak";
+    EraYear[EraYear["Chhasak"] = 6] = "Chhasak";
+    EraYear[EraYear["Saptasak"] = 7] = "Saptasak";
+    EraYear[EraYear["Atthasak"] = 8] = "Atthasak";
+    EraYear[EraYear["Novvasak"] = 9] = "Novvasak"; // នព្វស័ក
+})(EraYear || (exports.EraYear = EraYear = {}));
+var DayOfWeek;
+(function (DayOfWeek) {
+    DayOfWeek[DayOfWeek["Sunday"] = 0] = "Sunday";
+    DayOfWeek[DayOfWeek["Monday"] = 1] = "Monday";
+    DayOfWeek[DayOfWeek["Tuesday"] = 2] = "Tuesday";
+    DayOfWeek[DayOfWeek["Wednesday"] = 3] = "Wednesday";
+    DayOfWeek[DayOfWeek["Thursday"] = 4] = "Thursday";
+    DayOfWeek[DayOfWeek["Friday"] = 5] = "Friday";
+    DayOfWeek[DayOfWeek["Saturday"] = 6] = "Saturday"; // សៅរ៍
+})(DayOfWeek || (exports.DayOfWeek = DayOfWeek = {}));
 // ============================================================================
 // Constants and Locale Data
 // ============================================================================
 const LunarMonths = {
     'មិគសិរ': 0, 'បុស្ស': 1, 'មាឃ': 2, 'ផល្គុន': 3,
     'ចេត្រ': 4, 'ពិសាខ': 5, 'ជេស្ឋ': 6, 'អាសាឍ': 7,
-    'ស្រាពណ៍': 8, 'ភទ្របទ': 9, 'អស្សុជ': 10, 'កក្ដិក': 11,
+    'ស្រាពណ៍': 8, 'ភទ្របទ': 9, 'អស្សុជ': 10, 'កត្ដិក': 11,
     'បឋមាសាឍ': 12, 'ទុតិយាសាឍ': 13
 };
 const LunarMonthNames = [
     'មិគសិរ', 'បុស្ស', 'មាឃ', 'ផល្គុន', 'ចេត្រ', 'ពិសាខ',
-    'ជេស្ឋ', 'អាសាឍ', 'ស្រាពណ៍', 'ភទ្របទ', 'អស្សុជ', 'កក្ដិក',
+    'ជេស្ឋ', 'អាសាឍ', 'ស្រាពណ៍', 'ភទ្របទ', 'អស្សុជ', 'កត្ដិក',
     'បឋមាសាឍ', 'ទុតិយាសាឍ'
 ];
 const SolarMonthNames = [
@@ -34,7 +98,7 @@ const SolarMonthNames = [
 ];
 const AnimalYearNames = [
     'ជូត', 'ឆ្លូវ', 'ខាល', 'ថោះ', 'រោង', 'ម្សាញ់',
-    'មមីរ', 'ممែ', 'វក', 'រកា', 'ច', 'កុរ'
+    'មមី', 'មមែ', 'វក', 'រកា', 'ច', 'កុរ'
 ];
 const EraYearNames = [
     'សំរឹទ្ធិស័ក', 'ឯកស័ក', 'ទោស័ក', 'ត្រីស័ក', 'ចត្វាស័ក',
@@ -202,15 +266,16 @@ function getLeapType(beYear) {
 }
 function getNumberOfDaysInKhmerMonth(monthIndex, beYear) {
     const leapType = getLeapType(beYear);
-    if (monthIndex === 6 && leapType === 2) { // ជេស្ឋ with leap day
+    const idx = typeof monthIndex === 'number' ? monthIndex : monthIndex;
+    if (idx === MonthIndex.Jesth && leapType === 2) { // ជេស្ឋ with leap day
         return 30;
     }
-    if (monthIndex === 12 || monthIndex === 13) { // បឋមាសាឍ, ទុតិយាសាឍ
+    if (idx === MonthIndex.BothmakAsath || idx === MonthIndex.TutiyakAsath) { // បឋមាសាឍ, ទុតិយាសាឍ
         return leapType === 1 ? 30 : 0;
     }
     // Alternating pattern: even months = 29 days, odd months = 30 days
     // មិគសិរ:29, បុស្ស:30, មាឃ:29, ផល្គុន:30, ចេត្រ:29, ពិសាខ:30, ជេស្ឋ:29, អាសាឍ:30, etc.
-    return monthIndex % 2 === 0 ? 29 : 30;
+    return idx % 2 === 0 ? 29 : 30;
 }
 function getNumberOfDaysInKhmerYear(beYear) {
     const leapType = getLeapType(beYear);
@@ -222,28 +287,30 @@ function getNumberOfDaysInKhmerYear(beYear) {
 }
 function nextMonthOf(monthIndex, beYear) {
     const leapType = getLeapType(beYear);
-    if (monthIndex === 6 && leapType === 1) { // ជេស្ឋ in leap month year
-        return 12; // បឋមាសាឍ
+    const idx = typeof monthIndex === 'number' ? monthIndex : monthIndex;
+    if (idx === MonthIndex.Jesth && leapType === 1) { // ជេស្ឋ in leap month year
+        return MonthIndex.BothmakAsath; // បឋមាសាឍ
     }
-    if (monthIndex === 11)
-        return 0; // កក្ដិក -> មិគសិរ
-    if (monthIndex === 12)
-        return 13; // បឋមាសាឍ -> ទុតិយាសាឍ
-    if (monthIndex === 13)
-        return 8; // ទុតិយាសាឍ -> ស្រាពណ៍
-    return monthIndex + 1;
+    if (idx === MonthIndex.Kadek)
+        return MonthIndex.Mikasar; // កត្ដិក -> មិគសិរ
+    if (idx === MonthIndex.BothmakAsath)
+        return MonthIndex.TutiyakAsath; // បឋមាសាឍ -> ទុតិយាសាឍ
+    if (idx === MonthIndex.TutiyakAsath)
+        return MonthIndex.Srap; // ទុតិយាសាឍ -> ស្រាពណ៍
+    return (idx + 1);
 }
 function previousMonthOf(monthIndex, beYear) {
     const leapType = getLeapType(beYear);
-    if (monthIndex === 0)
-        return 11; // មិគសិរ -> កក្ដិក
-    if (monthIndex === 8 && leapType === 1)
-        return 13; // ស្រាពណ៍ -> ទុតិយាសាឍ (leap)
-    if (monthIndex === 13)
-        return 12; // ទុតិយាសាឍ -> បឋមាសាឍ
-    if (monthIndex === 12)
-        return 6; // បឋមាសាឍ -> ជេស្ឋ
-    return monthIndex - 1;
+    const idx = typeof monthIndex === 'number' ? monthIndex : monthIndex;
+    if (idx === MonthIndex.Mikasar)
+        return MonthIndex.Kadek; // មិគសិរ -> កត្ដិក
+    if (idx === MonthIndex.Srap && leapType === 1)
+        return MonthIndex.TutiyakAsath; // ស្រាពណ៍ -> ទុតិយាសាឍ (leap)
+    if (idx === MonthIndex.TutiyakAsath)
+        return MonthIndex.BothmakAsath; // ទុតិយាសាឍ -> បឋមាសាឍ
+    if (idx === MonthIndex.BothmakAsath)
+        return MonthIndex.Jesth; // បឋមាសាឍ -> ជេស្ឋ
+    return (idx - 1);
 }
 // ============================================================================
 // Khmer New Year Calculation (JS Year based)
@@ -401,7 +468,7 @@ class KhmerDate {
     }
     // Get day number (0-29) - converts from 1-based internal to 0-based external
     getDayNumber() {
-        if (this.moonPhase === 0) { // កើត
+        if (this.moonPhase === MoonPhase.Waxing) { // កើត
             return this.day - 1; // day 1-15 → dayNum 0-14
         }
         else { // រោច
@@ -411,10 +478,10 @@ class KhmerDate {
     static fromDayNumber(dayNum) {
         // Converts from 0-based dayNum to 1-based day
         if (dayNum < 15) {
-            return { day: dayNum + 1, moonPhase: 0 }; // dayNum 0-14 → day 1-15
+            return { day: dayNum + 1, moonPhase: MoonPhase.Waxing }; // dayNum 0-14 → day 1-15
         }
         else {
-            return { day: (dayNum - 15) + 1, moonPhase: 1 }; // dayNum 15-29 → day 1-15
+            return { day: (dayNum - 15) + 1, moonPhase: MoonPhase.Waning }; // dayNum 15-29 → day 1-15
         }
     }
     addDays(count) {
@@ -432,8 +499,8 @@ class KhmerDate {
                 const newDayNum = currentDayNum + remaining;
                 const newDay = KhmerDate.fromDayNumber(newDayNum);
                 let newBeYear = result.beYear;
-                if (result.monthIndex === 5) { // ពិសាខ
-                    if (result.moonPhase === 0 && newDay.moonPhase === 1) {
+                if (result.monthIndex === MonthIndex.Visakh) { // ពិសាខ
+                    if (result.moonPhase === MoonPhase.Waxing && newDay.moonPhase === MoonPhase.Waning) {
                         newBeYear++;
                     }
                 }
@@ -443,8 +510,8 @@ class KhmerDate {
             else {
                 remaining -= (daysLeftInMonth + 1);
                 const nextMonth = nextMonthOf(result.monthIndex, result.beYear);
-                const newBeYear = (result.monthIndex === 4) ? result.beYear + 1 : result.beYear;
-                result = new KhmerDate(1, 0, nextMonth, newBeYear); // Start at 1កើត
+                const newBeYear = (result.monthIndex === MonthIndex.Chetr) ? result.beYear + 1 : result.beYear;
+                result = new KhmerDate(1, MoonPhase.Waxing, nextMonth, newBeYear); // Start at 1កើត
             }
         }
         return result;
@@ -460,8 +527,8 @@ class KhmerDate {
                 const newDayNum = currentDayNum - remaining;
                 const newDay = KhmerDate.fromDayNumber(newDayNum);
                 let newBeYear = result.beYear;
-                if (result.monthIndex === 5) { // ពិសាខ
-                    if (result.moonPhase === 1 && newDay.moonPhase === 0) {
+                if (result.monthIndex === MonthIndex.Visakh) { // ពិសាខ
+                    if (result.moonPhase === MoonPhase.Waning && newDay.moonPhase === MoonPhase.Waxing) {
                         newBeYear--;
                     }
                 }
@@ -471,7 +538,7 @@ class KhmerDate {
             else {
                 remaining -= (currentDayNum + 1);
                 const prevMonth = previousMonthOf(result.monthIndex, result.beYear);
-                const newBeYear = (result.monthIndex === 5) ? result.beYear - 1 : result.beYear;
+                const newBeYear = (result.monthIndex === MonthIndex.Visakh) ? result.beYear - 1 : result.beYear;
                 const daysInPrevMonth = getNumberOfDaysInKhmerMonth(prevMonth, newBeYear);
                 const newDay = KhmerDate.fromDayNumber(daysInPrevMonth - 1);
                 result = new KhmerDate(newDay.day, newDay.moonPhase, prevMonth, newBeYear);
@@ -515,7 +582,7 @@ function getVisakhaBochea(year, isSearching = false) {
         for (let searchDay = 1; searchDay <= daysInMonth; searchDay++) {
             // Avoid infinite recursion by using simplified BE year during search
             const result = gregorianToKhmerInternal(year, searchMonth, searchDay, 12, 0, 0, true);
-            if (result.khmer.monthIndex === 5 && result._khmerDateObj.getDayNumber() === 15) {
+            if (result.khmer.monthIndex === MonthIndex.Visakh && result._khmerDateObj.getDayNumber() === 15) {
                 // Found 1រោច Pisakh - return timestamp at midnight (start of BE year change day)
                 // BE year changes at 00:00 on this day
                 const timestamp = new Date(year, searchMonth - 1, searchDay, 0, 0, 0, 0).getTime();
@@ -639,18 +706,25 @@ function gregorianToKhmerInternal(year, month, day, hour = 0, minute = 0, second
         khmer: {
             day: khmerDayInfo.day,
             moonPhase: khmerDayInfo.moonPhase,
+            moonPhaseName: MoonStatusNames[khmerDayInfo.moonPhase],
             monthIndex: khmerMonth,
             monthName: LunarMonthNames[khmerMonth],
             beYear: beYear,
             jsYear: jsYear,
-            animalYear: AnimalYearNames[animalYearIndex],
-            eraYear: EraYearNames[eraYearIndex],
-            dayOfWeek: WeekdayNames[dayOfWeek]
+            animalYear: animalYearIndex,
+            animalYearName: AnimalYearNames[animalYearIndex],
+            eraYear: eraYearIndex,
+            eraYearName: EraYearNames[eraYearIndex],
+            dayOfWeek: dayOfWeek,
+            dayOfWeekName: WeekdayNames[dayOfWeek]
         },
         _khmerDateObj: khmerDate
     };
 }
 function khmerToGregorian(day, moonPhase, monthIndex, beYear) {
+    // Convert enums to numbers if needed
+    const moonPhaseNum = typeof moonPhase === 'number' ? moonPhase : moonPhase;
+    const monthIndexNum = typeof monthIndex === 'number' ? monthIndex : monthIndex;
     // Convert BE year to approximate Gregorian year
     const approxYear = beYear - 544;
     // Search within a range around the approximate year
@@ -665,8 +739,8 @@ function khmerToGregorian(day, moonPhase, monthIndex, beYear) {
             for (let gDay = 1; gDay <= daysInMonth; gDay++) {
                 // For BE year transition day (1រោច Pisakh) and the day before (15កើត Pisakh),
                 // check multiple times during the day because BE year can change during this period
-                const isAroundBEYearChange = monthIndex === 5 &&
-                    ((day === 15 && moonPhase === 0) || (day === 1 && moonPhase === 1));
+                const isAroundBEYearChange = monthIndexNum === MonthIndex.Visakh &&
+                    ((day === 15 && moonPhaseNum === MoonPhase.Waxing) || (day === 1 && moonPhaseNum === MoonPhase.Waning));
                 const timesToCheck = isAroundBEYearChange
                     ? [0, 6, 12, 18, 23] // Check at different hours
                     : [0]; // Normal case: just check at midnight
@@ -674,9 +748,9 @@ function khmerToGregorian(day, moonPhase, monthIndex, beYear) {
                     const khmerResult = gregorianToKhmerInternal(year, month, gDay, hour, 0, 0, false);
                     // Check if it matches our target
                     if (khmerResult.khmer.beYear === beYear &&
-                        khmerResult.khmer.monthIndex === monthIndex &&
+                        khmerResult.khmer.monthIndex === monthIndexNum &&
                         khmerResult.khmer.day === day &&
-                        khmerResult.khmer.moonPhase === moonPhase) {
+                        khmerResult.khmer.moonPhase === moonPhaseNum) {
                         candidates.push({ year, month, day: gDay });
                         break; // Found a match for this date, no need to check other times
                     }
@@ -685,7 +759,7 @@ function khmerToGregorian(day, moonPhase, monthIndex, beYear) {
         }
     }
     if (candidates.length === 0) {
-        throw new Error(`Could not find Gregorian date for Khmer date: ${day} ${moonPhase === 0 ? 'កើត' : 'រោច'} month ${monthIndex} BE ${beYear}`);
+        throw new Error(`Could not find Gregorian date for Khmer date: ${day} ${moonPhaseNum === MoonPhase.Waxing ? 'កើត' : 'រោច'} month ${monthIndexNum} BE ${beYear}`);
     }
     // If multiple candidates found, prefer closest to approximate year
     if (candidates.length > 1) {
@@ -700,9 +774,9 @@ function khmerToGregorian(day, moonPhase, monthIndex, beYear) {
         const noonMatches = closestCandidates.filter(c => {
             const noonCheck = gregorianToKhmerInternal(c.year, c.month, c.day, 12, 0, 0, false);
             return noonCheck.khmer.beYear === beYear &&
-                noonCheck.khmer.monthIndex === monthIndex &&
+                noonCheck.khmer.monthIndex === monthIndexNum &&
                 noonCheck.khmer.day === day &&
-                noonCheck.khmer.moonPhase === moonPhase;
+                noonCheck.khmer.moonPhase === moonPhaseNum;
         });
         if (noonMatches.length > 0) {
             return noonMatches[0];
@@ -789,22 +863,22 @@ function format(khmerData, formatString) {
     if (!formatString) {
         // Default format
         const { khmer } = khmerData;
-        const moonDay = `${khmer.day}${MoonStatusNames[khmer.moonPhase]}`;
-        return toKhmerNumeral(`ថ្ងៃ${khmer.dayOfWeek} ${moonDay} ខែ${khmer.monthName} ឆ្នាំ${khmer.animalYear} ${khmer.eraYear} ពុទ្ធសករាជ ${khmer.beYear}`);
+        const moonDay = `${khmer.day}${khmer.moonPhaseName}`;
+        return toKhmerNumeral(`ថ្ងៃ${khmer.dayOfWeekName} ${moonDay} ខែ${khmer.monthName} ឆ្នាំ${khmer.animalYearName} ${khmer.eraYearName} ពុទ្ធសករាជ ${khmer.beYear}`);
     }
     // Custom format
     const formatRules = {
-        'W': () => khmerData.khmer.dayOfWeek,
+        'W': () => khmerData.khmer.dayOfWeekName,
         'w': () => WeekdayNamesShort[khmerData.gregorian.dayOfWeek],
         'd': () => khmerData.khmer.day,
         'D': () => (khmerData.khmer.day < 10 ? '0' : '') + khmerData.khmer.day,
         'n': () => MoonStatusShort[khmerData.khmer.moonPhase],
-        'N': () => MoonStatusNames[khmerData.khmer.moonPhase],
+        'N': () => khmerData.khmer.moonPhaseName,
         'o': () => MoonDaySymbols[khmerData._khmerDateObj.getDayNumber()],
         'm': () => khmerData.khmer.monthName,
         'M': () => SolarMonthNames[khmerData.gregorian.month - 1],
-        'a': () => khmerData.khmer.animalYear,
-        'e': () => khmerData.khmer.eraYear,
+        'a': () => khmerData.khmer.animalYearName,
+        'e': () => khmerData.khmer.eraYearName,
         'b': () => khmerData.khmer.beYear,
         'c': () => khmerData.gregorian.year,
         'j': () => khmerData.khmer.jsYear
@@ -858,7 +932,13 @@ exports.momentkh = {
         EraYearNames,
         WeekdayNames,
         MoonStatusNames
-    }
+    },
+    // Enums export for easier usage
+    MoonPhase,
+    MonthIndex,
+    AnimalYear,
+    EraYear,
+    DayOfWeek
 };
 // Default export
 exports.default = exports.momentkh;

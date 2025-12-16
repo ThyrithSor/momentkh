@@ -57,7 +57,7 @@ function formatKhmerDate(khmerDate) {
   const moonPhaseNames = ['កើត', 'រោច'];
   const monthNames = [
     'មិគសិរ', 'បុស្ស', 'មាឃ', 'ផល្គុន', 'ចេត្រ', 'ពិសាខ',
-    'ជេស្ឋ', 'អាសាឍ', 'ស្រាពណ៍', 'ភទ្របទ', 'អស្សុជ', 'កក្ដិក'
+    'ជេស្ឋ', 'អាសាឍ', 'ស្រាពណ៍', 'ភទ្របទ', 'អស្សុជ', 'កត្ដិក'
   ];
   return `${khmerDate.day}${moonPhaseNames[khmerDate.moonPhase]} ${monthNames[khmerDate.monthIndex]} BE ${khmerDate.beYear}`;
 }

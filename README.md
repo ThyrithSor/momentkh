@@ -4,7 +4,35 @@
 
 [![Version](https://img.shields.io/badge/version-3.0.0-blue.svg)](https://github.com/ThyrithSor/momentkh)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![No Dependencies](https://img.shields.io/badge/dependencies-none-success.svg)]()
+[![No Dependencies](https://img.shields.io/badge/dependencies-none-success.svg)](https://github.com/ThyrithSor/momentkh)
+
+---
+
+## ⚡ TLDR - Quick Start
+
+```javascript
+// Import
+const momentkh = require("@thyrith/momentkh");
+
+// Convert date to Khmer format (default)
+const khmer = momentkh.fromDate(new Date());
+console.log(momentkh.format(khmer));
+// Output: ថ្ងៃចន្ទ ១៦រោច ខែមិគសិរ ឆ្នាំរោង ឆស័ក ពុទ្ធសករាជ ២៥៦៨
+
+// Convert date to Khmer format (custom)
+console.log(momentkh.format(khmer, "dN ខែm ឆ្នាំa"));
+// Output: ១៦រោច ខែមិគសិរ ឆ្នាំរោង
+
+// Convert Khmer date to Gregorian
+const gregorian = momentkh.fromKhmer(15, 0, 5, 2568); // 15កើត ខែពិសាខ ព.ស.២៥៦៨
+console.log(gregorian);
+// Output: { year: 2025, month: 5, day: 11 }
+
+// Get Khmer New Year
+const newYear = momentkh.getNewYear(2025);
+console.log(newYear);
+// Output: { year: 2025, month: 4, day: 13, hour: 20, minute: 9 }
+```
 
 ---
 
@@ -20,6 +48,7 @@
   - [toDate()](#todateday-moonphase-monthindex-beyear)
   - [getNewYear()](#getnewyearyear)
   - [format()](#formatkhmerdata-formatstring)
+- [Using Enums (NEW in v3.0)](#-using-enums-new-in-v30)
 - [Understanding Khmer Calendar](#-understanding-khmer-calendar)
   - [Buddhist Era (BE) Year](#buddhist-era-be-year)
   - [Animal Year](#animal-year)
@@ -37,6 +66,7 @@
 
 - ✅ **Zero Dependencies** - Pure JavaScript, no external libraries required
 - ✅ **TypeScript Support** - Full type definitions included for excellent IDE experience
+- ✅ **Type-Safe Enums** - NEW in v3.0! Use enums for moonPhase, monthIndex, animalYear, eraYear, and dayOfWeek
 - ✅ **Bidirectional Conversion** - Convert between Gregorian ↔ Khmer Lunar dates
 - ✅ **Accurate Calculations** - Based on traditional Khmer astronomical algorithms
 - ✅ **Khmer New Year** - Precise calculation of Moha Songkran timing
@@ -87,7 +117,7 @@ Type definitions are included automatically when you install via NPM. For direct
 ### Node.js (CommonJS)
 
 ```javascript
-const momentkh = require("./momentkh");
+const momentkh = require("@thyrith/momentkh");
 
 // Convert specific date
 const khmer = momentkh.fromGregorian(2024, 4, 14, 10, 30);
@@ -101,7 +131,7 @@ console.log(newYear); // { year: 2024, month: 4, day: 13, hour: 22, minute: 24 }
 ### ES Modules
 
 ```javascript
-import momentkh from "./momentkh.js";
+import momentkh from "@thyrith/momentkh";
 
 const khmer = momentkh.fromDate(new Date());
 console.log(momentkh.format(khmer));
@@ -109,33 +139,74 @@ console.log(momentkh.format(khmer));
 
 ### TypeScript
 
-Full TypeScript support with complete type definitions:
+Full TypeScript support with complete type definitions and enums:
 
 ```typescript
-import momentkh, { KhmerConversionResult, NewYearInfo, GregorianDate } from "./momentkh";
+import momentkh, {
+  KhmerConversionResult,
+  NewYearInfo,
+  GregorianDate,
+  MoonPhase,
+  MonthIndex,
+  AnimalYear,
+  EraYear,
+  DayOfWeek,
+} from "@thyrith/momentkh";
 
 // Convert with full type safety
-const khmer: KhmerConversionResult = momentkh.fromGregorian(2024, 4, 14, 10, 30);
+const khmer: KhmerConversionResult = momentkh.fromGregorian(
+  2024,
+  4,
+  14,
+  10,
+  30
+);
 console.log(momentkh.format(khmer));
+
+// Access enum values (NEW in v3.0!)
+console.log(khmer.khmer.moonPhase === MoonPhase.Waxing); // Type-safe comparison
+console.log(khmer.khmer.monthIndex === MonthIndex.Chetr); // Enum comparison
+console.log(khmer.khmer.dayOfWeek === DayOfWeek.Sunday); // Autocomplete support!
+
+// Reverse conversion with enums (type-safe!)
+const gregorianDate: GregorianDate = momentkh.fromKhmer(
+  15,
+  MoonPhase.Waxing, // Use enum instead of 0
+  MonthIndex.Visakh, // Use enum instead of 5
+  2568
+);
+console.log(
+  `${gregorianDate.year}-${gregorianDate.month}-${gregorianDate.day}`
+);
+
+// Still supports numbers for backward compatibility
+const gregorianDate2: GregorianDate = momentkh.fromKhmer(15, 0, 5, 2568);
 
 // Get New Year with typed result
 const newYear: NewYearInfo = momentkh.getNewYear(2024);
-console.log(`${newYear.year}-${newYear.month}-${newYear.day} ${newYear.hour}:${newYear.minute}`);
-
-// Reverse conversion with types
-const gregorianDate: GregorianDate = momentkh.fromKhmer(6, 0, 4, 2568);
-console.log(`${gregorianDate.year}-${gregorianDate.month}-${gregorianDate.day}`);
+console.log(
+  `${newYear.year}-${newYear.month}-${newYear.day} ${newYear.hour}:${newYear.minute}`
+);
 
 // Access constants with full autocomplete
 const monthName = momentkh.constants.LunarMonthNames[4]; // "ចេត្រ"
 ```
 
 **Available Types:**
+
 - `KhmerConversionResult` - Full conversion result object
 - `GregorianDate` - Gregorian date object
-- `KhmerDateInfo` - Khmer date information
+- `KhmerDateInfo` - Khmer date information (now with enum fields!)
 - `NewYearInfo` - New Year timing information
 - `Constants` - Calendar constants interface
+
+**Available Enums (NEW in v3.0):**
+
+- 🌙 `MoonPhase` - Waxing (កើត) and Waning (រោច)
+- 📅 `MonthIndex` - All 14 Khmer lunar months
+- 🐉 `AnimalYear` - All 12 animal years
+- ⭐ `EraYear` - All 10 era years
+- 📆 `DayOfWeek` - Sunday through Saturday
 
 ---
 
@@ -148,12 +219,12 @@ Converts a Gregorian (Western) date to a Khmer Lunar date.
 **Parameters:**
 | Parameter | Type | Required | Range | Description |
 |-----------|------|----------|-------|-------------|
-| `year` | Number | Yes | Any | Gregorian year (e.g., 2024) |
-| `month` | Number | Yes | 1-12 | **1-based** month (1=January, 12=December) |
-| `day` | Number | Yes | 1-31 | Day of month |
-| `hour` | Number | No | 0-23 | Hour (default: 0) |
-| `minute` | Number | No | 0-59 | Minute (default: 0) |
-| `second` | Number | No | 0-59 | Second (default: 0) |
+| `year` | Number | ✅ Yes | Any | 📅 Gregorian year (e.g., 2024) |
+| `month` | Number | ✅ Yes | 1-12 | 📅 **1-based** month (1=January, 12=December) |
+| `day` | Number | ✅ Yes | 1-31 | 📅 Day of month |
+| `hour` | Number | ⚪ No | 0-23 | ⏰ Hour (default: 0) |
+| `minute` | Number | ⚪ No | 0-59 | ⏰ Minute (default: 0) |
+| `second` | Number | ⚪ No | 0-59 | ⏰ Second (default: 0) |
 
 **Returns:** Object
 
@@ -169,19 +240,28 @@ Converts a Gregorian (Western) date to a Khmer Lunar date.
     dayOfWeek: 0         // Number: 0=Sunday, 1=Monday, ..., 6=Saturday
   },
   khmer: {
-    day: 6,              // Number: Lunar day (1-15)
-    moonPhase: 0,        // Number: 0=កើត (waxing), 1=រោច (waning)
-    monthIndex: 4,       // Number: Month index (0-13, see table below)
-    monthName: 'ចេត្រ',  // String: Khmer month name
-    beYear: 2568,        // Number: Buddhist Era year
-    jsYear: 1386,        // Number: Jolak Sakaraj (Chula Sakaraj) year
-    animalYear: 'រោង',   // String: Animal year name
-    eraYear: 'ឆស័ក',     // String: Era/Sak name
-    dayOfWeek: 'អាទិត្យ' // String: Khmer weekday name
+    day: 6,                      // Number: Lunar day (1-15)
+    moonPhase: 0,                // MoonPhase enum: 0=Waxing (កើត), 1=Waning (រោច)
+    moonPhaseName: 'កើត',        // String: Moon phase name (NEW in v3.0)
+    monthIndex: 4,               // MonthIndex enum: 0-13 (see table below)
+    monthName: 'ចេត្រ',          // String: Khmer month name
+    beYear: 2568,                // Number: Buddhist Era year
+    jsYear: 1386,                // Number: Jolak Sakaraj (Chula Sakaraj) year
+    animalYear: 4,               // AnimalYear enum: 0-11 (NEW in v3.0)
+    animalYearName: 'រោង',       // String: Animal year name
+    eraYear: 6,                  // EraYear enum: 0-9 (NEW in v3.0)
+    eraYearName: 'ឆស័ក',         // String: Era/Sak name
+    dayOfWeek: 0,                // DayOfWeek enum: 0=Sunday, 6=Saturday (NEW in v3.0)
+    dayOfWeekName: 'អាទិត្យ'     // String: Khmer weekday name
   },
   _khmerDateObj: KhmerDate // Internal: KhmerDate object (for advanced use)
 }
 ```
+
+**✨ NEW in v3.0:** The `khmer` object now includes both enum values AND string names for easier usage:
+
+- 🔢 Use enum values (e.g., `moonPhase`, `monthIndex`) for type-safe comparisons
+- 📝 Use string names (e.g., `moonPhaseName`, `monthName`) for display purposes
 
 **Example:**
 
@@ -201,10 +281,10 @@ Converts a Khmer Lunar date to a Gregorian date.
 **Parameters:**
 | Parameter | Type | Required | Range | Description |
 |-----------|------|----------|-------|-------------|
-| `day` | Number | Yes | 1-15 | Lunar day number within the phase |
-| `moonPhase` | Number | Yes | 0 or 1 | 0 = កើត (waxing), 1 = រោច (waning) |
-| `monthIndex` | Number | Yes | 0-13 | Khmer month index (see table below) |
-| `beYear` | Number | Yes | Any | Buddhist Era year (e.g., 2568) |
+| `day` | Number | ✅ Yes | 1-15 | 📅 Lunar day number within the phase |
+| `moonPhase` | Number \| MoonPhase | ✅ Yes | 0 or 1 | 🌙 0 = កើត (waxing), 1 = រោច (waning). ✨ NEW: Can use `MoonPhase.Waxing` or `MoonPhase.Waning` |
+| `monthIndex` | Number \| MonthIndex | ✅ Yes | 0-13 | 📅 Khmer month index (see table below). ✨ NEW: Can use `MonthIndex` enum |
+| `beYear` | Number | ✅ Yes | Any | 🙏 Buddhist Era year (e.g., 2568) |
 
 **Lunar Month Indices:**
 | Index | Khmer Name | Notes |
@@ -214,15 +294,15 @@ Converts a Khmer Lunar date to a Gregorian date.
 | 2 | មាឃ (Meak) | |
 | 3 | ផល្គុន (Phalkun) | |
 | 4 | ចេត្រ (Cheit) | |
-| 5 | ពិសាខ (Pisakh) | Contains Visakha Bochea (15កើត) |
-| 6 | ជេស្ឋ (Jesth) | Can have leap day (30 days instead of 29) |
+| 5 | ពិសាខ (Pisakh) | 🙏 Contains Visakha Bochea (15កើត) |
+| 6 | ជេស្ឋ (Jesth) | ➕ Can have leap day (30 days instead of 29) |
 | 7 | អាសាឍ (Asadh) | |
 | 8 | ស្រាពណ៍ (Srap) | |
 | 9 | ភទ្របទ (Phatrabot) | |
 | 10 | អស្សុជ (Assoch) | |
-| 11 | កក្ដិក (Kadeuk) | |
-| 12 | បឋមាសាឍ (Pathamasadh) | Only exists in leap month years |
-| 13 | ទុតិយាសាឍ (Tutiyasadh) | Only exists in leap month years |
+| 11 | កត្ដិក (Kadeuk) | |
+| 12 | បឋមាសាឍ (Pathamasadh) | 🌟 Only exists in leap month years |
+| 13 | ទុតិយាសាឍ (Tutiyasadh) | 🌟 Only exists in leap month years |
 
 **Returns:** Object
 
@@ -237,17 +317,32 @@ Converts a Khmer Lunar date to a Gregorian date.
 **Example:**
 
 ```javascript
-// Convert 6កើត ខែចេត្រ ព.ស.២៥៦៨ to Gregorian
-const gregorian = momentkh.fromKhmer(6, 0, 4, 2568);
-console.log(gregorian); // { year: 2024, month: 4, day: 14 }
+// Using numbers (backward compatible)
+const gregorian1 = momentkh.fromKhmer(6, 0, 4, 2568);
+console.log(gregorian1); // { year: 2024, month: 4, day: 14 }
+
+// Using enums (NEW in v3.0 - type-safe!)
+const { MoonPhase, MonthIndex } = momentkh;
+const gregorian2 = momentkh.fromKhmer(
+  6,
+  MoonPhase.Waxing,
+  MonthIndex.Chetr,
+  2568
+);
+console.log(gregorian2); // { year: 2024, month: 4, day: 14 }
+
+// Mixed: numbers and enums work together
+const gregorian3 = momentkh.fromKhmer(15, MoonPhase.Waxing, 5, 2568);
+console.log(gregorian3); // Works perfectly!
 ```
 
 **Important Notes:**
 
-- `day` represents the day number within the moon phase (always 1-15)
-- `moonPhase` 0 = កើត (waxing, days 1-15), 1 = រោច (waning, days 1-14 or 1-15)
-- A full lunar month is typically 29-30 days total
-- Example: "៨រោច" means day=8, moonPhase=1
+- 📌 `day` represents the day number within the moon phase (always 1-15)
+- 🌙 `moonPhase` 0 = កើត (waxing, days 1-15), 1 = រោច (waning, days 1-14 or 1-15)
+- ✨ **NEW:** Use `MoonPhase.Waxing` or `MoonPhase.Waning` for better code readability
+- 📅 A full lunar month is typically 29-30 days total
+- 💡 Example: "៨រោច" means day=8, moonPhase=1 (or MoonPhase.Waning)
 
 ---
 
@@ -376,6 +471,231 @@ console.log(momentkh.format(khmer, "ថ្ងៃw dN m ឆ្នាំa e ព.�
 
 ---
 
+## 🔢 Using Enums (NEW in v3.0)
+
+MomentKH 3.0 introduces TypeScript enums for better type safety and code readability. Use enums instead of magic numbers for clearer, more maintainable code.
+
+### Available Enums
+
+#### 🌙 MoonPhase
+
+Represents the moon phase in the lunar calendar.
+
+```javascript
+const { MoonPhase } = momentkh;
+
+MoonPhase.Waxing; // 0 - 🌒 កើត (waxing moon, days 1-15)
+MoonPhase.Waning; // 1 - 🌘 រោច (waning moon, days 1-15)
+```
+
+#### 📅 MonthIndex
+
+All 14 Khmer lunar months (including leap months).
+
+```javascript
+const { MonthIndex } = momentkh;
+
+MonthIndex.Mikasar; // 0  - មិគសិរ
+MonthIndex.Bos; // 1  - បុស្ស
+MonthIndex.Meak; // 2  - មាឃ
+MonthIndex.Phalgun; // 3  - ផល្គុន
+MonthIndex.Chetr; // 4  - ចេត្រ
+MonthIndex.Visakh; // 5  - ពិសាខ
+MonthIndex.Jesth; // 6  - ជេស្ឋ
+MonthIndex.Asath; // 7  - អាសាឍ
+MonthIndex.Srap; // 8  - ស្រាពណ៍
+MonthIndex.Photrobot; // 9  - ភទ្របទ
+MonthIndex.Assoch; // 10 - អស្សុជ
+MonthIndex.Kadek; // 11 - កត្ដិក
+MonthIndex.BothmakAsath; // 12 - បឋមាសាឍ (leap month only)
+MonthIndex.TutiyakAsath; // 13 - ទុតិយាសាឍ (leap month only)
+```
+
+#### 🐉 AnimalYear
+
+The 12 animal years in the zodiac cycle.
+
+```javascript
+const { AnimalYear } = momentkh;
+
+AnimalYear.Chhut; // 0  - 🐀 ជូត (Rat)
+AnimalYear.Chlov; // 1  - 🐂 ឆ្លូវ (Ox)
+AnimalYear.Khal; // 2  - 🐅 ខាល (Tiger)
+AnimalYear.Thos; // 3  - 🐇 ថោះ (Rabbit)
+AnimalYear.Rong; // 4  - 🐉 រោង (Dragon)
+AnimalYear.Masagn; // 5  - 🐍 ម្សាញ់ (Snake)
+AnimalYear.Momee; // 6  - 🐎 មមី (Horse)
+AnimalYear.Momae; // 7  - 🐐 មមែ (Goat)
+AnimalYear.Vok; // 8  - 🐒 វក (Monkey)
+AnimalYear.Roka; // 9  - 🐓 រកា (Rooster)
+AnimalYear.Cho; // 10 - 🐕 ច (Dog)
+AnimalYear.Kor; // 11 - 🐖 កុរ (Pig)
+```
+
+#### ⭐ EraYear
+
+The 10 era years (ស័ក) cycle.
+
+```javascript
+const { EraYear } = momentkh;
+
+EraYear.Samridhisak; // 0 - 🔟 សំរឹទ្ធិស័ក
+EraYear.Ekasak; // 1 - 1️⃣ ឯកស័ក
+EraYear.Tosak; // 2 - 2️⃣ ទោស័ក
+EraYear.Tresak; // 3 - 3️⃣ ត្រីស័ក
+EraYear.Chatvasak; // 4 - 4️⃣ ចត្វាស័ក
+EraYear.Panchasak; // 5 - 5️⃣ បញ្ចស័ក
+EraYear.Chhasak; // 6 - 6️⃣ ឆស័ក
+EraYear.Saptasak; // 7 - 7️⃣ សប្តស័ក
+EraYear.Atthasak; // 8 - 8️⃣ អដ្ឋស័ក
+EraYear.Novvasak; // 9 - 9️⃣ នព្វស័ក
+```
+
+#### 📆 DayOfWeek
+
+Days of the week.
+
+```javascript
+const { DayOfWeek } = momentkh;
+
+DayOfWeek.Sunday; // 0 - ☀️ អាទិត្យ
+DayOfWeek.Monday; // 1 - 🌙 ចន្ទ
+DayOfWeek.Tuesday; // 2 - 🔥 អង្គារ
+DayOfWeek.Wednesday; // 3 - 🪐 ពុធ
+DayOfWeek.Thursday; // 4 - ⚡ ព្រហស្បតិ៍
+DayOfWeek.Friday; // 5 - 💎 សុក្រ
+DayOfWeek.Saturday; // 6 - 💀 សៅរ៍
+```
+
+### Usage Examples
+
+#### Example 1: Type-Safe Comparisons
+
+```javascript
+const { MoonPhase, MonthIndex, DayOfWeek } = momentkh;
+const khmer = momentkh.fromGregorian(2024, 12, 16);
+
+// Check moon phase
+if (khmer.khmer.moonPhase === MoonPhase.Waxing) {
+  console.log("Waxing moon (កើត)");
+} else {
+  console.log("Waning moon (រោច)");
+}
+
+// Check specific month
+if (khmer.khmer.monthIndex === MonthIndex.Mikasar) {
+  console.log("It is Mikasar month!");
+}
+
+// Check day of week
+if (khmer.khmer.dayOfWeek === DayOfWeek.Monday) {
+  console.log("It is Monday!");
+}
+```
+
+#### Example 2: Converting with Enums
+
+```javascript
+const { MoonPhase, MonthIndex } = momentkh;
+
+// Convert Khmer to Gregorian using enums (much clearer!)
+const date1 = momentkh.fromKhmer(
+  15, // day
+  MoonPhase.Waxing, // instead of 0
+  MonthIndex.Visakh, // instead of 5
+  2568
+);
+
+// Still works with numbers for backward compatibility
+const date2 = momentkh.fromKhmer(15, 0, 5, 2568);
+
+// Both give the same result
+console.log(date1); // { year: 2025, month: 5, day: 11 }
+console.log(date2); // { year: 2025, month: 5, day: 11 }
+```
+
+#### Example 3: Switch Statements with Enums
+
+```javascript
+const { MonthIndex, AnimalYear } = momentkh;
+const khmer = momentkh.fromGregorian(2024, 12, 16);
+
+// Switch on month
+switch (khmer.khmer.monthIndex) {
+  case MonthIndex.Mikasar:
+  case MonthIndex.Bos:
+  case MonthIndex.Meak:
+    console.log("Winter months");
+    break;
+  case MonthIndex.Phalgun:
+  case MonthIndex.Chetr:
+  case MonthIndex.Visakh:
+    console.log("Spring months");
+    break;
+  // ... more cases
+}
+
+// Switch on animal year
+switch (khmer.khmer.animalYear) {
+  case AnimalYear.Rong:
+    console.log("Year of the Dragon!");
+    break;
+  case AnimalYear.Masagn:
+    console.log("Year of the Snake!");
+    break;
+  // ... more cases
+}
+```
+
+#### Example 4: TypeScript Benefits
+
+```typescript
+import momentkh, { MoonPhase, MonthIndex, KhmerConversionResult } from './momentkh';
+
+// Full autocomplete and type checking!
+const result: KhmerConversionResult = momentkh.fromGregorian(2024, 12, 16);
+
+// TypeScript knows these are enums
+const phase: MoonPhase = result.khmer.moonPhase;
+const month: MonthIndex = result.khmer.monthIndex;
+
+// Type error if you try to use invalid value
+// const date = momentkh.fromKhmer(15, 3, 5, 2568); // Error! 3 is not a valid MoonPhase
+
+// Autocomplete shows all enum options
+const date = momentkh.fromKhmer(
+  15,
+  MoonPhase.  // ← IDE shows: Waxing, Waning
+  MonthIndex. // ← IDE shows: Mikasar, Bos, Meak, etc.
+  2568
+);
+```
+
+### Benefits of Using Enums
+
+1. 📖 **Readability**: `MonthIndex.Visakh` is clearer than `5`
+2. 🛡️ **Type Safety**: TypeScript catches invalid values at compile time
+3. ⚡ **Autocomplete**: IDEs show all available options
+4. 🔧 **Maintainability**: Easier to understand code months later
+5. ♻️ **Refactoring**: Safer to change enum values (single source of truth)
+6. 📚 **Documentation**: Enums serve as inline documentation
+
+### 🔄 Backward Compatibility
+
+✅ All functions accept both enums and numbers:
+
+```javascript
+// All of these work:
+momentkh.fromKhmer(15, MoonPhase.Waxing, MonthIndex.Visakh, 2568); // ✨ New enum way
+momentkh.fromKhmer(15, 0, MonthIndex.Visakh, 2568); // 🔀 Mixed
+momentkh.fromKhmer(15, MoonPhase.Waxing, 5, 2568); // 🔀 Mixed
+momentkh.fromKhmer(15, 0, 5, 2568); // 👍 Old way still works!
+```
+
+🎯 **Existing code using numbers continues to work without changes!**
+
+---
+
 ## 🧮 Understanding Khmer Calendar
 
 The Khmer calendar is a **lunisolar calendar** that tracks both the moon phases and the solar year. It uses **three different year numbering systems** that change at different times:
@@ -384,34 +704,32 @@ The Khmer calendar is a **lunisolar calendar** that tracks both the moon phases 
 
 **Full Name:** ពុទ្ធសករាជ (Putthsak, Buddhist Era)
 **Offset from Gregorian:** +543 or +544
-**When it increases:** Right after midnight (00:01) on the **15th waxing day of Pisakh month** (១៥កើត ខែពិសាខ)
+**When it increases:** At midnight (00:00) on the **15th waxing day of Pisakh month** (១៥កើត ខែពិសាខ)
 
 **Example Timeline:**
 
 ```
 2024-05-22 23:59 → 14កើត Pisakh, BE 2567
-2024-05-23 00:00 → 15កើត Pisakh, BE 2567 (OLD year)
-2024-05-23 00:01 → 15កើត Pisakh, BE 2568 (NEW year starts!)
+2024-05-23 00:00 → 15កើត Pisakh, BE 2568 (NEW year starts!)
 2024-05-23 23:59 → 15កើត Pisakh, BE 2568
 2024-05-24 00:00 → 1រោច Pisakh, BE 2568
 ```
 
 **Important:**
 
-- The 15th waxing day of Pisakh is **Visakha Bochea** (ពិសាខបូជា), celebrating Buddha's birth, enlightenment, and death
-- At midnight (00:00) of this sacred day, it's still the old BE year
-- At 00:01 onwards, the new BE year begins
-- The year changes ON the sacred day itself, not the day after
+- 🙏 The 15th waxing day of Pisakh is **Visakha Bochea** (ពិសាខបូជា), celebrating Buddha's birth, enlightenment, and death
+- ⏰ At midnight (00:00) when this sacred day begins, the new BE year starts
+- 📍 The year changes exactly at the start of the 15th waxing day of Pisakh
 
 **Code Example:**
 
 ```javascript
 // Check BE year transition
-const before = momentkh.fromGregorian(2024, 5, 23, 0, 0); // Midnight
-const after = momentkh.fromGregorian(2024, 5, 23, 0, 1); // 00:01
+const before = momentkh.fromGregorian(2024, 5, 22, 23, 59); // 23:59 on May 22
+const at = momentkh.fromGregorian(2024, 5, 23, 0, 0); // Midnight on May 23
 
-console.log(before.khmer.beYear); // 2567 (old year at midnight)
-console.log(after.khmer.beYear); // 2568 (new year at 00:01)
+console.log(before.khmer.beYear); // 2567 (old year)
+console.log(at.khmer.beYear); // 2568 (new year starts at midnight!)
 ```
 
 ---
@@ -423,20 +741,20 @@ console.log(after.khmer.beYear); // 2568 (new year at 00:01)
 **When it increases:** At the exact moment of **Moha Songkran** (មហាសង្រ្កាន្ត) - Khmer New Year
 
 **The 12 Animals (in order):**
-| Index | Khmer | Pronunciation | Animal |
-|-------|-------|---------------|--------|
-| 0 | ជូត | Chhūt | Rat |
-| 1 | ឆ្លូវ | Chhlūv | Ox |
-| 2 | ខាល | Khāl | Tiger |
-| 3 | ថោះ | Thaŏh | Rabbit |
-| 4 | រោង | Rōng | Dragon |
-| 5 | ម្សាញ់ | Msanh | Snake |
-| 6 | មមីរ | Momi | Horse |
-| 7 | មមែ | Momè | Goat |
-| 8 | វក | Vŏk | Monkey |
-| 9 | រកា | Rŏka | Rooster |
-| 10 | ច | Châ | Dog |
-| 11 | កុរ | Kŏr | Pig |
+| Index | Khmer | Pronunciation | Animal | Emoji |
+|-------|-------|---------------|--------|-------|
+| 0 | ជូត | Chhūt | Rat | 🐀 |
+| 1 | ឆ្លូវ | Chhlūv | Ox | 🐂 |
+| 2 | ខាល | Khāl | Tiger | 🐅 |
+| 3 | ថោះ | Thaŏh | Rabbit | 🐇 |
+| 4 | រោង | Rōng | Dragon | 🐉 |
+| 5 | ម្សាញ់ | Msanh | Snake | 🐍 |
+| 6 | មមី | Momi | Horse | 🐎 |
+| 7 | មមែ | Momè | Goat | 🐐 |
+| 8 | វក | Vŏk | Monkey | 🐒 |
+| 9 | រកា | Rŏka | Rooster | 🐓 |
+| 10 | ច | Châ | Dog | 🐕 |
+| 11 | កុរ | Kŏr | Pig | 🐖 |
 
 **Example Timeline:**
 
@@ -472,7 +790,7 @@ console.log(at.khmer.animalYear); // 'រកា' (Rooster) - Changed!
 **The 10 Eras (in order):**
 | Index | Khmer | Romanization |
 |-------|-------|--------------|
-| 0 | សំរឹទ្ធិស័ក | Samrech Sak |
+| 0 | សំរឹទ្ធិស័ក | Samridhi Sak |
 | 1 | ឯកស័ក | Aek Sak |
 | 2 | ទោស័ក | To Sak |
 | 3 | ត្រីស័ក | Trei Sak |
@@ -485,9 +803,9 @@ console.log(at.khmer.animalYear); // 'រកា' (Rooster) - Changed!
 
 **New Year Celebration Days:**
 
-- **Day 1:** Moha Songkran (មហាសង្រ្កាន្ត) - New Year's Day
-- **Day 2:** Virak Wanabat (វីរៈវ័នបត) - Second day
-- **Day 3 or 4:** Lerng Sak (ថ្ងៃឡើងស័ក) - Last day & Era change day
+- 🎉 **Day 1:** Moha Songkran (មហាសង្រ្កាន្ត) - New Year's Day
+- 🎊 **Day 2:** Virak Wanabat (វីរៈវ័នបត) - Second day
+- ⭐ **Day 3 or 4:** Lerng Sak (ថ្ងៃឡើងស័ក) - Last day & Era change day
 
 **Example:**
 
@@ -508,11 +826,11 @@ console.log(lerngSakDay.khmer.eraYear); // 'សប្តស័ក' (new era!)
 
 **Summary Table:**
 
-| Year Type       | Changes At            | Example Date/Time    |
-| --------------- | --------------------- | -------------------- |
-| **BE Year**     | 00:00 on ១រោច ខែពិសាខ | May 23, 2024 00:00   |
-| **Animal Year** | ម៉ោង និង នាទីទេវតាចុះ | April 13, 2024 22:17 |
-| **Era Year**    | 00:00 នៅថ្ងៃឡើងស័ក    | April 16, 2024 00:00 |
+| Year Type       | Changes At             | Example Date/Time    |
+| --------------- | ---------------------- | -------------------- |
+| **BE Year**     | 00:00 on ១៥កើត ខែពិសាខ | May 23, 2024 00:00   |
+| **Animal Year** | ម៉ោង និង នាទីទេវតាចុះ  | April 13, 2024 22:17 |
+| **Era Year**    | 00:00 នៅថ្ងៃឡើងស័ក     | April 16, 2024 00:00 |
 
 **Visual Timeline for 2024:**
 
@@ -520,8 +838,8 @@ console.log(lerngSakDay.khmer.eraYear); // 'សប្តស័ក' (new era!)
 April 13, 22:23 → BE 2567, Monkey (វក), Old Era (ឆស័ក)
 April 13, 22:24 → BE 2567, Rooster (រកា), Old Era (ឆស័ក) ← Animal Year changes
 April 17, 00:00 → BE 2567, Rooster (រកា), New Era (សប្តស័ក) ← Era changes
-May 23, 00:00   → BE 2567, Rooster (រកា), New Era (សប្តស័ក)
-May 23, 00:01   → BE 2568, Rooster (រកា), New Era (សប្តស័ក) ← BE Year changes
+May 22, 23:59   → BE 2567, Rooster (រកា), New Era (សប្តស័ក)
+May 23, 00:00   → BE 2568, Rooster (រកា), New Era (សប្តស័ក) ← BE Year changes
 ```
 
 ---
@@ -530,26 +848,26 @@ May 23, 00:01   → BE 2568, Rooster (រកា), New Era (សប្តស័ក
 
 Complete list of format tokens for the `format()` function:
 
-| Token               | Output            | Description                 | Example               |
-| ------------------- | ----------------- | --------------------------- | --------------------- |
-| **Date Components** |
-| `W`                 | ថ្ងៃនៃសប្តាហ៍ពេញ  | Weekday name (full)         | អាទិត្យ, ចន្ទ, អង្គារ |
-| `w`                 | ថ្ងៃនៃសប្តាហ៍ខ្លី | Weekday name (short)        | អា, ច, អ              |
-| `d`                 | ថ្ងៃទី            | Lunar day number            | ១, ៥, ១៥              |
-| `D`                 | ថ្ងៃទី (២ខ្ទង់)   | Lunar day (zero-padded)     | ០១, ០៥, ១៥            |
-| **Moon Phase**      |
-| `n`                 | កើត/រោច (ខ្លី)    | Moon phase (short)          | ក, រ                  |
-| `N`                 | កើត/រោច (ពេញ)     | Moon phase (full)           | កើត, រោច              |
-| `o`                 | និមិត្តសញ្ញា      | Moon day symbol             | ᧡, ᧢, ᧣ ... ᧿         |
-| **Month Names**     |
-| `m`                 | ខែចន្ទគតិ         | Lunar month name            | មិគសិរ, បុស្ស, ចេត្រ  |
-| `M`                 | ខែសុរិយគតិ        | Solar month name            | មករា, កុម្ភៈ, មេសា    |
-| **Year Components** |
-| `a`                 | ឆ្នាំសត្វ         | Animal year                 | ជូត, ឆ្លូវ, រោង       |
-| `e`                 | ស័ក               | Era year                    | ឯកស័ក, ទោស័ក          |
-| `b`                 | ព.ស.              | Buddhist Era year           | ២៥៦៨                  |
-| `c`                 | គ.ស.              | Common Era (Gregorian) year | ២០២៤                  |
-| `j`                 | ច.ស.              | Jolak Sakaraj year          | ១៣៨៦                  |
+| Token                  | Output            | Description                 | Example               |
+| ---------------------- | ----------------- | --------------------------- | --------------------- |
+| **📅 Date Components** |
+| `W`                    | ថ្ងៃនៃសប្តាហ៍ពេញ  | Weekday name (full)         | អាទិត្យ, ចន្ទ, អង្គារ |
+| `w`                    | ថ្ងៃនៃសប្តាហ៍ខ្លី | Weekday name (short)        | អា, ច, អ              |
+| `d`                    | ថ្ងៃទី            | Lunar day number            | ១, ៥, ១៥              |
+| `D`                    | ថ្ងៃទី (២ខ្ទង់)   | Lunar day (zero-padded)     | ០១, ០៥, ១៥            |
+| **🌙 Moon Phase**      |
+| `n`                    | កើត/រោច (ខ្លី)    | Moon phase (short)          | ក, រ                  |
+| `N`                    | កើត/រោច (ពេញ)     | Moon phase (full)           | កើត, រោច              |
+| `o`                    | និមិត្តសញ្ញា      | Moon day symbol             | ᧡, ᧢, ᧣ ... ᧿         |
+| **📆 Month Names**     |
+| `m`                    | ខែចន្ទគតិ         | Lunar month name            | មិគសិរ, បុស្ស, ចេត្រ  |
+| `M`                    | ខែសុរិយគតិ        | Solar month name            | មករា, កុម្ភៈ, មេសា    |
+| **⏰ Year Components** |
+| `a`                    | ឆ្នាំសត្វ         | Animal year                 | ជូត, ឆ្លូវ, រោង       |
+| `e`                    | ស័ក               | Era year                    | ឯកស័ក, ទោស័ក          |
+| `b`                    | ព.ស.              | Buddhist Era year           | ២៥៦៨                  |
+| `c`                    | គ.ស.              | Common Era (Gregorian) year | ២០២៤                  |
+| `j`                    | ច.ស.              | Jolak Sakaraj year          | ១៣៨៦                  |
 
 **Format Examples:**
 
@@ -575,11 +893,13 @@ console.log(momentkh.format(khmer, "ថ្ងៃទី o"));
 
 Access Khmer calendar constants through `momentkh.constants`:
 
+**✨ NEW in v3.0:** For type-safe access, use the enums instead! See [🔢 Using Enums](#-using-enums-new-in-v30) section.
+
 ```javascript
 // Lunar month names array (indices 0-13)
 momentkh.constants.LunarMonthNames;
 // ['មិគសិរ', 'បុស្ស', 'មាឃ', 'ផល្គុន', 'ចេត្រ', 'ពិសាខ', 'ជេស្ឋ', 'អាសាឍ',
-//  'ស្រាពណ៍', 'ភទ្របទ', 'អស្សុជ', 'កក្ដិក', 'បឋមាសាឍ', 'ទុតិយាសាឍ']
+//  'ស្រាពណ៍', 'ភទ្របទ', 'អស្សុជ', 'កត្ដិក', 'បឋមាសាឍ', 'ទុតិយាសាឍ']
 
 // Solar month names array (indices 0-11)
 momentkh.constants.SolarMonthNames;
@@ -589,7 +909,7 @@ momentkh.constants.SolarMonthNames;
 // Animal year names array (indices 0-11)
 momentkh.constants.AnimalYearNames;
 // ['ជូត', 'ឆ្លូវ', 'ខាល', 'ថោះ', 'រោង', 'ម្សាញ់',
-//  'មមីរ', 'មមែ', 'វក', 'រកា', 'ច', 'កុរ']
+//  'មមី', 'មមែ', 'វក', 'រកា', 'ច', 'កុរ']
 
 // Era year names array (indices 0-9)
 momentkh.constants.EraYearNames;
@@ -651,7 +971,7 @@ require("@thyrith/momentkh")(moment);
 **After (v2):**
 
 ```javascript
-const momentkh = require("./momentkh");
+const momentkh = require("@thyrith/momentkh");
 ```
 
 ### API Migration
@@ -672,7 +992,7 @@ console.log(khmerDate);
 **After (v2):**
 
 ```javascript
-const momentkh = require("./momentkh");
+const momentkh = require("@thyrith/momentkh");
 
 const today = new Date();
 const khmer = momentkh.fromDate(today);
@@ -756,14 +1076,14 @@ console.log(`${ny.year}-${ny.month}-${ny.day} ${ny.hour}:${ny.minute}`);
 
 ### Feature Comparison
 
-| Feature               | MomentKH v1                | MomentKH v3           |
-| --------------------- | -------------------------- | --------------------- |
-| **Dependencies**      | Requires moment.js (~50KB) | Zero dependencies     |
-| **File Size**         | Multiple files             | Single file (~35KB)   |
-| **Setup**             | Initialize with moment     | Direct import/require |
-| **API Style**         | Extends moment.js          | Standalone functions  |
-| **Khmer → Gregorian** | ❌ Not supported           | ✅ Fully supported    |
-| **Browser Support**   | Modern browsers            | ES5+ (IE11+)          |
+| Feature               | MomentKH v1                | MomentKH v3                |
+| --------------------- | -------------------------- | -------------------------- |
+| **Dependencies**      | Requires moment.js (~50KB) | Zero dependencies          |
+| **File Size**         | Multiple files             | Single file (~35KB)        |
+| **Setup**             | Initialize with moment     | Direct import/require      |
+| **API Style**         | Extends moment.js          | Standalone functions       |
+| **Khmer → Gregorian** | ❌ Not supported           | ✅ Fully supported         |
+| **Browser Support**   | Modern browsers            | ES5+ (IE11+)               |
 | **TypeScript**        | No types                   | ✅ Full TypeScript support |
 
 ### Quick Reference Table
@@ -906,22 +1226,23 @@ displayKhmerMonth(2024, 4);
 // Find the exact moment BE year changes
 const year = 2024;
 
-// Search in May for Visakha Bochea
+// Search in May for Visakha Bochea (15កើត Pisakh)
 for (let day = 20; day <= 25; day++) {
   const midnight = momentkh.fromGregorian(year, 5, day, 0, 0);
-  const morning = momentkh.fromGregorian(year, 5, day, 0, 1);
 
   if (
     midnight.khmer.day === 15 &&
     midnight.khmer.moonPhase === 0 &&
     midnight.khmer.monthIndex === 5
   ) {
+    const beforeMidnight = momentkh.fromGregorian(year, 5, day - 1, 23, 59);
+
     console.log(`Found Visakha Bochea: ${year}-05-${day}`);
-    console.log(`At 00:00 - BE ${midnight.khmer.beYear}`);
-    console.log(`At 00:01 - BE ${morning.khmer.beYear}`);
+    console.log(`At ${day - 1} 23:59 - BE ${beforeMidnight.khmer.beYear}`);
+    console.log(`At ${day} 00:00 - BE ${midnight.khmer.beYear}`);
     console.log(
       `Year changed: ${
-        midnight.khmer.beYear !== morning.khmer.beYear ? "YES" : "NO"
+        beforeMidnight.khmer.beYear !== midnight.khmer.beYear ? "YES" : "NO"
       }`
     );
   }
