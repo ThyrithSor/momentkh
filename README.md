@@ -1330,6 +1330,5 @@ node test_specific_dates.js
 
 ---
 
-**Version:** 3.0.0
-**Last Updated:** December 2024
-**Status:** Production Ready ✅
+**Version:** 3.0.1
+**Last Updated:** December 2025
