@@ -190,7 +190,9 @@ console.log(`   Completed: ${testCategories[2].count} tests`);
 
 // Category 4: Leap year dates (20 tests)
 console.log(`\n[4/${testCategories.length}] ${testCategories[3].name} (${testCategories[3].count} tests)...`);
-const leapYears = [1800, 1804, 1900, 2000, 2004, 2008, 2012, 2016, 2020, 2024, 2028, 2032, 2036, 2040, 2044, 2048, 2100, 2200, 2296, 2300];
+// Only include actual leap years. Years divisible by 100 but not 400 are NOT leap years.
+// 1800, 1900, 2100, 2200, 2300 are NOT leap years
+const leapYears = [1804, 1808, 1996, 2000, 2004, 2008, 2012, 2016, 2020, 2024, 2028, 2032, 2036, 2040, 2044, 2048, 2052, 2096, 2296, 2400];
 for (let i = 0; i < testCategories[3].count; i++) {
   totalTests++;
 

@@ -280,6 +280,145 @@ function getDayOfWeek(year: number, month: number, day: number): number {
 }
 
 // ============================================================================
+// Input Validation Functions
+// ============================================================================
+
+/**
+ * Validates Gregorian date parameters
+ * @throws {Error} If any parameter is invalid
+ */
+function validateGregorianDate(
+  year: number,
+  month: number,
+  day: number,
+  hour: number = 0,
+  minute: number = 0,
+  second: number = 0
+): void {
+  // Validate types
+  if (typeof year !== 'number' || isNaN(year)) {
+    throw new Error(`Invalid year: ${year}. Year must be a valid number.`);
+  }
+  if (typeof month !== 'number' || isNaN(month)) {
+    throw new Error(`Invalid month: ${month}. Month must be a valid number.`);
+  }
+  if (typeof day !== 'number' || isNaN(day)) {
+    throw new Error(`Invalid day: ${day}. Day must be a valid number.`);
+  }
+  if (typeof hour !== 'number' || isNaN(hour)) {
+    throw new Error(`Invalid hour: ${hour}. Hour must be a valid number.`);
+  }
+  if (typeof minute !== 'number' || isNaN(minute)) {
+    throw new Error(`Invalid minute: ${minute}. Minute must be a valid number.`);
+  }
+  if (typeof second !== 'number' || isNaN(second)) {
+    throw new Error(`Invalid second: ${second}. Second must be a valid number.`);
+  }
+
+  // Validate month range (1-12)
+  if (month < 1 || month > 12) {
+    throw new Error(`Invalid month: ${month}. Month must be between 1 and 12.`);
+  }
+
+  // Validate day range for the specific month/year
+  const daysInMonth = getDaysInGregorianMonth(year, month);
+  if (day < 1 || day > daysInMonth) {
+    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 
+                       'July', 'August', 'September', 'October', 'November', 'December'];
+    throw new Error(
+      `Invalid day: ${day}. ${monthNames[month - 1]} ${year} has ${daysInMonth} days.`
+    );
+  }
+
+  // Validate hour (0-23)
+  if (hour < 0 || hour > 23) {
+    throw new Error(`Invalid hour: ${hour}. Hour must be between 0 and 23.`);
+  }
+
+  // Validate minute (0-59)
+  if (minute < 0 || minute > 59) {
+    throw new Error(`Invalid minute: ${minute}. Minute must be between 0 and 59.`);
+  }
+
+  // Validate second (0-59)
+  if (second < 0 || second > 59) {
+    throw new Error(`Invalid second: ${second}. Second must be between 0 and 59.`);
+  }
+}
+
+/**
+ * Validates Khmer date parameters
+ * @throws {Error} If any parameter is invalid
+ */
+function validateKhmerDate(
+  day: number,
+  moonPhase: MoonPhase | number,
+  monthIndex: MonthIndex | number,
+  beYear: number
+): void {
+  // Validate types
+  if (typeof day !== 'number' || isNaN(day)) {
+    throw new Error(`Invalid day: ${day}. Day must be a valid number.`);
+  }
+  if (typeof moonPhase !== 'number' || isNaN(moonPhase)) {
+    throw new Error(`Invalid moonPhase: ${moonPhase}. moonPhase must be a valid number.`);
+  }
+  if (typeof monthIndex !== 'number' || isNaN(monthIndex)) {
+    throw new Error(`Invalid monthIndex: ${monthIndex}. monthIndex must be a valid number.`);
+  }
+  if (typeof beYear !== 'number' || isNaN(beYear)) {
+    throw new Error(`Invalid beYear: ${beYear}. beYear must be a valid number.`);
+  }
+
+  // Validate day (1-15)
+  if (day < 1 || day > 15) {
+    throw new Error(
+      `Invalid day: ${day}. Lunar day must be between 1 and 15.`
+    );
+  }
+
+  // Validate moonPhase (0 = Waxing, 1 = Waning)
+  const moonPhaseNum = typeof moonPhase === 'number' ? moonPhase : moonPhase as number;
+  if (moonPhaseNum !== 0 && moonPhaseNum !== 1) {
+    throw new Error(
+      `Invalid moonPhase: ${moonPhase}. moonPhase must be 0 (Waxing/កើត) or 1 (Waning/រោច).`
+    );
+  }
+
+  // Validate monthIndex (0-13)
+  const monthIndexNum = typeof monthIndex === 'number' ? monthIndex : monthIndex as number;
+  if (monthIndexNum < 0 || monthIndexNum > 13) {
+    throw new Error(
+      `Invalid monthIndex: ${monthIndex}. monthIndex must be between 0 and 13.`
+    );
+  }
+
+  // Validate beYear (reasonable range: 2000-3000)
+  if (beYear < 2000 || beYear > 3000) {
+    throw new Error(
+      `Invalid beYear: ${beYear}. beYear must be between 2000 and 3000.`
+    );
+  }
+
+  // Additional validation: check if leap months (12, 13) are used in non-leap years
+  // This is done in the conversion function since it requires more complex logic
+}
+
+/**
+ * Validates JavaScript Date object
+ * @throws {Error} If Date object is invalid
+ */
+function validateDateObject(date: Date): void {
+  if (!(date instanceof Date)) {
+    throw new Error('Invalid input: Expected a Date object.');
+  }
+  if (isNaN(date.getTime())) {
+    throw new Error('Invalid Date object: Date is not a valid date.');
+  }
+}
+
+
+// ============================================================================
 // Era Conversions
 // ============================================================================
 
@@ -905,6 +1044,9 @@ function gregorianToKhmerInternal(
 }
 
 function khmerToGregorian(day: number, moonPhase: MoonPhase | number, monthIndex: MonthIndex | number, beYear: number): GregorianDate {
+  // Validate input parameters
+  validateKhmerDate(day, moonPhase, monthIndex, beYear);
+  
   // Convert enums to numbers if needed
   const moonPhaseNum = typeof moonPhase === 'number' ? moonPhase : moonPhase as number;
   const monthIndexNum = typeof monthIndex === 'number' ? monthIndex : monthIndex as number;
@@ -1123,6 +1265,8 @@ function format(khmerData: KhmerConversionResult, formatString?: string): string
 // ============================================================================
 // Wrapper function for public API
 function gregorianToKhmer(year: number, month: number, day: number, hour: number = 0, minute: number = 0, second: number = 0): KhmerConversionResult {
+  // Validate input parameters
+  validateGregorianDate(year, month, day, hour, minute, second);
   return gregorianToKhmerInternal(year, month, day, hour, minute, second, false);
 }
 
@@ -1152,6 +1296,8 @@ export const momentkh = {
 
   // Utility for creating date from Date object
   fromDate(date: Date): KhmerConversionResult {
+    // Validate Date object
+    validateDateObject(date);
     return gregorianToKhmer(
       date.getFullYear(),
       date.getMonth() + 1,
