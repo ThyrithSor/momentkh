@@ -1,5 +1,5 @@
 /**
- * MomentKH2 - Standalone Khmer Calendar Library (TypeScript)
+ * MomentKH - Standalone Khmer Calendar Library (TypeScript)
  *
  * A simplified, standalone library for Khmer calendar conversion
  * No dependencies required
