@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ES2016",
+    "module": "commonjs",
+    "lib": ["ES2016", "DOM"],
+    "declaration": true,
+    "declarationMap": true,
+    "outDir": "./dist",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "moduleResolution": "node"
+  },
+  "include": ["momentkh2.ts"],
+  "exclude": ["node_modules", "dist"]
+}
