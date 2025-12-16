@@ -490,7 +490,7 @@
       while (remaining > 0) {
         const daysInMonth = getNumberOfDaysInKhmerMonth(result.monthIndex, result.beYear);
         const currentDayNum = result.getDayNumber();
-        const daysLeftInMonth = daysInMonth - currentDayNum;
+        const daysLeftInMonth = (daysInMonth - 1) - currentDayNum;
 
         if (remaining <= daysLeftInMonth) {
           const newDayNum = currentDayNum + remaining;
@@ -509,7 +509,7 @@
           remaining -= (daysLeftInMonth + 1);
           const nextMonth = nextMonthOf(result.monthIndex, result.beYear);
           const newBeYear = (result.monthIndex === 4) ? result.beYear + 1 : result.beYear;
-          result = new KhmerDate(1, 1, nextMonth, newBeYear); // Start at 1រោច
+          result = new KhmerDate(1, 0, nextMonth, newBeYear); // Start at 1កើត
         }
       }
 
@@ -525,7 +525,7 @@
       while (remaining > 0) {
         const currentDayNum = result.getDayNumber();
 
-        if (remaining < currentDayNum) {
+        if (remaining <= currentDayNum) {
           const newDayNum = currentDayNum - remaining;
           const newDay = KhmerDate.fromDayNumber(newDayNum);
 
@@ -539,11 +539,11 @@
           result = new KhmerDate(newDay.day, newDay.moonPhase, result.monthIndex, newBeYear);
           remaining = 0;
         } else {
-          remaining -= currentDayNum;
+          remaining -= (currentDayNum + 1);
           const prevMonth = previousMonthOf(result.monthIndex, result.beYear);
           const newBeYear = (result.monthIndex === 5) ? result.beYear - 1 : result.beYear;
           const daysInPrevMonth = getNumberOfDaysInKhmerMonth(prevMonth, newBeYear);
-          const newDay = KhmerDate.fromDayNumber(daysInPrevMonth);
+          const newDay = KhmerDate.fromDayNumber(daysInPrevMonth - 1);
           result = new KhmerDate(newDay.day, newDay.moonPhase, prevMonth, newBeYear);
         }
       }
@@ -593,8 +593,9 @@
         // Avoid infinite recursion by using simplified BE year during search
         const result = gregorianToKhmerInternal(year, searchMonth, searchDay, 12, 0, 0, true);
         if (result.khmer.monthIndex === 5 && result._khmerDateObj.getDayNumber() === 14) {
-          // Found Visakha Bochea - cache and return
-          const timestamp = new Date(year, searchMonth - 1, searchDay, 12, 0, 0).getTime();
+          // Found Visakha Bochea - return timestamp at midnight (start of 15កើត day)
+          // BE year changes at 00:01 on this day (right after midnight)
+          const timestamp = new Date(year, searchMonth - 1, searchDay, 0, 0, 0, 0).getTime();
           visakhaBocheaCache[year] = timestamp;
           return timestamp;
         }
@@ -602,7 +603,7 @@
     }
 
     // Fallback if not found
-    const fallback = new Date(year, 3, 15, 12, 0, 0).getTime();
+    const fallback = new Date(year, 3, 15, 0, 0, 0, 0).getTime();
     visakhaBocheaCache[year] = fallback;
     return fallback;
   }
@@ -745,62 +746,76 @@
   }
 
   function khmerToGregorian(day, moonPhase, monthIndex, beYear) {
-    const targetKhmer = new KhmerDate(day, moonPhase, monthIndex, beYear);
+    // Convert BE year to approximate Gregorian year
+    const approxYear = beYear - 544;
 
-    // Use fixed epoch: January 1, 1900 = 1កើត ខែបុស្ស ព.ស.2443
-    const epochGregorian = { year: 1900, month: 1, day: 1 };
-    const epochKhmer = new KhmerDate(1, 0, 1, 2443); // 1កើត បុស្ស 2443
+    // Search within a range around the approximate year
+    // Start from 2 years before to 2 years after to account for calendar differences
+    const startYear = approxYear - 2;
+    const endYear = approxYear + 2;
 
-    // Calculate difference in days between epoch and target
-    let diffDays = 0;
+    let candidates = [];
 
-    // Determine direction
-    if (beYear > epochKhmer.beYear ||
-      (beYear === epochKhmer.beYear && monthIndex > epochKhmer.monthIndex) ||
-      (beYear === epochKhmer.beYear && monthIndex === epochKhmer.monthIndex && targetKhmer.getDayNumber() >= epochKhmer.getDayNumber())) {
-      // Target is after epoch - add days
-      let iterDate = epochKhmer;
-      const maxIterations = 100000;
-      let iterations = 0;
+    // Iterate through Gregorian dates to find all matches
+    for (let year = startYear; year <= endYear; year++) {
+      for (let month = 1; month <= 12; month++) {
+        const daysInMonth = getDaysInGregorianMonth(year, month);
+        for (let gDay = 1; gDay <= daysInMonth; gDay++) {
+          // For Visakha Bochea day (15កើត Pisakh), check multiple times during the day
+          // because the BE year can change during that day
+          const timesToCheck = (day === 15 && moonPhase === 0 && monthIndex === 5)
+            ? [0, 6, 12, 18, 23] // Check at different hours
+            : [0]; // Normal case: just check at midnight
 
-      while (iterations < maxIterations) {
-        if (iterDate.beYear === targetKhmer.beYear &&
-          iterDate.monthIndex === targetKhmer.monthIndex &&
-          iterDate.day === targetKhmer.day &&
-          iterDate.moonPhase === targetKhmer.moonPhase) {
-          break;
+          for (const hour of timesToCheck) {
+            const khmerResult = gregorianToKhmerInternal(year, month, gDay, hour, 0, 0, false);
+
+            // Check if it matches our target
+            if (khmerResult.khmer.beYear === beYear &&
+                khmerResult.khmer.monthIndex === monthIndex &&
+                khmerResult.khmer.day === day &&
+                khmerResult.khmer.moonPhase === moonPhase) {
+              candidates.push({ year, month, day: gDay });
+              break; // Found a match for this date, no need to check other times
+            }
+          }
         }
-
-        iterDate = iterDate.addDays(1);
-        diffDays++;
-        iterations++;
-      }
-    } else {
-      // Target is before epoch - subtract days
-      let iterDate = epochKhmer;
-      const maxIterations = 100000;
-      let iterations = 0;
-
-      while (iterations < maxIterations) {
-        if (iterDate.beYear === targetKhmer.beYear &&
-          iterDate.monthIndex === targetKhmer.monthIndex &&
-          iterDate.day === targetKhmer.day &&
-          iterDate.moonPhase === targetKhmer.moonPhase) {
-          break;
-        }
-
-        iterDate = iterDate.subtractDays(1);
-        diffDays--;
-        iterations++;
       }
     }
 
-    // Calculate Gregorian date from epoch
-    const epochJdn = gregorianToJulianDay(epochGregorian.year, epochGregorian.month, epochGregorian.day);
-    const resultJdn = epochJdn + diffDays;
-    const result = julianDayToGregorian(resultJdn);
+    if (candidates.length === 0) {
+      throw new Error(`Could not find Gregorian date for Khmer date: ${day} ${moonPhase === 0 ? 'កើត' : 'រោច'} month ${monthIndex} BE ${beYear}`);
+    }
 
-    return result;
+    // If multiple candidates found, prefer closest to approximate year
+    if (candidates.length > 1) {
+      // First, try to filter by year distance
+      const minDistance = Math.min(...candidates.map(c => Math.abs(c.year - approxYear)));
+      const closestCandidates = candidates.filter(c => Math.abs(c.year - approxYear) === minDistance);
+
+      // If we have a unique closest candidate, return it
+      if (closestCandidates.length === 1) {
+        return closestCandidates[0];
+      }
+
+      // If there are ties, prefer the one that matches at noon
+      const noonMatches = closestCandidates.filter(c => {
+        const noonCheck = gregorianToKhmerInternal(c.year, c.month, c.day, 12, 0, 0, false);
+        return noonCheck.khmer.beYear === beYear &&
+               noonCheck.khmer.monthIndex === monthIndex &&
+               noonCheck.khmer.day === day &&
+               noonCheck.khmer.moonPhase === moonPhase;
+      });
+
+      if (noonMatches.length > 0) {
+        return noonMatches[0];
+      }
+
+      // Fall back to first closest candidate
+      return closestCandidates[0];
+    }
+
+    return candidates[0];
   }
 
   function getNewYearFullInfo(ceYear) {
