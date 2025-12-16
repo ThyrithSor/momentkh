@@ -16,20 +16,20 @@ export declare enum MoonPhase {
     Waning = 1
 }
 export declare enum MonthIndex {
-    Mikasar = 0,// មិគសិរ
-    Bos = 1,// បុស្ស
+    Migasir = 0,// មិគសិរ
+    Boss = 1,// បុស្ស
     Meak = 2,// មាឃ
-    Phalgun = 3,// ផល្គុន
-    Chetr = 4,// ចេត្រ
-    Visakh = 5,// ពិសាខ
+    Phalkun = 3,// ផល្គុន
+    Cheit = 4,// ចេត្រ
+    Pisakh = 5,// ពិសាខ
     Jesth = 6,// ជេស្ឋ
-    Asath = 7,// អាសាឍ
+    Asadh = 7,// អាសាឍ
     Srap = 8,// ស្រាពណ៍
-    Photrobot = 9,// ភទ្របទ
+    Phatrabot = 9,// ភទ្របទ
     Assoch = 10,// អស្សុជ
-    Kadek = 11,// កត្ដិក
-    BothmakAsath = 12,// បឋមាសាឍ
-    TutiyakAsath = 13
+    Kadeuk = 11,// កត្ដិក
+    Pathamasadh = 12,// បឋមាសាឍ
+    Tutiyasadh = 13
 }
 export declare enum AnimalYear {
     Chhut = 0,// ជូត - Rat
@@ -46,16 +46,16 @@ export declare enum AnimalYear {
     Kor = 11
 }
 export declare enum EraYear {
-    Samridhisak = 0,// សំរឹទ្ធិស័ក
-    Ekasak = 1,// ឯកស័ក
-    Tosak = 2,// ទោស័ក
-    Tresak = 3,// ត្រីស័ក
-    Chatvasak = 4,// ចត្វាស័ក
-    Panchasak = 5,// បញ្ចស័ក
-    Chhasak = 6,// ឆស័ក
-    Saptasak = 7,// សប្តស័ក
-    Atthasak = 8,// អដ្ឋស័ក
-    Novvasak = 9
+    SamridhiSak = 0,// សំរឹទ្ធិស័ក
+    AekSak = 1,// ឯកស័ក
+    ToSak = 2,// ទោស័ក
+    TreiSak = 3,// ត្រីស័ក
+    ChattvaSak = 4,// ចត្វាស័ក
+    PanchaSak = 5,// បញ្ចស័ក
+    ChhaSak = 6,// ឆស័ក
+    SappaSak = 7,// សប្តស័ក
+    AtthaSak = 8,// អដ្ឋស័ក
+    NappaSak = 9
 }
 export declare enum DayOfWeek {
     Sunday = 0,// អាទិត្យ

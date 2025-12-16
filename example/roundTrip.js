@@ -93,7 +93,7 @@ console.log('-'.repeat(80));
 
 const testDates = [
     { year: 2024, month: 4, day: 14 },  // Khmer New Year
-    { year: 2024, month: 5, day: 22 },  // Visakha Bochea
+    { year: 2024, month: 5, day: 22 },  // Pisakha Bochea
     { year: 2024, month: 1, day: 1 },   // New Year's Day
 ];
 

@@ -24,20 +24,20 @@ export enum MoonPhase {
 }
 
 export enum MonthIndex {
-  Mikasar = 0,      // មិគសិរ
-  Bos = 1,          // បុស្ស
+  Migasir = 0,      // មិគសិរ
+  Boss = 1,          // បុស្ស
   Meak = 2,         // មាឃ
-  Phalgun = 3,      // ផល្គុន
-  Chetr = 4,        // ចេត្រ
-  Visakh = 5,       // ពិសាខ
+  Phalkun = 3,      // ផល្គុន
+  Cheit = 4,        // ចេត្រ
+  Pisakh = 5,       // ពិសាខ
   Jesth = 6,        // ជេស្ឋ
-  Asath = 7,        // អាសាឍ
+  Asadh = 7,        // អាសាឍ
   Srap = 8,         // ស្រាពណ៍
-  Photrobot = 9,    // ភទ្របទ
+  Phatrabot = 9,    // ភទ្របទ
   Assoch = 10,      // អស្សុជ
-  Kadek = 11,       // កត្ដិក
-  BothmakAsath = 12,   // បឋមាសាឍ
-  TutiyakAsath = 13    // ទុតិយាសាឍ
+  Kadeuk = 11,       // កត្ដិក
+  Pathamasadh = 12,   // បឋមាសាឍ
+  Tutiyasadh = 13    // ទុតិយាសាឍ
 }
 
 export enum AnimalYear {
@@ -56,16 +56,16 @@ export enum AnimalYear {
 }
 
 export enum EraYear {
-  Samridhisak = 0,    // សំរឹទ្ធិស័ក
-  Ekasak = 1,         // ឯកស័ក
-  Tosak = 2,          // ទោស័ក
-  Tresak = 3,         // ត្រីស័ក
-  Chatvasak = 4,      // ចត្វាស័ក
-  Panchasak = 5,      // បញ្ចស័ក
-  Chhasak = 6,        // ឆស័ក
-  Saptasak = 7,       // សប្តស័ក
-  Atthasak = 8,       // អដ្ឋស័ក
-  Novvasak = 9        // នព្វស័ក
+  SamridhiSak = 0,    // សំរឹទ្ធិស័ក
+  AekSak = 1,         // ឯកស័ក
+  ToSak = 2,          // ទោស័ក
+  TreiSak = 3,         // ត្រីស័ក
+  ChattvaSak = 4,      // ចត្វាស័ក
+  PanchaSak = 5,      // បញ្ចស័ក
+  ChhaSak = 6,        // ឆស័ក
+  SappaSak = 7,       // សប្តស័ក
+  AtthaSak = 8,       // អដ្ឋស័ក
+  NappaSak = 9        // នព្វស័ក
 }
 
 export enum DayOfWeek {
@@ -531,7 +531,7 @@ function getNumberOfDaysInKhmerMonth(monthIndex: MonthIndex | number, beYear: nu
   if (idx === MonthIndex.Jesth && leapType === 2) { // ជេស្ឋ with leap day
     return 30;
   }
-  if (idx === MonthIndex.BothmakAsath || idx === MonthIndex.TutiyakAsath) { // បឋមាសាឍ, ទុតិយាសាឍ
+  if (idx === MonthIndex.Pathamasadh || idx === MonthIndex.Tutiyasadh) { // បឋមាសាឍ, ទុតិយាសាឍ
     return leapType === 1 ? 30 : 0;
   }
   // Alternating pattern: even months = 29 days, odd months = 30 days
@@ -551,11 +551,11 @@ function nextMonthOf(monthIndex: MonthIndex | number, beYear: number): MonthInde
   const idx = typeof monthIndex === 'number' ? monthIndex : monthIndex as number;
 
   if (idx === MonthIndex.Jesth && leapType === 1) { // ជេស្ឋ in leap month year
-    return MonthIndex.BothmakAsath; // បឋមាសាឍ
+    return MonthIndex.Pathamasadh; // បឋមាសាឍ
   }
-  if (idx === MonthIndex.Kadek) return MonthIndex.Mikasar; // កត្ដិក -> មិគសិរ
-  if (idx === MonthIndex.BothmakAsath) return MonthIndex.TutiyakAsath; // បឋមាសាឍ -> ទុតិយាសាឍ
-  if (idx === MonthIndex.TutiyakAsath) return MonthIndex.Srap; // ទុតិយាសាឍ -> ស្រាពណ៍
+  if (idx === MonthIndex.Kadeuk) return MonthIndex.Migasir; // កត្ដិក -> មិគសិរ
+  if (idx === MonthIndex.Pathamasadh) return MonthIndex.Tutiyasadh; // បឋមាសាឍ -> ទុតិយាសាឍ
+  if (idx === MonthIndex.Tutiyasadh) return MonthIndex.Srap; // ទុតិយាសាឍ -> ស្រាពណ៍
 
   return (idx + 1) as MonthIndex;
 }
@@ -564,10 +564,10 @@ function previousMonthOf(monthIndex: MonthIndex | number, beYear: number): Month
   const leapType = getLeapType(beYear);
   const idx = typeof monthIndex === 'number' ? monthIndex : monthIndex as number;
 
-  if (idx === MonthIndex.Mikasar) return MonthIndex.Kadek; // មិគសិរ -> កត្ដិក
-  if (idx === MonthIndex.Srap && leapType === 1) return MonthIndex.TutiyakAsath; // ស្រាពណ៍ -> ទុតិយាសាឍ (leap)
-  if (idx === MonthIndex.TutiyakAsath) return MonthIndex.BothmakAsath; // ទុតិយាសាឍ -> បឋមាសាឍ
-  if (idx === MonthIndex.BothmakAsath) return MonthIndex.Jesth; // បឋមាសាឍ -> ជេស្ឋ
+  if (idx === MonthIndex.Migasir) return MonthIndex.Kadeuk; // មិគសិរ -> កត្ដិក
+  if (idx === MonthIndex.Srap && leapType === 1) return MonthIndex.Tutiyasadh; // ស្រាពណ៍ -> ទុតិយាសាឍ (leap)
+  if (idx === MonthIndex.Tutiyasadh) return MonthIndex.Pathamasadh; // ទុតិយាសាឍ -> បឋមាសាឍ
+  if (idx === MonthIndex.Pathamasadh) return MonthIndex.Jesth; // បឋមាសាឍ -> ជេស្ឋ
 
   return (idx - 1) as MonthIndex;
 }
@@ -784,7 +784,7 @@ class KhmerDate {
         const newDay = KhmerDate.fromDayNumber(newDayNum);
 
         let newBeYear = result.beYear;
-        if (result.monthIndex === MonthIndex.Visakh) { // ពិសាខ
+        if (result.monthIndex === MonthIndex.Pisakh) { // ពិសាខ
           if (result.moonPhase === MoonPhase.Waxing && newDay.moonPhase === MoonPhase.Waning) {
             newBeYear++;
           }
@@ -795,7 +795,7 @@ class KhmerDate {
       } else {
         remaining -= (daysLeftInMonth + 1);
         const nextMonth = nextMonthOf(result.monthIndex, result.beYear);
-        const newBeYear = (result.monthIndex === MonthIndex.Chetr) ? result.beYear + 1 : result.beYear;
+        const newBeYear = (result.monthIndex === MonthIndex.Cheit) ? result.beYear + 1 : result.beYear;
         result = new KhmerDate(1, MoonPhase.Waxing, nextMonth, newBeYear); // Start at 1កើត
       }
     }
@@ -817,7 +817,7 @@ class KhmerDate {
         const newDay = KhmerDate.fromDayNumber(newDayNum);
 
         let newBeYear = result.beYear;
-        if (result.monthIndex === MonthIndex.Visakh) { // ពិសាខ
+        if (result.monthIndex === MonthIndex.Pisakh) { // ពិសាខ
           if (result.moonPhase === MoonPhase.Waning && newDay.moonPhase === MoonPhase.Waxing) {
             newBeYear--;
           }
@@ -828,7 +828,7 @@ class KhmerDate {
       } else {
         remaining -= (currentDayNum + 1);
         const prevMonth = previousMonthOf(result.monthIndex, result.beYear);
-        const newBeYear = (result.monthIndex === MonthIndex.Visakh) ? result.beYear - 1 : result.beYear;
+        const newBeYear = (result.monthIndex === MonthIndex.Pisakh) ? result.beYear - 1 : result.beYear;
         const daysInPrevMonth = getNumberOfDaysInKhmerMonth(prevMonth, newBeYear);
         const newDay = KhmerDate.fromDayNumber(daysInPrevMonth - 1);
         result = new KhmerDate(newDay.day, newDay.moonPhase, prevMonth, newBeYear);
@@ -857,7 +857,7 @@ function getMaybeBEYear(year: number, month: number): number {
   }
 }
 
-// Cache for Visakha Bochea dates by year
+// Cache for Pisakha Bochea dates by year
 const visakhaBocheaCache: Record<number, number> = {};
 
 // Cache for New Year Full Info
@@ -868,7 +868,7 @@ const newYearInfoCache: Record<number, NewYearFullInfo> = {};
  * BE year increases on ១រោច ខែពិសាខ (1st waning day of Pisakh = dayNumber 15 of month 5)
  * Returns timestamp in milliseconds at midnight of that day
  */
-function getVisakhaBochea(year: number, isSearching: boolean = false): number {
+function getPisakhaBochea(year: number, isSearching: boolean = false): number {
   if (visakhaBocheaCache[year]) {
     return visakhaBocheaCache[year];
   }
@@ -879,7 +879,7 @@ function getVisakhaBochea(year: number, isSearching: boolean = false): number {
     for (let searchDay = 1; searchDay <= daysInMonth; searchDay++) {
       // Avoid infinite recursion by using simplified BE year during search
       const result = gregorianToKhmerInternal(year, searchMonth, searchDay, 12, 0, 0, true);
-      if (result.khmer.monthIndex === MonthIndex.Visakh && result._khmerDateObj.getDayNumber() === 15) {
+      if (result.khmer.monthIndex === MonthIndex.Pisakh && result._khmerDateObj.getDayNumber() === 15) {
         // Found 1រោច Pisakh - return timestamp at midnight (start of BE year change day)
         // BE year changes at 00:00 on this day
         const timestamp = new Date(year, searchMonth - 1, searchDay, 0, 0, 0, 0).getTime();
@@ -982,7 +982,7 @@ function gregorianToKhmerInternal(
   } else {
     // Normal mode: compare against exact BE year transition datetime (1រោច Pisakh at 00:00)
     const inputTimestamp = new Date(year, month - 1, day, hour, minute, second).getTime();
-    const beYearTransitionTimestamp = getVisakhaBochea(year);
+    const beYearTransitionTimestamp = getPisakhaBochea(year);
 
     if (inputTimestamp >= beYearTransitionTimestamp) {
       // On or after 1រោច Pisakh (new BE year)
@@ -998,15 +998,15 @@ function gregorianToKhmerInternal(
   let animalYearIndex = ((beYear + 4) % 12 + 12) % 12;
 
   // Adjust Era and Animal Year based on Khmer New Year logic
-  // They should change at New Year, not wait for Visakha Bochea (which changes BE)
+  // They should change at New Year, not wait for Pisakha Bochea (which changes BE)
   if (!isSearching) {
     const newYearInfo = getNewYearFullInfo(year);
     const inputTimestamp = new Date(year, month - 1, day, hour, minute, second).getTime();
-    const visakhaBocheaTimestamp = getVisakhaBochea(year);
+    const visakhaBocheaTimestamp = getPisakhaBochea(year);
 
     // Animal Year changes at Moha Songkran (exact New Year time)
-    // Only apply manual increment if we are in the gap between New Year and Visakha Bochea
-    // (After Visakha Bochea, the BE year increments, so the formula based on BE automatically gives the new Animal Year)
+    // Only apply manual increment if we are in the gap between New Year and Pisakha Bochea
+    // (After Pisakha Bochea, the BE year increments, so the formula based on BE automatically gives the new Animal Year)
     if (inputTimestamp >= newYearInfo.newYearMoment.getTime() && inputTimestamp <= visakhaBocheaTimestamp) {
       animalYearIndex = (animalYearIndex + 1) % 12;
     }
@@ -1068,7 +1068,7 @@ function khmerToGregorian(day: number, moonPhase: MoonPhase | number, monthIndex
       for (let gDay = 1; gDay <= daysInMonth; gDay++) {
         // For BE year transition day (1រោច Pisakh) and the day before (15កើត Pisakh),
         // check multiple times during the day because BE year can change during this period
-        const isAroundBEYearChange = monthIndexNum === MonthIndex.Visakh &&
+        const isAroundBEYearChange = monthIndexNum === MonthIndex.Pisakh &&
           ((day === 15 && moonPhaseNum === MoonPhase.Waxing) || (day === 1 && moonPhaseNum === MoonPhase.Waning));
         const timesToCheck = isAroundBEYearChange
           ? [0, 6, 12, 18, 23] // Check at different hours

@@ -37,8 +37,8 @@ if (result.khmer.moonPhase === MoonPhase.Waxing) {
   console.log('✓ It is Waning Moon (រោច)');
 }
 
-if (result.khmer.monthIndex === MonthIndex.Mikasar) {
-  console.log('✓ It is Mikasar month (មិគសិរ)');
+if (result.khmer.monthIndex === MonthIndex.Migasir) {
+  console.log('✓ It is Migasir month (មិគសិរ)');
 } else {
   console.log(`  Current month: ${result.khmer.monthName}`);
 }
@@ -56,7 +56,7 @@ console.log('-'.repeat(80));
 const gregorianDate = momentkh.fromKhmer(
   15,                    // day
   MoonPhase.Waxing,     // moon phase (using enum)
-  MonthIndex.Visakh,    // month index (using enum)
+  MonthIndex.Pisakh,    // month index (using enum)
   2568                  // BE year
 );
 console.log('Input: 15កើត ខែពិសាខ ព.ស.2568');
@@ -69,7 +69,7 @@ console.log('-'.repeat(80));
 const gregorianDate2 = momentkh.fromKhmer(
   15,   // day
   0,    // moon phase (0 = Waxing)
-  5,    // month index (5 = Visakh)
+  5,    // month index (5 = Pisakh)
   2568  // BE year
 );
 console.log('Input: 15កើត ខែពិសាខ ព.ស.2568');
@@ -86,10 +86,10 @@ console.log('  Waning:', MoonPhase.Waning, '(រោច)');
 console.log();
 
 console.log('MonthIndex (selected):');
-console.log('  Mikasar:', MonthIndex.Mikasar, '(មិគសិរ)');
-console.log('  Visakh:', MonthIndex.Visakh, '(ពិសាខ)');
+console.log('  Migasir:', MonthIndex.Migasir, '(មិគសិរ)');
+console.log('  Pisakh:', MonthIndex.Pisakh, '(ពិសាខ)');
 console.log('  Jesth:', MonthIndex.Jesth, '(ជេស្ឋ)');
-console.log('  Asath:', MonthIndex.Asath, '(អាសាឍ)');
+console.log('  Asadh:', MonthIndex.Asadh, '(អាសាឍ)');
 console.log();
 
 console.log('AnimalYear (selected):');

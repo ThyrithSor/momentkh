@@ -71,7 +71,7 @@ function formatGregorianDate(date) {
 const testCategories = [
   { name: 'Random Khmer dates', count: 350 },
   { name: 'Round-trip validation', count: 100 },
-  { name: 'Edge case - Visakha Bochea dates', count: 30 },
+  { name: 'Edge case - Pisakha Bochea dates', count: 30 },
   { name: 'Edge case - Month transitions', count: 20 }
 ];
 
@@ -170,8 +170,8 @@ for (let i = 0; i < testCategories[1].count; i++) {
 }
 console.log(`   Completed: ${testCategories[1].count} tests`);
 
-// Category 3: Edge case - Visakha Bochea dates (30 tests)
-// Test 15កើត ពិសាខ (Visakha Bochea) for various BE years
+// Category 3: Edge case - Pisakha Bochea dates (30 tests)
+// Test 15កើត ពិសាខ (Pisakha Bochea) for various BE years
 console.log(`\n[3/${testCategories.length}] ${testCategories[2].name} (${testCategories[2].count} tests)...`);
 for (let i = 0; i < testCategories[2].count; i++) {
   totalTests++;
@@ -198,7 +198,7 @@ for (let i = 0; i < testCategories[2].count; i++) {
         failures.push({
           category: testCategories[2].name,
           khmerDate: formatKhmerDate({ day, moonPhase, monthIndex, beYear }),
-          error: 'Visakha Bochea round-trip mismatch',
+          error: 'Pisakha Bochea round-trip mismatch',
           result: formatGregorianDate(result),
           verifyKhmer: verifyKhmer.khmer
         });

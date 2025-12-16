@@ -47,7 +47,7 @@ function formatGregorianDate(date) {
 // Test categories
 const testCategories = [
   { name: 'Random dates', count: 400 },
-  { name: 'Edge cases - Visakha Bochea', count: 50 },
+  { name: 'Edge cases - Pisakha Bochea', count: 50 },
   { name: 'Edge cases - New Year period', count: 30 },
   { name: 'Leap year dates', count: 20 }
 ];
@@ -93,8 +93,8 @@ for (let i = 0; i < testCategories[0].count; i++) {
 }
 console.log(`   Completed: ${testCategories[0].count} tests`);
 
-// Category 2: Edge cases - Visakha Bochea dates (50 tests)
-// Test around the Visakha Bochea day (15th waxing Pisakh) where BE year changes
+// Category 2: Edge cases - Pisakha Bochea dates (50 tests)
+// Test around the Pisakha Bochea day (15th waxing Pisakh) where BE year changes
 console.log(`\n[2/${testCategories.length}] ${testCategories[1].name} (${testCategories[1].count} tests)...`);
 const visakhaBocheaYears = [];
 for (let i = 0; i < testCategories[1].count; i++) {
@@ -105,7 +105,7 @@ for (let i = 0; i < testCategories[1].count; i++) {
 for (const year of visakhaBocheaYears) {
   totalTests++;
 
-  // Test Visakha Bochea period (late April to late May)
+  // Test Pisakha Bochea period (late April to late May)
   const month = Math.random() > 0.5 ? 4 : 5;
   const day = Math.floor(Math.random() * 20) + 10; // Days 10-29
   const hour = Math.floor(Math.random() * 24);
