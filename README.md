@@ -87,14 +87,6 @@ console.log(newYear);
 npm install @thyrith/momentkh
 ```
 
-### Direct Download
-
-Download `momentkh.js` from the repository and include it in your project.
-
-```bash
-cp momentkh.js /path/to/your/project/
-```
-
 ### TypeScript
 
 Type definitions are included automatically when you install via NPM. For direct downloads, you can also use `momentkh.ts` or the compiled `.d.ts` files from the `dist/` folder.
@@ -107,7 +99,7 @@ Type definitions are included automatically when you install via NPM. For direct
 
 ```html
 <!-- Include the browser-compatible UMD bundle -->
-<script src="momentkh.js"></script>
+<script src="https://thyrithsor.github.io/momentkh/momentkh.js"></script>
 <script>
   // Convert today to Khmer
   const today = new Date();
@@ -1276,7 +1268,7 @@ for (let day = 20; day <= 25; day++) {
 
 MIT License - Same as original momentkh
 
-Copyright (c) 2024
+Copyright (c) 2025
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
@@ -1324,9 +1316,9 @@ node test_specific_dates.js
 
 ## 📞 Support
 
-- **Documentation:** See examples folder (`newYearMoment.js`, `index.html`)
 - **Issues:** [GitHub Issues](https://github.com/ThyrithSor/momentkh/issues)
 - **Comparison:** Check behavior against original momentkh for compatibility
+- **Comtact** [E-mail](me@thyrith.com)
 
 ---
 
