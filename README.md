@@ -1345,7 +1345,7 @@ node test_specific_dates.js
 
 - **Issues:** [GitHub Issues](https://github.com/ThyrithSor/momentkh/issues)
 - **Comparison:** Check behavior against original momentkh for compatibility
-- **Contact** [E-mail](me@thyrith.com)
+- **Contact:** [E-mail](mailto:me@thyrith.com)
 
 ---
 
