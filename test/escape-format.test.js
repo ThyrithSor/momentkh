@@ -82,6 +82,22 @@ try {
     console.log(`FAILURE: [[Day]]: formatted as "${result5}", expected "[Day]: "`);
   }
 
+  // Test Case 6: M[s] (Verify distinction between Ms token and M + escaped [s])
+  // M = Solar Month Name (e.g., April -> មេសា)
+  // [s] = Literal 's'
+  // Result should be "មេសាs" (assuming date in April)
+  // If it wrongly matched 'Ms' (Solar Month Abbreviation), it would be "មេសា" or "មស" (depending on abbrev).
+  
+  const result6 = format(khmerDate, 'M[s]');
+  console.log(`Format 'M[s]': ${result6}`);
+  // April in Khmer is មេសា (Mesa)
+  // So we expect "មេសាs"
+  if (result6.includes('s') && !result6.includes('[s]')) {
+     console.log('SUCCESS: M[s] formatted correctly containing literal "s"');
+  } else {
+     console.log(`FAILURE: M[s] formatted as "${result6}"`);
+  }
+
 } catch (e) {
   console.error('Error running test:', e);
 }

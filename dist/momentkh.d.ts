@@ -138,10 +138,18 @@ export interface Constants {
     LunarMonths: Record<string, number>;
     LunarMonthNames: string[];
     SolarMonthNames: string[];
+    SolarMonthAbbreviationNames: string[];
+    LunarMonthAbbreviationNames: string[];
     AnimalYearNames: string[];
+    AnimalYearEmojis: string[];
     SakNames: string[];
     WeekdayNames: string[];
+    WeekdayNamesShort: string[];
     MoonPhaseNames: string[];
+    MoonPhaseShort: string[];
+    MoonDaySymbols: string[];
+    KhmerNumerals: Record<string, string>;
+    khNewYearMoments: Record<string, string>;
 }
 declare class KhmerDate {
     day: number;
@@ -168,6 +176,7 @@ export declare const constants: {
     SolarMonthAbbreviationNames: string[];
     LunarMonthAbbreviationNames: string[];
     AnimalYearNames: string[];
+    AnimalYearEmojis: string[];
     SakNames: string[];
     WeekdayNames: string[];
     MoonPhaseNames: string[];
@@ -186,6 +195,7 @@ declare const _default: {
         SolarMonthAbbreviationNames: string[];
         LunarMonthAbbreviationNames: string[];
         AnimalYearNames: string[];
+        AnimalYearEmojis: string[];
         SakNames: string[];
         WeekdayNames: string[];
         MoonPhaseNames: string[];

@@ -4,7 +4,7 @@
 
 [🎮 **Live Demo Playground**](https://thyrithsor.github.io/momentkh/)
 
-[![Version](https://img.shields.io/badge/version-3.0.1-blue.svg)](https://github.com/ThyrithSor/momentkh)
+[![Version](https://img.shields.io/badge/version-3.0.2-blue.svg)](https://github.com/ThyrithSor/momentkh)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![No Dependencies](https://img.shields.io/badge/dependencies-none-success.svg)](https://github.com/ThyrithSor/momentkh)
 
@@ -99,7 +99,7 @@ Type definitions are included automatically when you install via NPM. For direct
 
 ```html
 <!-- Include the browser-compatible UMD bundle -->
-<script src="https://thyrithsor.github.io/momentkh/momentkh.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/ThyrithSor/momentkh@3.0.2/momentkh.js"></script>
 <script>
   // Convert today to Khmer
   const today = new Date();
@@ -873,10 +873,21 @@ Complete list of format tokens for the `format()` function:
 | `M`                    | ខែសុរិយគតិ        | Solar month name               | មករា, កុម្ភៈ, មេសា    |
 | **⏰ Year Components** |
 | `a`                    | ឆ្នាំសត្វ         | Animal year                    | ជូត, ឆ្លូវ, រោង       |
+| `as`                   | ឆ្នាំ (រូប)       | Animal year emoji              | 🐀, 🐂, 🐉            |
 | `e`                    | ស័ក               | Sak                            | ឯកស័ក, ទោស័ក          |
 | `b`                    | ព.ស.              | Buddhist Era year              | ២៥៦៨                  |
+| `br`                   | BE                | Buddhist Era year (Latin)      | 2568                  |
 | `c`                    | គ.ស.              | Common Era (Gregorian) year    | ២០២៤                  |
+| `cr`                   | CE                | Common Era year (Latin)        | 2024                  |
 | `j`                    | ច.ស.              | Jolak Sakaraj year             | ១៣៨៦                  |
+| `jr`                   | JS                | Jolak Sakaraj year (Latin)     | 1386                  |
+| **📅 Day Components**  |
+| `d`                    | ថ្ងៃទី            | Day of month                   | ១, ២, ១៤              |
+| `dr`                   | Day               | Day of month (Latin)           | 1, 2, 14              |
+| `D`                    | ថ្ងៃទី (មាន០)     | Day of month (padded)          | ០១, ០២, ១៤            |
+| `Dr`                   | Day (0)           | Day of month (padded Latin)    | 01, 02, 14            |
+| `W`                    | ថ្ងៃនៃសប្តាហ៍     | Day of week (full)             | អាទិត្យ, ចន្ទ         |
+| `w`                    | ថ្ងៃ (សង្ខេប)     | Day of week (short)            | អា, ច, អ              |
 
 **Format Examples:**
 
@@ -919,6 +930,11 @@ momentkh.constants.SolarMonthNames;
 momentkh.constants.AnimalYearNames;
 // ['ជូត', 'ឆ្លូវ', 'ខាល', 'ថោះ', 'រោង', 'ម្សាញ់',
 //  'មមី', 'មមែ', 'វក', 'រកា', 'ច', 'កុរ']
+
+// Animal year emojis array (indices 0-11)
+momentkh.constants.AnimalYearEmojis;
+// ['🐀', '🐂', '🐅', '🐇', '🐉', '🐍',
+//  '🐎', '🐐', '🐒', '🐓', '🐕', '🐖']
 
 // Sak names array (indices 0-9)
 momentkh.constants.SakNames;

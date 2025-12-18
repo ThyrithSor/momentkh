@@ -159,10 +159,18 @@ export interface Constants {
   LunarMonths: Record<string, number>;
   LunarMonthNames: string[];
   SolarMonthNames: string[];
+  SolarMonthAbbreviationNames: string[];
+  LunarMonthAbbreviationNames: string[];
   AnimalYearNames: string[];
+  AnimalYearEmojis: string[];
   SakNames: string[];
   WeekdayNames: string[];
+  WeekdayNamesShort: string[];
   MoonPhaseNames: string[];
+  MoonPhaseShort: string[];
+  MoonDaySymbols: string[];
+  KhmerNumerals: Record<string, string>;
+  khNewYearMoments: Record<string, string>;
 }
 
 // ============================================================================
@@ -201,6 +209,11 @@ const LunarMonthAbbreviationNames: string[] = [
 const AnimalYearNames: string[] = [
   'ជូត', 'ឆ្លូវ', 'ខាល', 'ថោះ', 'រោង', 'ម្សាញ់',
   'មមី', 'មមែ', 'វក', 'រកា', 'ច', 'កុរ'
+];
+
+const AnimalYearEmojis: string[] = [
+  '🐀', '🐂', '🐅', '🐇', '🐉', '🐍',
+  '🐎', '🐐', '🐒', '🐓', '🐕', '🐖'
 ];
 
 const SakNames: string[] = [
@@ -1250,18 +1263,24 @@ function formatKhmer(khmerData: KhmerConversionResult, formatString?: string): s
   const formatRules: Record<string, () => string | number> = {
     'W': () => khmerData.khmer.dayOfWeekName,
     'w': () => WeekdayNamesShort[khmerData.gregorian.dayOfWeek],
-    'd': () => khmerData.khmer.day,
-    'D': () => (khmerData.khmer.day < 10 ? '0' : '') + khmerData.khmer.day,
+    'd': () => toKhmerNumeral(khmerData.khmer.day),
+    'D': () => toKhmerNumeral((khmerData.khmer.day < 10 ? '0' : '') + khmerData.khmer.day),
+    'dr': () => khmerData.khmer.day,
+    'Dr': () => (khmerData.khmer.day < 10 ? '0' : '') + khmerData.khmer.day,
     'n': () => MoonPhaseShort[khmerData.khmer.moonPhase],
     'N': () => khmerData.khmer.moonPhaseName,
     'o': () => MoonDaySymbols[khmerData._khmerDateObj.getDayNumber()],
     'm': () => khmerData.khmer.monthName,
     'M': () => SolarMonthNames[khmerData.gregorian.month - 1],
     'a': () => khmerData.khmer.animalYearName,
+    'as': () => AnimalYearEmojis[khmerData.khmer.animalYear],
     'e': () => khmerData.khmer.sakName,
-    'b': () => khmerData.khmer.beYear,
-    'c': () => khmerData.gregorian.year,
-    'j': () => khmerData.khmer.jsYear,
+    'b': () => toKhmerNumeral(khmerData.khmer.beYear),
+    'br': () => khmerData.khmer.beYear,
+    'c': () => toKhmerNumeral(khmerData.gregorian.year),
+    'cr': () => khmerData.gregorian.year,
+    'j': () => toKhmerNumeral(khmerData.khmer.jsYear),
+    'jr': () => khmerData.khmer.jsYear,
     'Ms': () => SolarMonthAbbreviationNames[khmerData.gregorian.month - 1],
     'ms': () => LunarMonthAbbreviationNames[khmerData.khmer.monthIndex]
   };
@@ -1275,7 +1294,7 @@ function formatKhmer(khmerData: KhmerConversionResult, formatString?: string): s
       return escaped;
     }
     const value = formatRules[token]();
-    return toKhmerNumeral(String(value));
+    return String(value);
   });
 
   return result;
@@ -1339,6 +1358,7 @@ export const constants = {
   SolarMonthAbbreviationNames,
   LunarMonthAbbreviationNames,
   AnimalYearNames,
+  AnimalYearEmojis,
   SakNames,
   WeekdayNames,
   MoonPhaseNames

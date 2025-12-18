@@ -24,6 +24,7 @@ const umdBundle = `(function (root, factory) {
     root.MoonPhase = exp.MoonPhase;
     root.MonthIndex = exp.MonthIndex;
     root.AnimalYear = exp.AnimalYear;
+    root.AnimalYearEmojis = exp.AnimalYearEmojis;
     root.Sak = exp.Sak;
     root.DayOfWeek = exp.DayOfWeek;
   }
