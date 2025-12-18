@@ -5,7 +5,7 @@
  */
 
 const momentkh = require('@thyrith/momentkh');
-const { MoonPhase, MonthIndex, AnimalYear, EraYear, DayOfWeek } = momentkh;
+const { MoonPhase, MonthIndex, AnimalYear, Sak, DayOfWeek } = momentkh;
 
 console.log('='.repeat(80));
 console.log('MOMENTKH 3.0 - ENUM USAGE EXAMPLES');
@@ -23,7 +23,7 @@ console.log('  Day:', result.khmer.day);
 console.log('  Moon Phase (enum):', result.khmer.moonPhase, '→', result.khmer.moonPhaseName);
 console.log('  Month Index (enum):', result.khmer.monthIndex, '→', result.khmer.monthName);
 console.log('  Animal Year (enum):', result.khmer.animalYear, '→', result.khmer.animalYearName);
-console.log('  Era Year (enum):', result.khmer.eraYear, '→', result.khmer.eraYearName);
+console.log('  Sak (enum):', result.khmer.sak, '→', result.khmer.sakName);
 console.log('  Day of Week (enum):', result.khmer.dayOfWeek, '→', result.khmer.dayOfWeekName);
 console.log('  BE Year:', result.khmer.beYear);
 console.log();

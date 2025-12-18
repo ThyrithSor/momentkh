@@ -31,7 +31,7 @@ console.log(`  Day: ${khmer.khmer.day}${khmer.khmer.moonPhase === 0 ? 'កើត
 console.log(`  Month: ${khmer.khmer.monthName}`);
 console.log(`  BE Year: ${khmer.khmer.beYear}`);
 console.log(`  Animal Year: ${khmer.khmer.animalYear}`);
-console.log(`  Era Year: ${khmer.khmer.eraYear}`);
+console.log(`  Sak: ${khmer.khmer.sak}`);
 console.log(`  Weekday: ${khmer.khmer.dayOfWeek}`);
 console.log();
 

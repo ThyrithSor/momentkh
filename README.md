@@ -54,7 +54,7 @@ console.log(newYear);
 - [Understanding Khmer Calendar](#-understanding-khmer-calendar)
   - [Buddhist Era (BE) Year](#buddhist-era-be-year)
   - [Animal Year](#animal-year)
-  - [Era Year (Sak)](#era-year-sak)
+  - [Sak](#sak-year-sak)
   - [When Each Year Type Increases](#when-each-year-type-increases)
 - [Format Codes](#-format-codes)
 - [Constants](#-constants)
@@ -68,7 +68,7 @@ console.log(newYear);
 
 - ✅ **Zero Dependencies** - Pure JavaScript, no external libraries required
 - ✅ **TypeScript Support** - Full type definitions included for excellent IDE experience
-- ✅ **Type-Safe Enums** - NEW in v3.0! Use enums for moonPhase, monthIndex, animalYear, eraYear, and dayOfWeek
+- ✅ **Type-Safe Enums** - NEW in v3.0! Use enums for moonPhase, monthIndex, animalYear, sak, and dayOfWeek
 - ✅ **Bidirectional Conversion** - Convert between Gregorian ↔ Khmer Lunar dates
 - ✅ **Accurate Calculations** - Based on traditional Khmer astronomical algorithms
 - ✅ **Khmer New Year** - Precise calculation of Moha Songkran timing
@@ -147,7 +147,7 @@ import momentkh, {
   MoonPhase,
   MonthIndex,
   AnimalYear,
-  EraYear,
+  Sak,
   DayOfWeek,
 } from "@thyrith/momentkh";
 
@@ -203,7 +203,7 @@ const monthName = momentkh.constants.LunarMonthNames[4]; // "ចេត្រ"
 - 🌙 `MoonPhase` - Waxing (កើត) and Waning (រោច)
 - 📅 `MonthIndex` - All 14 Khmer lunar months
 - 🐉 `AnimalYear` - All 12 animal years
-- ⭐ `EraYear` - All 10 era years
+- ⭐ `Sak` - All 10 Saks
 - 📆 `DayOfWeek` - Sunday through Saturday
 
 ---
@@ -247,8 +247,8 @@ Converts a Gregorian (Western) date to a Khmer Lunar date.
     jsYear: 1386,                // Number: Jolak Sakaraj (Chula Sakaraj) year
     animalYear: 4,               // AnimalYear enum: 0-11 (NEW in v3.0)
     animalYearName: 'រោង',       // String: Animal year name
-    eraYear: 6,                  // EraYear enum: 0-9 (NEW in v3.0)
-    eraYearName: 'ឆស័ក',         // String: Era/Sak name
+    sak: 6,                  // Sak enum: 0-9 (NEW in v3.0)
+    sakName: 'ឆស័ក',         // String: Sak name
     dayOfWeek: 0,                // DayOfWeek enum: 0=Sunday, 6=Saturday (NEW in v3.0)
     dayOfWeekName: 'អាទិត្យ'     // String: Khmer weekday name
   },
@@ -442,8 +442,13 @@ Formats a Khmer date object into a string with optional custom formatting.
 **Default Format:**
 
 ```
-ថ្ងៃ{weekday} {day}{moonPhase} ខែ{month} ឆ្នាំ{animalYear} {eraYear} ពុទ្ធសករាជ {beYear}
+ថ្ងៃ{weekday} {day}{moonPhase} ខែ{month} ឆ្នាំ{animalYear} {sak} ពុទ្ធសករាជ {beYear}
 ```
+
+**Escaping Characters:**
+To escape characters in the format string (so they are not interpreted as format codes), wrap them in square brackets `[]`.
+
+Example: `[Week] w` -> "Week អា"
 
 **Returns:** String (formatted Khmer date)
 
@@ -465,6 +470,10 @@ console.log(momentkh.format(khmer, "c/M/D"));
 
 console.log(momentkh.format(khmer, "ថ្ងៃw dN m ឆ្នាំa e ព.ស.b"));
 // ថ្ងៃអា ៦កើត ចេត្រ ឆ្នាំរោង ឆស័ក ព.ស.២៥៦៨
+
+// Escaping characters (use brackets [])
+console.log(momentkh.format(khmer, "[Day:] d [Month:] m"));
+// Day: ៦ Month: ចេត្រ
 ```
 
 ---
@@ -530,23 +539,23 @@ AnimalYear.Cho; // 10 - 🐕 ច (Dog)
 AnimalYear.Kor; // 11 - 🐖 កុរ (Pig)
 ```
 
-#### ⭐ EraYear
+#### ⭐ Sak
 
-The 10 era years (ស័ក) cycle.
+The 10 Saks (ស័ក) cycle.
 
 ```javascript
-const { EraYear } = momentkh;
+const { Sak } = momentkh;
 
-EraYear.SamridhiSak; // 0 - 🔟 សំរឹទ្ធិស័ក
-EraYear.AekSak; // 1 - 1️⃣ ឯកស័ក
-EraYear.ToSak; // 2 - 2️⃣ ទោស័ក
-EraYear.TreiSak; // 3 - 3️⃣ ត្រីស័ក
-EraYear.ChattvaSak; // 4 - 4️⃣ ចត្វាស័ក
-EraYear.PanchaSak; // 5 - 5️⃣ បញ្ចស័ក
-EraYear.ChhaSak; // 6 - 6️⃣ ឆស័ក
-EraYear.SappaSak; // 7 - 7️⃣ សប្តស័ក
-EraYear.AtthaSak; // 8 - 8️⃣ អដ្ឋស័ក
-EraYear.NappaSak; // 9 - 9️⃣ នព្វស័ក
+Sak.SamridhiSak; // 0 - 🔟 សំរឹទ្ធិស័ក
+Sak.AekSak; // 1 - 1️⃣ ឯកស័ក
+Sak.ToSak; // 2 - 2️⃣ ទោស័ក
+Sak.TreiSak; // 3 - 3️⃣ ត្រីស័ក
+Sak.ChattvaSak; // 4 - 4️⃣ ចត្វាស័ក
+Sak.PanchaSak; // 5 - 5️⃣ បញ្ចស័ក
+Sak.ChhaSak; // 6 - 6️⃣ ឆស័ក
+Sak.SappaSak; // 7 - 7️⃣ សប្តស័ក
+Sak.AtthaSak; // 8 - 8️⃣ អដ្ឋស័ក
+Sak.NappaSak; // 9 - 9️⃣ នព្វស័ក
 ```
 
 #### 📆 DayOfWeek
@@ -779,13 +788,13 @@ console.log(at.khmer.animalYear); // 'រកា' (Rooster) - Changed!
 
 ---
 
-### Era Year (Sak)
+### Sak
 
 **Full Name:** ស័ក (Sak, Era)
 **Cycle:** 10 years
 **When it increases:** At **midnight (00:00) of the last day** of Khmer New Year celebration (Lerng Sak - ថ្ងៃឡើងស័ក)
 
-**The 10 Eras (in order):**
+**The 10 Saks (in order):**
 | Index | Khmer | Romanization |
 |-------|-------|--------------|
 | 0 | សំរឹទ្ធិស័ក | Samridhi Sak |
@@ -803,19 +812,19 @@ console.log(at.khmer.animalYear); // 'រកា' (Rooster) - Changed!
 
 - 🎉 **Day 1:** Moha Songkran (មហាសង្រ្កាន្ត) - New Year's Day
 - 🎊 **Day 2:** Virak Wanabat (វីរៈវ័នបត) - Second day
-- ⭐ **Day 3 or 4:** Lerng Sak (ថ្ងៃឡើងស័ក) - Last day & Era change day
+- ⭐ **Day 3 or 4:** Lerng Sak (ថ្ងៃឡើងស័ក) - Last day & Sak change day
 
 **Example:**
 
 ```javascript
 // 2024 New Year is on April 13, 22:24
-// Lerng Sak (Era change) is typically 3-4 days later at midnight
+// Lerng Sak (Sak change) is typically 3-4 days later at midnight
 
 const newYearDay = momentkh.fromGregorian(2024, 4, 13, 23, 0);
-console.log(newYearDay.khmer.eraYear); // 'ឆស័ក' (still old era)
+console.log(newYearDay.khmer.sak); // 'ឆស័ក' (still old sak)
 
 const lerngSakDay = momentkh.fromGregorian(2024, 4, 17, 0, 0); // Midnight of Lerng Sak
-console.log(lerngSakDay.khmer.eraYear); // 'សប្តស័ក' (new era!)
+console.log(lerngSakDay.khmer.sak); // 'សប្តស័ក' (new sak!)
 ```
 
 ---
@@ -828,16 +837,16 @@ console.log(lerngSakDay.khmer.eraYear); // 'សប្តស័ក' (new era!)
 | --------------- | ------------------------ | -------------------- |
 | **BE Year**     | 00:00 នៅថ្ងៃ១រោច ខែពិសាខ | May 23, 2024 00:00   |
 | **Animal Year** | ម៉ោង និង នាទីទេវតាចុះ    | April 13, 2024 22:17 |
-| **Era Year**    | 00:00 នៅថ្ងៃឡើងស័ក       | April 16, 2024 00:00 |
+| **Sak**         | 00:00 នៅថ្ងៃឡើងស័ក       | April 16, 2024 00:00 |
 
 **Visual Timeline for 2024:**
 
 ```
-April 13, 22:23 → BE 2567, Monkey (វក), Old Era (ឆស័ក)
-April 13, 22:24 → BE 2567, Rooster (រកា), Old Era (ឆស័ក) ← Animal Year changes
-April 17, 00:00 → BE 2567, Rooster (រកា), New Era (សប្តស័ក) ← Era changes
-May 22, 23:59   → BE 2567, Rooster (រកា), New Era (សប្តស័ក)
-May 23, 00:00   → BE 2568, Rooster (រកា), New Era (សប្តស័ក) ← BE Year changes
+April 13, 22:23 → BE 2567, Monkey (វក), Old Sak (ឆស័ក)
+April 13, 22:24 → BE 2567, Rooster (រកា), Old Sak (ឆស័ក) ← Animal Year changes
+April 17, 00:00 → BE 2567, Rooster (រកា), New Sak (សប្តស័ក) ← Sak changes
+May 22, 23:59   → BE 2567, Rooster (រកា), New Sak (សប្តស័ក)
+May 23, 00:00   → BE 2568, Rooster (រកា), New Sak (សប្តស័ក) ← BE Year changes
 ```
 
 ---
@@ -846,26 +855,28 @@ May 23, 00:00   → BE 2568, Rooster (រកា), New Era (សប្តស័ក
 
 Complete list of format tokens for the `format()` function:
 
-| Token                  | Output            | Description                 | Example               |
-| ---------------------- | ----------------- | --------------------------- | --------------------- |
+| Token                  | Output            | Description                    | Example               |
+| ---------------------- | ----------------- | ------------------------------ | --------------------- |
 | **📅 Date Components** |
-| `W`                    | ថ្ងៃនៃសប្តាហ៍ពេញ  | Weekday name (full)         | អាទិត្យ, ចន្ទ, អង្គារ |
-| `w`                    | ថ្ងៃនៃសប្តាហ៍ខ្លី | Weekday name (short)        | អា, ច, អ              |
-| `d`                    | ថ្ងៃទី            | Lunar day number            | ១, ៥, ១៥              |
-| `D`                    | ថ្ងៃទី (២ខ្ទង់)   | Lunar day (zero-padded)     | ០១, ០៥, ១៥            |
+| `W`                    | ថ្ងៃនៃសប្តាហ៍ពេញ  | Weekday name (full)            | អាទិត្យ, ចន្ទ, អង្គារ |
+| `w`                    | ថ្ងៃនៃសប្តាហ៍ខ្លី | Weekday name (short)           | អា, ច, អ              |
+| `d`                    | ថ្ងៃទី            | Lunar day number               | ១, ៥, ១៥              |
+| `D`                    | ថ្ងៃទី (២ខ្ទង់)   | Lunar day (zero-padded)        | ០១, ០៥, ១៥            |
 | **🌙 Moon Phase**      |
-| `n`                    | កើត/រោច (ខ្លី)    | Moon phase (short)          | ក, រ                  |
-| `N`                    | កើត/រោច (ពេញ)     | Moon phase (full)           | កើត, រោច              |
-| `o`                    | និមិត្តសញ្ញា      | Moon day symbol             | ᧡, ᧢, ᧣ ... ᧿         |
+| `n`                    | កើត/រោច (ខ្លី)    | Moon phase (short)             | ក, រ                  |
+| `N`                    | កើត/រោច (ពេញ)     | Moon phase (full)              | កើត, រោច              |
+| `o`                    | និមិត្តសញ្ញា      | Moon day symbol                | ᧡, ᧢, ᧣ ... ᧿         |
 | **📆 Month Names**     |
-| `m`                    | ខែចន្ទគតិ         | Lunar month name            | មិគសិរ, បុស្ស, ចេត្រ  |
-| `M`                    | ខែសុរិយគតិ        | Solar month name            | មករា, កុម្ភៈ, មេសា    |
+| `m`                    | ខែចន្ទគតិ         | Lunar month name               | មិគសិរ, បុស្ស, ចេត្រ  |
+| `ms`                   | ខែ (សង្ខេប)       | Lunar month name (abbreviated) | មិ, បុ                |
+| `Ms`                   | ខែ (សង្ខេប)       | Solar month name (abbreviated) | មក, កម                |
+| `M`                    | ខែសុរិយគតិ        | Solar month name               | មករា, កុម្ភៈ, មេសា    |
 | **⏰ Year Components** |
-| `a`                    | ឆ្នាំសត្វ         | Animal year                 | ជូត, ឆ្លូវ, រោង       |
-| `e`                    | ស័ក               | Era year                    | ឯកស័ក, ទោស័ក          |
-| `b`                    | ព.ស.              | Buddhist Era year           | ២៥៦៨                  |
-| `c`                    | គ.ស.              | Common Era (Gregorian) year | ២០២៤                  |
-| `j`                    | ច.ស.              | Jolak Sakaraj year          | ១៣៨៦                  |
+| `a`                    | ឆ្នាំសត្វ         | Animal year                    | ជូត, ឆ្លូវ, រោង       |
+| `e`                    | ស័ក               | Sak                            | ឯកស័ក, ទោស័ក          |
+| `b`                    | ព.ស.              | Buddhist Era year              | ២៥៦៨                  |
+| `c`                    | គ.ស.              | Common Era (Gregorian) year    | ២០២៤                  |
+| `j`                    | ច.ស.              | Jolak Sakaraj year             | ១៣៨៦                  |
 
 **Format Examples:**
 
@@ -909,8 +920,8 @@ momentkh.constants.AnimalYearNames;
 // ['ជូត', 'ឆ្លូវ', 'ខាល', 'ថោះ', 'រោង', 'ម្សាញ់',
 //  'មមី', 'មមែ', 'វក', 'រកា', 'ច', 'កុរ']
 
-// Era year names array (indices 0-9)
-momentkh.constants.EraYearNames;
+// Sak names array (indices 0-9)
+momentkh.constants.SakNames;
 // ['សំរឹទ្ធិស័ក', 'ឯកស័ក', 'ទោស័ក', 'ត្រីស័ក', 'ចត្វាស័ក',
 //  'បញ្ចស័ក', 'ឆស័ក', 'សប្តស័ក', 'អដ្ឋស័ក', 'នព្វស័ក']
 
@@ -919,7 +930,7 @@ momentkh.constants.WeekdayNames;
 // ['អាទិត្យ', 'ចន្ទ', 'អង្គារ', 'ពុធ', 'ព្រហស្បតិ៍', 'សុក្រ', 'សៅរ៍']
 
 // Moon phase names array (indices 0-1)
-momentkh.constants.MoonStatusNames;
+momentkh.constants.MoonPhaseNames;
 // ['កើត', 'រោច']
 ```
 
@@ -1120,7 +1131,7 @@ console.log(
 );
 console.log("BE Year:", khmer.khmer.beYear);
 console.log("Animal Year:", khmer.khmer.animalYear);
-console.log("Era:", khmer.khmer.eraYear);
+console.log("Sak:", khmer.khmer.sak);
 console.log("Month:", khmer.khmer.monthName);
 console.log(
   "Day:",
@@ -1131,7 +1142,7 @@ console.log(
 // Gregorian: 14/4/2024
 // BE Year: 2568
 // Animal Year: រោង
-// Era: ឆស័ក
+// Sak: ឆស័ក
 // Month: ចេត្រ
 // Day: 6កើត
 ```
@@ -1318,9 +1329,9 @@ node test_specific_dates.js
 
 - **Issues:** [GitHub Issues](https://github.com/ThyrithSor/momentkh/issues)
 - **Comparison:** Check behavior against original momentkh for compatibility
-- **Comtact** [E-mail](me@thyrith.com)
+- **Contact** [E-mail](me@thyrith.com)
 
 ---
 
-**Version:** 3.0.1
+**Version:** 3.0.2
 **Last Updated:** December 2025

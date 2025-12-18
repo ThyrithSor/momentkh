@@ -12,7 +12,7 @@
     root.MoonPhase = exp.MoonPhase;
     root.MonthIndex = exp.MonthIndex;
     root.AnimalYear = exp.AnimalYear;
-    root.EraYear = exp.EraYear;
+    root.Sak = exp.Sak;
     root.DayOfWeek = exp.DayOfWeek;
   }
 }(typeof self !== 'undefined' ? self : this, function () {
@@ -35,7 +35,7 @@
  * @license MIT
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.constants = exports.DayOfWeek = exports.EraYear = exports.AnimalYear = exports.MonthIndex = exports.MoonPhase = void 0;
+exports.constants = exports.DayOfWeek = exports.Sak = exports.AnimalYear = exports.MonthIndex = exports.MoonPhase = void 0;
 exports.fromGregorian = fromGregorian;
 exports.fromKhmer = fromKhmer;
 exports.getNewYear = getNewYear;
@@ -83,19 +83,19 @@ var AnimalYear;
     AnimalYear[AnimalYear["Cho"] = 10] = "Cho";
     AnimalYear[AnimalYear["Kor"] = 11] = "Kor"; // កុរ - Pig
 })(AnimalYear || (exports.AnimalYear = AnimalYear = {}));
-var EraYear;
-(function (EraYear) {
-    EraYear[EraYear["SamridhiSak"] = 0] = "SamridhiSak";
-    EraYear[EraYear["AekSak"] = 1] = "AekSak";
-    EraYear[EraYear["ToSak"] = 2] = "ToSak";
-    EraYear[EraYear["TreiSak"] = 3] = "TreiSak";
-    EraYear[EraYear["ChattvaSak"] = 4] = "ChattvaSak";
-    EraYear[EraYear["PanchaSak"] = 5] = "PanchaSak";
-    EraYear[EraYear["ChhaSak"] = 6] = "ChhaSak";
-    EraYear[EraYear["SappaSak"] = 7] = "SappaSak";
-    EraYear[EraYear["AtthaSak"] = 8] = "AtthaSak";
-    EraYear[EraYear["NappaSak"] = 9] = "NappaSak"; // នព្វស័ក
-})(EraYear || (exports.EraYear = EraYear = {}));
+var Sak;
+(function (Sak) {
+    Sak[Sak["SamridhiSak"] = 0] = "SamridhiSak";
+    Sak[Sak["AekSak"] = 1] = "AekSak";
+    Sak[Sak["ToSak"] = 2] = "ToSak";
+    Sak[Sak["TreiSak"] = 3] = "TreiSak";
+    Sak[Sak["ChattvaSak"] = 4] = "ChattvaSak";
+    Sak[Sak["PanchaSak"] = 5] = "PanchaSak";
+    Sak[Sak["ChhaSak"] = 6] = "ChhaSak";
+    Sak[Sak["SappaSak"] = 7] = "SappaSak";
+    Sak[Sak["AtthaSak"] = 8] = "AtthaSak";
+    Sak[Sak["NappaSak"] = 9] = "NappaSak"; // នព្វស័ក
+})(Sak || (exports.Sak = Sak = {}));
 var DayOfWeek;
 (function (DayOfWeek) {
     DayOfWeek[DayOfWeek["Sunday"] = 0] = "Sunday";
@@ -124,11 +124,20 @@ const SolarMonthNames = [
     'មករា', 'កុម្ភៈ', 'មីនា', 'មេសា', 'ឧសភា', 'មិថុនា',
     'កក្កដា', 'សីហា', 'កញ្ញា', 'តុលា', 'វិច្ឆិកា', 'ធ្នូ'
 ];
+const SolarMonthAbbreviationNames = [
+    'មក', 'កម', 'មន', 'មស', 'ឧស', 'មថ',
+    'កដ', 'សហ', 'កញ', 'តល', 'វក', 'ធន'
+];
+const LunarMonthAbbreviationNames = [
+    'មិ', 'បុ', 'មា', 'ផល', 'ចេ', 'ពិ',
+    'ជេ', 'អា', 'ស្រ', 'ភ', 'អ', 'ក',
+    'បឋ', 'ទុតិ'
+];
 const AnimalYearNames = [
     'ជូត', 'ឆ្លូវ', 'ខាល', 'ថោះ', 'រោង', 'ម្សាញ់',
     'មមី', 'មមែ', 'វក', 'រកា', 'ច', 'កុរ'
 ];
-const EraYearNames = [
+const SakNames = [
     'សំរឹទ្ធិស័ក', 'ឯកស័ក', 'ទោស័ក', 'ត្រីស័ក', 'ចត្វាស័ក',
     'បញ្ចស័ក', 'ឆស័ក', 'សប្តស័ក', 'អដ្ឋស័ក', 'នព្វស័ក'
 ];
@@ -136,8 +145,8 @@ const WeekdayNames = [
     'អាទិត្យ', 'ចន្ទ', 'អង្គារ', 'ពុធ', 'ព្រហស្បតិ៍', 'សុក្រ', 'សៅរ៍'
 ];
 const WeekdayNamesShort = ['អា', 'ច', 'អ', 'ព', 'ព្រ', 'សុ', 'ស'];
-const MoonStatusNames = ['កើត', 'រោច'];
-const MoonStatusShort = ['ក', 'រ'];
+const MoonPhaseNames = ['កើត', 'រោច'];
+const MoonPhaseShort = ['ក', 'រ'];
 const MoonDaySymbols = [
     '᧡', '᧢', '᧣', '᧤', '᧥', '᧦', '᧧', '᧨', '᧩', '᧪',
     '᧫', '᧬', '᧭', '᧮', '᧯', '᧱', '᧲', '᧳', '᧴', '᧵',
@@ -677,7 +686,7 @@ class KhmerDate {
         return result;
     }
     toString() {
-        return `${this.day}${MoonStatusNames[this.moonPhase]} ខែ${LunarMonthNames[this.monthIndex]} ព.ស.${this.beYear}`;
+        return `${this.day}${MoonPhaseNames[this.moonPhase]} ខែ${LunarMonthNames[this.monthIndex]} ព.ស.${this.beYear}`;
     }
 }
 // ============================================================================
@@ -828,7 +837,7 @@ function gregorianToKhmerInternal(year, month, day, hour = 0, minute = 0, second
             jsYear++;
         }
     }
-    const eraYearIndex = ((jsYear % 10) + 10) % 10;
+    const sakIndex = ((jsYear % 10) + 10) % 10;
     const dayOfWeek = getDayOfWeek(year, month, day);
     const khmerDate = new KhmerDate(khmerDayInfo.day, khmerDayInfo.moonPhase, khmerMonth, beYear);
     return {
@@ -836,15 +845,15 @@ function gregorianToKhmerInternal(year, month, day, hour = 0, minute = 0, second
         khmer: {
             day: khmerDayInfo.day,
             moonPhase: khmerDayInfo.moonPhase,
-            moonPhaseName: MoonStatusNames[khmerDayInfo.moonPhase],
+            moonPhaseName: MoonPhaseNames[khmerDayInfo.moonPhase],
             monthIndex: khmerMonth,
             monthName: LunarMonthNames[khmerMonth],
             beYear: beYear,
             jsYear: jsYear,
             animalYear: animalYearIndex,
             animalYearName: AnimalYearNames[animalYearIndex],
-            eraYear: eraYearIndex,
-            eraYearName: EraYearNames[eraYearIndex],
+            sak: sakIndex,
+            sakName: SakNames[sakIndex],
             dayOfWeek: dayOfWeek,
             dayOfWeekName: WeekdayNames[dayOfWeek]
         },
@@ -996,7 +1005,7 @@ function formatKhmer(khmerData, formatString) {
         // Default format
         const { khmer } = khmerData;
         const moonDay = `${khmer.day}${khmer.moonPhaseName}`;
-        return toKhmerNumeral(`ថ្ងៃ${khmer.dayOfWeekName} ${moonDay} ខែ${khmer.monthName} ឆ្នាំ${khmer.animalYearName} ${khmer.eraYearName} ពុទ្ធសករាជ ${khmer.beYear}`);
+        return toKhmerNumeral(`ថ្ងៃ${khmer.dayOfWeekName} ${moonDay} ខែ${khmer.monthName} ឆ្នាំ${khmer.animalYearName} ${khmer.sakName} ពុទ្ធសករាជ ${khmer.beYear}`);
     }
     // Custom format
     const formatRules = {
@@ -1004,20 +1013,27 @@ function formatKhmer(khmerData, formatString) {
         'w': () => WeekdayNamesShort[khmerData.gregorian.dayOfWeek],
         'd': () => khmerData.khmer.day,
         'D': () => (khmerData.khmer.day < 10 ? '0' : '') + khmerData.khmer.day,
-        'n': () => MoonStatusShort[khmerData.khmer.moonPhase],
+        'n': () => MoonPhaseShort[khmerData.khmer.moonPhase],
         'N': () => khmerData.khmer.moonPhaseName,
         'o': () => MoonDaySymbols[khmerData._khmerDateObj.getDayNumber()],
         'm': () => khmerData.khmer.monthName,
         'M': () => SolarMonthNames[khmerData.gregorian.month - 1],
         'a': () => khmerData.khmer.animalYearName,
-        'e': () => khmerData.khmer.eraYearName,
+        'e': () => khmerData.khmer.sakName,
         'b': () => khmerData.khmer.beYear,
         'c': () => khmerData.gregorian.year,
-        'j': () => khmerData.khmer.jsYear
+        'j': () => khmerData.khmer.jsYear,
+        'Ms': () => SolarMonthAbbreviationNames[khmerData.gregorian.month - 1],
+        'ms': () => LunarMonthAbbreviationNames[khmerData.khmer.monthIndex]
     };
-    const regex = new RegExp(Object.keys(formatRules).join('|'), 'g');
-    const result = formatString.replace(regex, match => {
-        const value = formatRules[match]();
+    // Sort keys by length descending to ensure longer tokens (like 'Ms', 'ms') are matched before shorter ones (like 'M', 'm')
+    const sortedKeys = Object.keys(formatRules).sort((a, b) => b.length - a.length);
+    const regex = new RegExp(`\\[([^\\]]+)\\]|(${sortedKeys.join('|')})`, 'g');
+    const result = formatString.replace(regex, (match, escaped, token) => {
+        if (escaped) {
+            return escaped;
+        }
+        const value = formatRules[token]();
         return toKhmerNumeral(String(value));
     });
     return result;
@@ -1063,10 +1079,12 @@ exports.constants = {
     LunarMonths,
     LunarMonthNames,
     SolarMonthNames,
+    SolarMonthAbbreviationNames,
+    LunarMonthAbbreviationNames,
     AnimalYearNames,
-    EraYearNames,
+    SakNames,
     WeekdayNames,
-    MoonStatusNames
+    MoonPhaseNames
 };
 // Default export - aggregate all exports for convenience
 exports.default = {
@@ -1080,7 +1098,7 @@ exports.default = {
     MoonPhase,
     MonthIndex,
     AnimalYear,
-    EraYear,
+    Sak,
     DayOfWeek
 };
 

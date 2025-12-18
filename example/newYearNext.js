@@ -39,7 +39,7 @@ console.log('Khmer Calendar Information:');
 console.log(`  Khmer Date: ${momentkh.format(khmerNewYear, 'dN ខែm')}`);
 console.log(`  BE Year: ${khmerNewYear.khmer.beYear}`);
 console.log(`  Animal Year: ${khmerNewYear.khmer.animalYear}`);
-console.log(`  Era Year: ${khmerNewYear.khmer.eraYear}`);
+console.log(`  Sak: ${khmerNewYear.khmer.sak}`);
 console.log(`  Weekday: ${khmerNewYear.khmer.dayOfWeek}`);
 console.log();
 

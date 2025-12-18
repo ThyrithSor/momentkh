@@ -45,7 +45,7 @@ export declare enum AnimalYear {
     Cho = 10,// ច - Dog
     Kor = 11
 }
-export declare enum EraYear {
+export declare enum Sak {
     SamridhiSak = 0,// សំរឹទ្ធិស័ក
     AekSak = 1,// ឯកស័ក
     ToSak = 2,// ទោស័ក
@@ -85,8 +85,8 @@ export interface KhmerDateInfo {
     jsYear: number;
     animalYear: AnimalYear;
     animalYearName: string;
-    eraYear: EraYear;
-    eraYearName: string;
+    sak: Sak;
+    sakName: string;
     dayOfWeek: DayOfWeek;
     dayOfWeekName: string;
 }
@@ -139,9 +139,9 @@ export interface Constants {
     LunarMonthNames: string[];
     SolarMonthNames: string[];
     AnimalYearNames: string[];
-    EraYearNames: string[];
+    SakNames: string[];
     WeekdayNames: string[];
-    MoonStatusNames: string[];
+    MoonPhaseNames: string[];
 }
 declare class KhmerDate {
     day: number;
@@ -165,10 +165,12 @@ export declare const constants: {
     LunarMonths: Record<string, number>;
     LunarMonthNames: string[];
     SolarMonthNames: string[];
+    SolarMonthAbbreviationNames: string[];
+    LunarMonthAbbreviationNames: string[];
     AnimalYearNames: string[];
-    EraYearNames: string[];
+    SakNames: string[];
     WeekdayNames: string[];
-    MoonStatusNames: string[];
+    MoonPhaseNames: string[];
 };
 declare const _default: {
     fromGregorian: typeof fromGregorian;
@@ -181,15 +183,17 @@ declare const _default: {
         LunarMonths: Record<string, number>;
         LunarMonthNames: string[];
         SolarMonthNames: string[];
+        SolarMonthAbbreviationNames: string[];
+        LunarMonthAbbreviationNames: string[];
         AnimalYearNames: string[];
-        EraYearNames: string[];
+        SakNames: string[];
         WeekdayNames: string[];
-        MoonStatusNames: string[];
+        MoonPhaseNames: string[];
     };
     MoonPhase: typeof MoonPhase;
     MonthIndex: typeof MonthIndex;
     AnimalYear: typeof AnimalYear;
-    EraYear: typeof EraYear;
+    Sak: typeof Sak;
     DayOfWeek: typeof DayOfWeek;
 };
 export default _default;
