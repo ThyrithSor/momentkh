@@ -23,6 +23,8 @@ console.log(momentkh.format(khmer));
 
 // Convert from gregorian data (ថ្ងៃសុរិយគតិ) to Khmer format
 const khmer = momentkh.fromGregorian(2024, 4, 14); // ថ្ងៃទី១៤ ខែមេសា ឆ្នាំ២០២៤
+// or 
+// const khmer = momentkh.fromGregorian(2024, 4, 14, 0, 0, 0); // (year, month, day, hour = 0, minute = 0, second = 0)
 console.log(momentkh.format(khmer));
 // Output: ថ្ងៃអាទិត្យ ៦កើត ខែចេត្រ ឆ្នាំរោង បញ្ចស័ក ពុទ្ធសករាជ ២៥៦៧
 
@@ -31,7 +33,7 @@ console.log(momentkh.format(khmer, "dN ខែm ឆ្នាំa"));
 // Output: ១២រោច ខែមិគសិរ ឆ្នាំម្សាញ់
 
 // Convert Khmer date to Gregorian
-const gregorian = momentkh.fromKhmer(15, 0, 5, 2568); // 15កើត ខែពិសាខ ព.ស.២៥៦៨
+const gregorian = momentkh.fromKhmer(15, momentkh.MoonPhase.Waxing, momentkh.MonthIndex.Pisakh, 2568); // 15កើត ខែពិសាខ ព.ស.២៥៦៨
 console.log(gregorian);
 // Output: { year: 2025, month: 5, day: 11 }
 
