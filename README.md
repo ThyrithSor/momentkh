@@ -21,6 +21,11 @@ const khmer = momentkh.fromDate(new Date());
 console.log(momentkh.format(khmer));
 // Output: ថ្ងៃពុធ ១២រោច ខែមិគសិរ ឆ្នាំម្សាញ់ សប្តស័ក ពុទ្ធសករាជ ២៥៦៩
 
+// Convert from gregorian data (ថ្ងៃសុរិយគតិ) to Khmer format
+const khmer = momentkh.fromGregorian(2024, 4, 14); // ថ្ងៃទី១៤ ខែមេសា ឆ្នាំ២០២៤
+console.log(momentkh.format(khmer));
+// Output: ថ្ងៃអាទិត្យ ៦កើត ខែចេត្រ ឆ្នាំរោង បញ្ចស័ក ពុទ្ធសករាជ ២៥៦៧
+
 // Convert date to Khmer format (custom)
 console.log(momentkh.format(khmer, "dN ខែm ឆ្នាំa"));
 // Output: ១២រោច ខែមិគសិរ ឆ្នាំម្សាញ់
@@ -842,8 +847,8 @@ console.log(lerngSakDay.khmer.sak); // 'សប្តស័ក' (new sak!)
 **Visual Timeline for 2024:**
 
 ```
-April 13, 22:23 → BE 2567, Monkey (វក), Old Sak (ឆស័ក)
-April 13, 22:24 → BE 2567, Rooster (រកា), Old Sak (ឆស័ក) ← Animal Year changes
+April 13, 22:16 → BE 2567, Monkey (វក), Old Sak (ឆស័ក)
+April 13, 22:17 → BE 2567, Rooster (រកា), Old Sak (ឆស័ក) ← Animal Year changes
 April 17, 00:00 → BE 2567, Rooster (រកា), New Sak (សប្តស័ក) ← Sak changes
 May 22, 23:59   → BE 2567, Rooster (រកា), New Sak (សប្តស័ក)
 May 23, 00:00   → BE 2568, Rooster (រកា), New Sak (សប្តស័ក) ← BE Year changes
@@ -981,7 +986,7 @@ npm install @thyrith/momentkh --save
 **After (v2):**
 
 ```bash
-# Just download momentkh.js - no npm dependencies!
+npm install @thyrith/momentkh
 ```
 
 ### Import Changes
