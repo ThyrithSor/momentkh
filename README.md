@@ -510,7 +510,7 @@ All 14 Khmer lunar months (including leap months).
 const { MonthIndex } = momentkh;
 
 MonthIndex.Migasir; // 0  - មិគសិរ
-MonthIndex.Bos; // 1  - បុស្ស
+MonthIndex.Boss; // 1  - បុស្ស
 MonthIndex.Meak; // 2  - មាឃ
 MonthIndex.Phalkun; // 3  - ផល្គុន
 MonthIndex.Cheit; // 4  - ចេត្រ
@@ -637,7 +637,7 @@ const khmer = momentkh.fromGregorian(2024, 12, 16);
 // Switch on month
 switch (khmer.khmer.monthIndex) {
   case MonthIndex.Migasir:
-  case MonthIndex.Bos:
+  case MonthIndex.Boss:
   case MonthIndex.Meak:
     console.log("Winter months");
     break;
@@ -680,7 +680,7 @@ const month: MonthIndex = result.khmer.monthIndex;
 const date = momentkh.fromKhmer(
   15,
   MoonPhase.  // ← IDE shows: Waxing, Waning
-  MonthIndex. // ← IDE shows: Migasir, Bos, Meak, etc.
+  MonthIndex. // ← IDE shows: Migasir, Boss, Meak, etc.
   2568
 );
 ```
