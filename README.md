@@ -4,7 +4,7 @@
 
 [🎮 **Live Demo Playground**](https://thyrithsor.github.io/momentkh/)
 
-[![Version](https://img.shields.io/badge/version-3.0.2-blue.svg)](https://github.com/ThyrithSor/momentkh)
+[![Version](https://img.shields.io/badge/version-3.0.3-blue.svg)](https://github.com/ThyrithSor/momentkh)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![No Dependencies](https://img.shields.io/badge/dependencies-none-success.svg)](https://github.com/ThyrithSor/momentkh)
 
@@ -22,15 +22,15 @@ console.log(momentkh.format(khmer));
 // Output: ថ្ងៃពុធ ១២រោច ខែមិគសិរ ឆ្នាំម្សាញ់ សប្តស័ក ពុទ្ធសករាជ ២៥៦៩
 
 // Convert from gregorian data (ថ្ងៃសុរិយគតិ) to Khmer format
-const khmer = momentkh.fromGregorian(2024, 4, 14); // ថ្ងៃទី១៤ ខែមេសា ឆ្នាំ២០២៤
+const date = momentkh.fromGregorian(2025, 12, 10); // ថ្ងៃទី១០ ខែធ្នូ ឆ្នាំ២០២៥
 // or 
-// const khmer = momentkh.fromGregorian(2024, 4, 14, 0, 0, 0); // (year, month, day, hour = 0, minute = 0, second = 0)
-console.log(momentkh.format(khmer));
-// Output: ថ្ងៃអាទិត្យ ៦កើត ខែចេត្រ ឆ្នាំរោង បញ្ចស័ក ពុទ្ធសករាជ ២៥៦៧
+// const khmer = momentkh.fromGregorian(2025, 12, 10, 0, 0, 0); // (year, month, day, hour = 0, minute = 0, second = 0)
+console.log(momentkh.format(date));
+// Output: ថ្ងៃពុធ ៥រោច ខែមិគសិរ ឆ្នាំម្សាញ់ សប្តស័ក ពុទ្ធសករាជ ២៥៦៩
 
 // Convert date to Khmer format (custom)
-console.log(momentkh.format(khmer, "dN ខែm ឆ្នាំa"));
-// Output: ១២រោច ខែមិគសិរ ឆ្នាំម្សាញ់
+console.log(momentkh.format(date, "ប្រាសាទតាក្របីត្រូវបានចោរសៀមបាញ់បំផ្លាញទាំងស្រុង នៅថ្ងៃW ទីdsr ខែM ឆ្នាំcr ត្រូវនឹង ថ្ងៃទីDN ខែm ឆ្នាំa e ពុទ្ធសករាជ b។"));
+// Output: ប្រាសាទតាក្របីត្រូវបានចោរសៀមបាញ់បំផ្លាញទាំងស្រុង នៅថ្ងៃពុធ ទី10 ខែធ្នូ ឆ្នាំ2025 ត្រូវនឹង ថ្ងៃទី០៥រោច ខែមិគសិរ ឆ្នាំម្សាញ់ សប្តស័ក ពុទ្ធសករាជ ២៥៦៩។
 
 // Convert Khmer date to Gregorian
 const gregorian = momentkh.fromKhmer(15, momentkh.MoonPhase.Waxing, momentkh.MonthIndex.Pisakh, 2568); // 15កើត ខែពិសាខ ព.ស.២៥៦៨
@@ -106,7 +106,7 @@ Type definitions are included automatically when you install via NPM. For direct
 
 ```html
 <!-- Include the browser-compatible UMD bundle -->
-<script src="https://cdn.jsdelivr.net/gh/ThyrithSor/momentkh@3.0.2/momentkh.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/ThyrithSor/momentkh@3.0.3/momentkh.js"></script>
 <script>
   // Convert today to Khmer
   const today = new Date();
@@ -862,56 +862,67 @@ May 23, 00:00   → BE 2568, Rooster (រកា), New Sak (សប្តស័ក
 
 Complete list of format tokens for the `format()` function:
 
-| Token                  | Output            | Description                    | Example               |
-| ---------------------- | ----------------- | ------------------------------ | --------------------- |
-| **📅 Date Components** |
-| `W`                    | ថ្ងៃនៃសប្តាហ៍ពេញ  | Weekday name (full)            | អាទិត្យ, ចន្ទ, អង្គារ |
-| `w`                    | ថ្ងៃនៃសប្តាហ៍ខ្លី | Weekday name (short)           | អា, ច, អ              |
-| `d`                    | ថ្ងៃទី            | Lunar day number               | ១, ៥, ១៥              |
-| `D`                    | ថ្ងៃទី (២ខ្ទង់)   | Lunar day (zero-padded)        | ០១, ០៥, ១៥            |
-| **🌙 Moon Phase**      |
-| `n`                    | កើត/រោច (ខ្លី)    | Moon phase (short)             | ក, រ                  |
-| `N`                    | កើត/រោច (ពេញ)     | Moon phase (full)              | កើត, រោច              |
-| `o`                    | និមិត្តសញ្ញា      | Moon day symbol                | ᧡, ᧢, ᧣ ... ᧿         |
-| **📆 Month Names**     |
-| `m`                    | ខែចន្ទគតិ         | Lunar month name               | មិគសិរ, បុស្ស, ចេត្រ  |
-| `ms`                   | ខែ (សង្ខេប)       | Lunar month name (abbreviated) | មិ, បុ                |
-| `Ms`                   | ខែ (សង្ខេប)       | Solar month name (abbreviated) | មក, កម                |
-| `M`                    | ខែសុរិយគតិ        | Solar month name               | មករា, កុម្ភៈ, មេសា    |
-| **⏰ Year Components** |
-| `a`                    | ឆ្នាំសត្វ         | Animal year                    | ជូត, ឆ្លូវ, រោង       |
-| `as`                   | ឆ្នាំ (រូប)       | Animal year emoji              | 🐀, 🐂, 🐉            |
-| `e`                    | ស័ក               | Sak                            | ឯកស័ក, ទោស័ក          |
-| `b`                    | ព.ស.              | Buddhist Era year              | ២៥៦៨                  |
-| `br`                   | BE                | Buddhist Era year (Latin)      | 2568                  |
-| `c`                    | គ.ស.              | Common Era (Gregorian) year    | ២០២៤                  |
-| `cr`                   | CE                | Common Era year (Latin)        | 2024                  |
-| `j`                    | ច.ស.              | Jolak Sakaraj year             | ១៣៨៦                  |
-| `jr`                   | JS                | Jolak Sakaraj year (Latin)     | 1386                  |
-| **📅 Day Components**  |
-| `d`                    | ថ្ងៃទី            | Day of month                   | ១, ២, ១៤              |
-| `dr`                   | Day               | Day of month (Latin)           | 1, 2, 14              |
-| `D`                    | ថ្ងៃទី (មាន០)     | Day of month (padded)          | ០១, ០២, ១៤            |
-| `Dr`                   | Day (0)           | Day of month (padded Latin)    | 01, 02, 14            |
-| `W`                    | ថ្ងៃនៃសប្តាហ៍     | Day of week (full)             | អាទិត្យ, ចន្ទ         |
-| `w`                    | ថ្ងៃ (សង្ខេប)     | Day of week (short)            | អា, ច, អ              |
+| Token                      | Output            | Description                         | Example               |
+| -------------------------- | ----------------- | ----------------------------------- | --------------------- |
+| **📅 Weekday**             |
+| `W`                        | ថ្ងៃនៃសប្តាហ៍ពេញ  | Weekday name (full)                 | អាទិត្យ, ចន្ទ, អង្គារ |
+| `w`                        | ថ្ងៃនៃសប្តាហ៍ខ្លី | Weekday name (short)                | អា, ច, អ              |
+| **🌙 Lunar Day**           |
+| `d`                        | ថ្ងៃទី            | Lunar day number                    | ១, ៥, ១៥              |
+| `D`                        | ថ្ងៃទី (២ខ្ទង់)   | Lunar day (zero-padded)             | ០១, ០៥, ១៥            |
+| `dr`                       | Day               | Lunar day (Latin)                   | 1, 5, 15              |
+| `Dr`                       | Day (0)           | Lunar day (padded Latin)            | 01, 05, 15            |
+| **📆 Gregorian Day**       |
+| `ds`                       | ថ្ងៃទី            | Gregorian day number                | ១, ៥, ១៤              |
+| `Ds`                       | ថ្ងៃទី (២ខ្ទង់)   | Gregorian day (zero-padded)         | ០១, ០៥, ១៤            |
+| `dsr`                      | Day               | Gregorian day (Latin)               | 1, 5, 14              |
+| `Dsr`                      | Day (0)           | Gregorian day (padded Latin)        | 01, 05, 14            |
+| **🌙 Moon Phase**          |
+| `n`                        | កើត/រោច (ខ្លី)    | Moon phase (short)                  | ក, រ                  |
+| `N`                        | កើត/រោច (ពេញ)     | Moon phase (full)                   | កើត, រោច              |
+| `o`                        | និមិត្តសញ្ញា      | Moon day symbol                     | ᧡, ᧢, ᧣ ... ᧿         |
+| **📆 Month Names**         |
+| `m`                        | ខែចន្ទគតិ         | Lunar month name                    | មិគសិរ, បុស្ស, ចេត្រ  |
+| `ms`                       | ខែ (សង្ខេប)       | Lunar month name (abbreviated)      | មិ, បុ                |
+| `M`                        | ខែសុរិយគតិ        | Solar (Gregorian) month name        | មករា, កុម្ភៈ, មេសា    |
+| `Ms`                       | ខែ (សង្ខេប)       | Solar month name (abbreviated)      | មក, កម                |
+| **⏰ Year Components**     |
+| `a`                        | ឆ្នាំសត្វ         | Animal year                         | ជូត, ឆ្លូវ, រោង       |
+| `as`                       | ឆ្នាំ (រូប)       | Animal year emoji                   | 🐀, 🐂, 🐉            |
+| `e`                        | ស័ក               | Sak                                 | ឯកស័ក, ទោស័ក          |
+| `b`                        | ព.ស.              | Buddhist Era year                   | ២៥៦៨                  |
+| `br`                       | BE                | Buddhist Era year (Latin)           | 2568                  |
+| `c`                        | គ.ស.              | Common Era (Gregorian) year         | ២០២៤                  |
+| `cr`                       | CE                | Common Era year (Latin)             | 2024                  |
+| `j`                        | ច.ស.              | Jolak Sakaraj year                  | ១៣៨៦                  |
+| `jr`                       | JS                | Jolak Sakaraj year (Latin)          | 1386                  |
 
 **Format Examples:**
 
 ```javascript
-const khmer = momentkh.fromGregorian(2024, 4, 14);
+const khmer = momentkh.fromGregorian(2025, 5, 3);
 
 console.log(momentkh.format(khmer, "W, dN ខែm ព.ស.b"));
-// អាទិត្យ, ៦កើត ខែចេត្រ ព.ស.២៥៦៨
+// សៅរ៍, ៧កើត ខែពិសាខ ព.ស.២៥៦៨
 
-console.log(momentkh.format(khmer, "c/M/D ថ្ងៃw"));
-// ២០២៤/មេសា/១៤ ថ្ងៃអា
+console.log(momentkh.format(khmer, "c/M/Ds ថ្ងៃw"));
+// ២០២៥/ឧសភា/០៣ ថ្ងៃស
 
-console.log(momentkh.format(khmer, "ឆ្នាំa e ខែm ថ្ងៃទីd មានព្រះចន្ទN"));
-// ឆ្នាំរោង ឆស័ក ខែចេត្រ ថ្ងៃទី៦ មានព្រះចន្ទកើត
+console.log(momentkh.format(khmer, "ឆ្នាំa e ខែm ថ្ងៃទីDN"));
+// ឆ្នាំម្សាញ់ សប្តស័ក ខែពិសាខ ថ្ងៃទី០៧កើត
 
 console.log(momentkh.format(khmer, "ថ្ងៃទី o"));
-// ថ្ងៃទី ᧦ (moon symbol for day 6 waxing)
+// ថ្ងៃទី ᧧
+
+// Using new Gregorian day format codes
+console.log(momentkh.format(khmer, "ថ្ងៃទីds ខែM ឆ្នាំc"));
+// ថ្ងៃទី៣ ខែឧសភា ឆ្នាំ២០២៥
+
+console.log(momentkh.format(khmer, "dsr/M/cr"));
+// 3/ឧសភា/2025
+
+console.log(momentkh.format(khmer, "Dsr-M-cr"));
+// 03-ឧសភា-2025
 ```
 
 ---
@@ -1356,5 +1367,5 @@ node test_specific_dates.js
 
 ---
 
-**Version:** 3.0.2
+**Version:** 3.0.3
 **Last Updated:** December 2025
