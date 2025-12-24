@@ -866,36 +866,36 @@ Complete list of format tokens for the `format()` function:
 | -------------------------- | ----------------- | ----------------------------------- | --------------------- |
 | **📅 Weekday**             |
 | `W`                        | ថ្ងៃនៃសប្តាហ៍ពេញ  | Weekday name (full)                 | អាទិត្យ, ចន្ទ, អង្គារ |
-| `w`                        | ថ្ងៃនៃសប្តាហ៍ខ្លី | Weekday name (short)                | អា, ច, អ              |
+| `w`                        | ថ្ងៃនៃសប្តាហ៍ខ្លី | Weekday name (abbreviated)                | អា, ច, អ              |
 | **🌙 Lunar Day**           |
 | `d`                        | ថ្ងៃទី            | Lunar day number                    | ១, ៥, ១៥              |
 | `D`                        | ថ្ងៃទី (២ខ្ទង់)   | Lunar day (zero-padded)             | ០១, ០៥, ១៥            |
 | `dr`                       | Day               | Lunar day (Latin)                   | 1, 5, 15              |
 | `Dr`                       | Day (0)           | Lunar day (padded Latin)            | 01, 05, 15            |
 | **📆 Gregorian Day**       |
-| `ds`                       | ថ្ងៃទី            | Gregorian day number                | ១, ៥, ១៤              |
-| `Ds`                       | ថ្ងៃទី (២ខ្ទង់)   | Gregorian day (zero-padded)         | ០១, ០៥, ១៤            |
-| `dsr`                      | Day               | Gregorian day (Latin)               | 1, 5, 14              |
-| `Dsr`                      | Day (0)           | Gregorian day (padded Latin)        | 01, 05, 14            |
+| `ds`                       | ថ្ងៃទី            | Gregorian day number                | ១, ៥, ១៤, ៣១          |
+| `Ds`                       | ថ្ងៃទី (២ខ្ទង់)   | Gregorian day (zero-padded)         | ០១, ០៥, ១៤, ៣១        |
+| `dsr`                      | Day               | Gregorian day (Latin)               | 1, 5, 14, 31          |
+| `Dsr`                      | Day (0)           | Gregorian day (padded Latin)        | 01, 05, 14, 31        |
 | **🌙 Moon Phase**          |
-| `n`                        | កើត/រោច (ខ្លី)    | Moon phase (short)                  | ក, រ                  |
+| `n`                        | កើត/រោច (ខ្លី)    | Moon phase (abbreviated)                  | ក, រ                  |
 | `N`                        | កើត/រោច (ពេញ)     | Moon phase (full)                   | កើត, រោច              |
 | `o`                        | និមិត្តសញ្ញា      | Moon day symbol                     | ᧡, ᧢, ᧣ ... ᧿         |
 | **📆 Month Names**         |
-| `m`                        | ខែចន្ទគតិ         | Lunar month name                    | មិគសិរ, បុស្ស, ចេត្រ  |
-| `ms`                       | ខែ (សង្ខេប)       | Lunar month name (abbreviated)      | មិ, បុ                |
-| `M`                        | ខែសុរិយគតិ        | Solar (Gregorian) month name        | មករា, កុម្ភៈ, មេសា    |
-| `Ms`                       | ខែ (សង្ខេប)       | Solar month name (abbreviated)      | មក, កម                |
+| `m`                        | ខែចន្ទគតិ (ពេញ)      | Lunar month name                    | មិគសិរ, បុស្ស, ចេត្រ  |
+| `ms`                       | ខែ (ខ្លី)       | Lunar month name (abbreviated)      | មិ, បុ                |
+| `M`                        | ខែសុរិយគតិ (ពេញ)     | Solar (Gregorian) month name        | មករា, កុម្ភៈ, មេសា    |
+| `Ms`                       | ខែ (ខ្លី)       | Solar month name (abbreviated)      | មក, កម                |
 | **⏰ Year Components**     |
 | `a`                        | ឆ្នាំសត្វ         | Animal year                         | ជូត, ឆ្លូវ, រោង       |
 | `as`                       | ឆ្នាំ (រូប)       | Animal year emoji                   | 🐀, 🐂, 🐉            |
 | `e`                        | ស័ក               | Sak                                 | ឯកស័ក, ទោស័ក          |
-| `b`                        | ព.ស.              | Buddhist Era year                   | ២៥៦៨                  |
-| `br`                       | BE                | Buddhist Era year (Latin)           | 2568                  |
-| `c`                        | គ.ស.              | Common Era (Gregorian) year         | ២០២៤                  |
-| `cr`                       | CE                | Common Era year (Latin)             | 2024                  |
-| `j`                        | ច.ស.              | Jolak Sakaraj year                  | ១៣៨៦                  |
-| `jr`                       | JS                | Jolak Sakaraj year (Latin)          | 1386                  |
+| `b`                        | ព.ស. លេខខ្មែរ             | Buddhist Era year                   | ២៥៦៨                  |
+| `br`                       | ព.ស. លេខឡាតាំង            | Buddhist Era year (Latin)           | 2568                  |
+| `c`                        | គ.ស. លេខខ្មែរ             | Common Era (Gregorian) year         | ២០២៤                  |
+| `cr`                       | គ.ស. លេខឡាតាំង            | Common Era year (Latin)             | 2024                  |
+| `j`                        | ច.ស. លេខខ្មែរ           | Jolak Sakaraj year                  | ១៣៨៦                  |
+| `jr`                       | ច.ស.  លេខឡាតាំង           | Jolak Sakaraj year (Latin)          | 1386                  |
 
 **Format Examples:**
 
